@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+<!---->
+<Association
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="OverTimeLineAssoc"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <AssociationEnd
+    Name="OvertimeRequest"
+    Cardinality="1"
+    Source="true"
+    Owner="com.sbm.selfServices.model.entities.OvertimeRequest"
+    CascadeDelete="true"
+    DeleteContainee="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="OvertimeRequest"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.OvertimeRequest.uk_OvertimeRequest"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OvertimeRequest.OvertimeRequestId"/>
+    </AttrArray>
+  </AssociationEnd>
+  <AssociationEnd
+    Name="OverTimeLineEO"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.entities.OverTimeLineEO"
+    HasOwner="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="OverTimeLineEO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.fk_OverTimeLineEO"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.OvertimeRequestId"/>
+    </AttrArray>
+  </AssociationEnd>
+</Association>

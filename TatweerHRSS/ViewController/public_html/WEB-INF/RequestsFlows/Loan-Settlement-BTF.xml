@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="Loan-Settlement-BTF">
+    <default-activity id="__1">checkSession</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name id="__4">LoanSettlementMB</managed-bean-name>
+      <managed-bean-class id="__3">com.sbm.selfServices.view.mb.LoanSettlementMB</managed-bean-class>
+      <managed-bean-scope id="__2">backingBean</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__7">
+      <managed-bean-name id="__8">FilmStrip</managed-bean-name>
+      <managed-bean-class id="__6">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__9">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="LoanSettlementRequest">
+      <page>/RequestsFrags/LoanSettlementRequest.jsff</page>
+    </view>
+    <view id="LoanSettlementDetails">
+      <page>/RequestsFrags/LoanSettlementDetails.jsff</page>
+    </view>
+    <method-call id="checkSession">
+      <method>#{backingBeanScope.LoanSettlementMB.checkSession}</method>
+      <outcome id="__15">
+        <fixed-outcome>success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case>
+        <expression>#{PersonInfo.perosnNumber ne null and PersonInfo.assignee ne
+                    null}</expression>
+        <outcome id="__24">success</outcome>
+      </case>
+      <default-outcome>expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page>/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__25">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="hideFS">
+      <method>#{backingBeanScope.FilmStrip._hideFilmStrip}</method>
+      <outcome id="__41">
+        <fixed-outcome>edit</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="hideFS2">
+      <method>#{backingBeanScope.FilmStrip._hideFilmStrip}</method>
+      <outcome id="__50">
+        <fixed-outcome>create</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="showFS">
+      <method>#{backingBeanScope.FilmStrip._showFilmStrip}</method>
+      <outcome id="__56">
+        <fixed-outcome>toSearch</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__62">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute1">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__68">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__10">
+      <from-activity-id id="__11">checkSession</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome id="__14">success</from-outcome>
+        <to-activity-id id="__13">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__17">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__18">
+        <from-outcome id="__20">success</from-outcome>
+        <to-activity-id id="__19">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__22">
+        <from-outcome id="__23">expired</from-outcome>
+        <to-activity-id id="__21">SessionExpired</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__26">
+      <from-activity-id id="__27">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__28">
+        <from-outcome id="__29">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__30">Execute1</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__31">
+      <from-activity-id id="__32">LoanSettlementRequest</from-activity-id>
+      <control-flow-case id="__34">
+        <from-outcome id="__35">toEdit</from-outcome>
+        <to-activity-id id="__33">hideFS</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__43">
+        <from-outcome id="__44">new</from-outcome>
+        <to-activity-id id="__42">hideFS2</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__36">
+      <from-activity-id id="__37">hideFS</from-activity-id>
+      <control-flow-case id="__38">
+        <from-outcome id="__40">edit</from-outcome>
+        <to-activity-id id="__39">LoanSettlementDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__45">
+      <from-activity-id id="__46">hideFS2</from-activity-id>
+      <control-flow-case id="__47">
+        <from-outcome id="__49">create</from-outcome>
+        <to-activity-id id="__48">LoanSettlementDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__57">
+      <from-activity-id id="__58">LoanSettlementDetails</from-activity-id>
+      <control-flow-case id="__59">
+        <from-outcome id="__61">back</from-outcome>
+        <to-activity-id id="__60">showFS</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__51">
+      <from-activity-id id="__52">showFS</from-activity-id>
+      <control-flow-case id="__54">
+        <from-outcome id="__55">toSearch</from-outcome>
+        <to-activity-id id="__53">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__63">
+      <from-activity-id id="__64">Execute</from-activity-id>
+      <control-flow-case id="__66">
+        <from-outcome id="__65">Execute</from-outcome>
+        <to-activity-id id="__67">Execute1</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__69">
+      <from-activity-id id="__70">Execute1</from-activity-id>
+      <control-flow-case id="__73">
+        <from-outcome id="__72">Execute</from-outcome>
+        <to-activity-id id="__71">LoanSettlementRequest</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

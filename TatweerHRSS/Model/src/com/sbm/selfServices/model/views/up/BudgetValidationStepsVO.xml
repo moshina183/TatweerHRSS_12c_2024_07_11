@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BudgetValidationStepsVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  OrderBy="Step_ID asc"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="com.sbm.selfServices.model.views.up.BudgetValidationStepsVORowImpl">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <Attr Name="_isCodegen" Value="true"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.up.BudgetValidationStepsVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewAccessor
+    Name="RequestTypesROVO"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.RequestTypesROVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_RequestTypeId"
+    ListVOName="RequestTypesROVO"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RequestTypeId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="RequestTypeId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RequestName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT BudgetValidationEO.REQUEST_TYPE_ID, 
+       BudgetValidationEO.BUDGET_VALIDATION, 
+       BudgetValidationEO.STEP_ID, 
+       BudgetValidationEO.STEP_NAME
+FROM REQUEST_STEPS BudgetValidationEO]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="BudgetValidationEO"
+    Entity="com.sbm.selfServices.model.entities.BudgetValidationEO"/>
+  <ViewAttribute
+    Name="RequestTypeId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RequestTypeId"
+    EntityUsage="BudgetValidationEO"
+    AliasName="REQUEST_TYPE_ID"
+    LOVName="LOV_RequestTypeId">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BudgetValidationStepsVO.RequestTypeId_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BudgetValidation"
+    PrecisionRule="true"
+    EntityAttrName="BudgetValidation"
+    EntityUsage="BudgetValidationEO"
+    AliasName="BUDGET_VALIDATION"
+    DefaultValue="N"/>
+  <ViewAttribute
+    Name="StepId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StepId"
+    EntityUsage="BudgetValidationEO"
+    AliasName="STEP_ID"/>
+  <ViewAttribute
+    Name="StepName"
+    PrecisionRule="true"
+    EntityAttrName="StepName"
+    EntityUsage="BudgetValidationEO"
+    AliasName="STEP_NAME"/>
+  <ViewAttribute
+    Name="Trans_Budget_CheckBox"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BudgetValidationStepsVO.Trans_Budget_CheckBox_LABEL"/>
+        <CONTROLTYPE
+          Value="check_box"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="FilterbyRequestName"
+    ViewObjectName="com.sbm.selfServices.model.views.up.BudgetValidationStepsVO"
+    Conjunction="AND"
+    Mode="3">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow163"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="RequestTypeId"
+        ViewAttribute="RequestTypeId"
+        Operator="="
+        Conjunction="AND"
+        Required="Required"/>
+      <ViewCriteriaItem
+        Name="StepName"
+        ViewAttribute="StepName"
+        Operator="&lt;>"
+        Conjunction="AND"
+        Value="Finished"
+        Required="Optional">
+        <Properties>
+          <CustomProperties>
+            <Property
+              Name="renderedMode"
+              Value="Never"/>
+          </CustomProperties>
+        </Properties>
+      </ViewCriteriaItem>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:panelBox text="Exit And Clearance Requests for Trainees" id="pb1"
+                   showDisclosure="false"
+                   inlineStyle="background-color:#ffffff;">
+        <af:spacer width="10" height="10" id="s1"/>
+         <af:panelDashboard id="pd1" styleClass="AFStretchWidth" rowHeight="90px"
+                           columns="3" inlineStyle="height:100px"
+                           rendered="true">
+          <af:panelBox text="All Tasks" id="pb3" showDisclosure="false"
+                       inlineStyle="border-left-style:inset;border-left-color:#2d37f7;border-left-width:4px;text-align:center;"
+                       background="medium" titleHalign="center">
+            <af:commandLink text="#{bindings.AllTasks.inputValue}" id="l1"
+                            inlineStyle="font-size:7mm;color:Blue;text-align:center;"
+                            actionListener="#{backingBeanScope.TraineesExitFormMB.onClickStatusCount}">
+              <af:setPropertyListener from="AllTasks"
+                                      to="#{pageFlowScope.statusType}"
+                                      type="action"/>
+            </af:commandLink>
+          </af:panelBox>
+          <af:panelBox text="My Tasks" id="pb2" showDisclosure="false"
+                       inlineStyle="border-left-style:inset;border-left-color:#27fa23;border-left-width:4px;text-align:center;"
+                       background="medium" titleHalign="center">
+            <af:commandLink text="#{bindings.MyTasks.inputValue}" id="cl3"
+                            inlineStyle="font-size:7mm;color:Green;text-align:center;"
+                            actionListener="#{backingBeanScope.TraineesExitFormMB.onClickStatusCount}">
+              <af:setPropertyListener from="MyTasks"
+                                      to="#{pageFlowScope.statusType}"
+                                      type="action"/>
+            </af:commandLink>
+          </af:panelBox>
+          <af:panelBox text="Waiting Tasks" id="pb5" showDisclosure="false"
+                       inlineStyle="border-left-style:inset;border-left-color:#f0f72d;border-left-width:4px;text-align:center;"
+                       background="medium" titleHalign="center">
+            <af:commandLink text="#{bindings.PendingTasks.inputValue}" id="l2"
+                            inlineStyle="font-size:7mm;color:Orange;text-align:center;"
+                            actionListener="#{backingBeanScope.TraineesExitFormMB.onClickStatusCount}">
+              <af:setPropertyListener from="PendingTasks"
+                                      to="#{pageFlowScope.statusType}"
+                                      type="action"/>
+            </af:commandLink>
+          </af:panelBox>
+        </af:panelDashboard>
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                            inlineStyle="height:500px;">
+          <f:facet name="toolbar">
+            <af:toolbar id="t1" flex="10">
+              <af:commandButton text="Start New Task" id="cb1"
+                                action="#{backingBeanScope.TraineesExitFormMB.onNewRequest}">
+              </af:commandButton>
+               <af:popup id="p1"
+                        binding="#{backingBeanScope.TraineesExitFormMB.createReqPop}">
+                <af:dialog id="d1" title="Create Request" contentWidth="400" contentHeight="100"
+                           type="cancel">
+                  <af:panelFormLayout id="pfl1" maxColumns="1">
+                    <af:selectOneRadio value="#{bindings.RequestForTrans.inputValue}"
+                                       label="Request for"
+                                       required="#{bindings.RequestForTrans.hints.mandatory}"
+                                       shortDesc="#{bindings.RequestForTrans.hints.tooltip}"
+                                       id="sor1" layout="horizontal" autoSubmit="true">
+                      <f:selectItems value="#{bindings.RequestForTrans.items}"
+                                     id="si1"/>
+                    </af:selectOneRadio>
+                    <af:inputListOfValues id="personNameTransId" autoSubmit="true"
+                                          popupTitle="Search and Select: #{bindings.PersonNameTrans.hints.label}"
+                                          value="#{bindings.PersonNameTrans.inputValue}"
+                                          label="Person Name" partialTriggers="sor1" searchDesc="Search Person"
+                                          model="#{bindings.PersonNameTrans.listOfValuesModel}"
+                                          disabled="#{bindings.RequestForTrans.inputValue eq 'Self'}"
+                                          columns="#{bindings.PersonNameTrans.hints.displayWidth}"
+                                          shortDesc="#{bindings.PersonNameTrans.hints.tooltip}">
+                      <f:validator binding="#{bindings.PersonNameTrans.validator}"/>
+                      <af:autoSuggestBehavior suggestItems="#{bindings.PersonNameTrans.suggestItems}"
+                                      maxSuggestedItems="5"/>
+                    </af:inputListOfValues>
+                  </af:panelFormLayout>
+                  <f:facet name="buttonBar">
+                    <af:commandButton text="Create" id="cb2"
+                                      action="#{backingBeanScope.TraineesExitFormMB.onCreateFromPop}"/>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
+            </af:toolbar>
+          </f:facet>
+        <af:table value="#{bindings.TraineesExitForm_VO.collectionModel}"
+                  var="row" rows="#{bindings.TraineesExitForm_VO.rangeSize}"
+                  emptyText="#{bindings.TraineesExitForm_VO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.TraineesExitForm_VO.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.TraineesExitForm_VOQuery.queryDescriptor}"
+                  queryListener="#{bindings.TraineesExitForm_VOQuery.processQuery}"
+                  filterVisible="false" varStatus="vs"
+                  selectedRowKeys="#{bindings.TraineesExitForm_VO.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.TraineesExitForm_VO.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t2">
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.RequestId.name}"
+                     filterable="true" sortable="true"
+                     headerText="Request ID"
+                     id="c14">
+           <af:commandImageLink text="#{row.RequestId}" id="cil1"
+                                action="#{backingBeanScope.TraineesExitFormMB.onClickEdit}">
+                <af:setPropertyListener from="Exit"
+                                        to="#{pageFlowScope.formName}"
+                                        type="action"/>
+              </af:commandImageLink>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.PersonNumber.name}"
+                     filterable="true" sortable="true"
+                     headerText="Person Number"
+                     id="c11">
+            <af:outputText value="#{row.PersonNumber}" id="ot9" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.PersonName.name}"
+                     filterable="true" sortable="true"
+                     headerText="Person Name"
+                     id="c1" width="150">
+            <af:outputText value="#{row.PersonName}" id="ot8" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.TrainingTitle.name}"
+                     filterable="true" sortable="true"
+                     headerText="Training Title"
+                     id="c7">
+            <af:outputText value="#{row.TrainingTitle}" id="ot3" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.DateOfJoining.name}"
+                     filterable="false" sortable="true"
+                     headerText="Date Of Joining"
+                     id="c12">
+            <af:outputText value="#{row.DateOfJoining}" id="ot12" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+              <af:convertDateTime pattern="#{bindings.TraineesExitForm_VO.hints.DateOfJoining.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.LastWorkingDate.name}"
+                     filterable="false" sortable="true"
+                     headerText="Last Working Date"
+                     id="c3">
+            <af:outputText value="#{row.LastWorkingDate}" id="ot13" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+              <af:convertDateTime pattern="#{bindings.TraineesExitForm_VO.hints.LastWorkingDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.LengthOfService.name}"
+                     filterable="true" sortable="true" width="200"
+                     headerText="Length Of Service"
+                     id="c6">
+            <af:outputText value="#{row.LengthOfService}" id="ot5" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.Assignee.name}"
+                     filterable="true" sortable="true" visible="false"
+                     headerText="#{bindings.TraineesExitForm_VO.hints.Assignee.label}"
+                     id="c5">
+            <af:outputText value="#{row.Assignee}" id="ot4" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.AssigneeName.name}"
+                     filterable="true" sortable="true"
+                     headerText="Assignee Name"
+                     id="c8" width="150">
+            <af:outputText value="#{row.AssigneeName}" id="ot14" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.AssigneePosition.name}"
+                     filterable="true" sortable="true"
+                     headerText="Assignee" visible="false"
+                     id="c9">
+            <af:outputText value="#{row.AssigneePosition}" id="ot6" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.RequestStatus.name}"
+                     filterable="true" sortable="true"
+                     headerText="Request Status"
+                     id="c10">
+            <af:outputText value="#{row.RequestStatus}" id="ot11" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.StepId.name}"
+                     filterable="true" sortable="true"
+                     headerText="Step ID" visible="false"
+                     id="c13">
+            <af:outputText value="#{row.StepId}" id="ot2" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.TraineesExitForm_VO.hints.StepId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.CreatedBy.name}"
+                     filterable="true" sortable="true"
+                     headerText="Created By"
+                     id="c4" width="150">
+            <af:outputText value="#{row.CreatedBy}" id="ot1" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.TraineesExitForm_VO.hints.CreatedOn.name}"
+                     filterable="false" sortable="true"
+                     headerText="Created On" visible="false"
+                     id="c2">
+            <af:outputText value="#{row.CreatedOn}" id="ot7" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+              <af:convertDateTime pattern="#{bindings.TraineesExitForm_VO.hints.CreatedOn.format}"/>
+            </af:outputText>
+          </af:column>
+        </af:table>
+      </af:panelCollection></af:panelBox>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

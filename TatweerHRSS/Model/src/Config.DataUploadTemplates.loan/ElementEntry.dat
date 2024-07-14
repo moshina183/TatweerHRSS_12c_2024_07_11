@@ -1,0 +1,7 @@
+METADATA|ElementEntry|EffectiveStartDate|ElementName|LegislativeDataGroupName|AssignmentNumber|MultipleEntryCount|EntryType
+MERGE|ElementEntry|PLACEHOLDER_Date|Loan Deduction|THC LDG|PLACEHOLDER_EmployeeNumber|1|E
+
+METADATA|ElementEntryValue|EffectiveStartDate|InputValueName|ScreenEntryValue|AssignmentNumber|ElementName|LegislativeDataGroupName|MultipleEntryCount|EntryType
+MERGE|ElementEntryValue|PLACEHOLDER_Date|No of Months|PLACEHOLDER_NoOfMonths|PLACEHOLDER_EmployeeNumber|Loan Deduction|THC LDG|1|E
+MERGE|ElementEntryValue|PLACEHOLDER_Date|Division|PLACEHOLDER_Division|PLACEHOLDER_EmployeeNumber|Loan Deduction|THC LDG|1|E
+MERGE|ElementEntryValue|PLACEHOLDER_Date|Loan Creation Date|PLACEHOLDER_Date|PLACEHOLDER_EmployeeNumber|Loan Deduction|THC LDG|1|E

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="ExceptionalRewardRequestsPageDef" ControllerClass="com.view.beans.filmStrip.RegionPhaseListener"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ExceptionalRewardView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExceptionalRewardView1Iterator"/>
+    <searchRegion Binds="ExceptionalRewardView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ExceptionalRewardView1Query"/>
+    <iterator id="ManagerEmployeesVO1Iterator" Binds="ManagerEmployeesVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_ExceRewards_ROVOIterator"
+              Binds="StatusCount_ExceRewards_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ExceptionalRewardView1Iterator"
+          id="ExceptionalRewardView1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ExceptionalRewardView"
+                      Name="ExceptionalRewardView10">
+        <AttrNames>
+          <Item Value="ExceptionalRewardId"/>
+          <Item Value="PersonNumber"/>
+          <Item Value="PersonName"/>
+          <Item Value="CreatedByNo"/>
+          <Item Value="CreatedByName"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="StepId"/>
+          <Item Value="CreationDate"/>
+          <Item Value="RequestStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ExceptionalRewardView1Iterator" id="Execute"
+            InstanceName="SBMModuleDataControl.ExceptionalRewardView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="deleteMngrEmpsTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteMngrEmpsTableRows"
+                  IsViewObjectMethod="false"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.ExceptionalRewardTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="ExceptionalRewardId">
+      <AttrNames>
+        <Item Value="ExceptionalRewardId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="StatusCount_ExceRewards_ROVOIterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ExceRewards_ROVOIterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ExceRewards_ROVOIterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

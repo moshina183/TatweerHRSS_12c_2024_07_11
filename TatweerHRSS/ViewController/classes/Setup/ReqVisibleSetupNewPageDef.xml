@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="ReqVisibleSetupNewPageDef"
+                Package="Setup">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="RequestVisibleSetupVO1" RangeSize="8"
+              DataControl="SBMModuleDataControl"
+              id="RequestVisibleSetupVO1Iterator"/>
+    <searchRegion Criteria="findByLocation"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="RequestVisibleSetupVO1Iterator"
+                  id="findByLocationQuery"/>
+    <iterator id="RequestVisibleROVOIterator" Binds="RequestVisibleROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="RequestVisible_VOIterator" Binds="RequestVisible_VO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="LocationsVORefIterator" Binds="LocationsVORef"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="RequestVisibleSetupVO1Iterator"
+          id="RequestVisibleSetupVO1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.RequestVisibleSetupVO"
+                      Name="RequestVisibleSetupVO10">
+        <AttrNames>
+          <Item Value="RequestSetupId"/>
+          <Item Value="LocationsId"/>
+          <Item Value="RequestTypeId"/>
+          <Item Value="ReqVisibleFlagTrans"/>
+          <Item Value="LastUpdatedOn"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="ReqVisibleFlag"/>
+          <Item Value="Location"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,788 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox id="pgl1"  styleClass="AFStretchWidth" text="Reports Page">
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelGroupLayout id="pgl2" layout="scroll" styleClass="AFStretchWidth">
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t3">
+            <af:commandToolbarButton text="Export Business Trip Requests" id="ctb1">
+              <af:exportCollectionActionListener exportedId="t1"
+                                                 type="excelHTML"
+                                                 filename="All Business Trip Requests.xls"
+                                                 title="Business Trip Requests"/>
+            </af:commandToolbarButton>
+            <af:commandToolbarButton text="Export Selected Business Trip" id="ctb2">
+              <af:exportCollectionActionListener exportedId="t1"
+                                                 type="excelHTML"
+                                                 exportedRows="selected"
+                                                 filename="Selectedl Business Trip Requests.xls"
+                                                 title="Business Trip Requests"/>
+            </af:commandToolbarButton>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.BusinessTripRequestReportsVO1.collectionModel}"
+                  var="row"
+                  rows="#{bindings.BusinessTripRequestReportsVO1.rangeSize}"
+                  emptyText="#{bindings.BusinessTripRequestReportsVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.BusinessTripRequestReportsVO1.rangeSize}"
+                  rowBandingInterval="0"
+                  selectionListener="#{bindings.BusinessTripRequestReportsVO1.collectionModel.makeCurrent}"
+                  rowSelection="multiple" id="t1" styleClass="AFStretchWidth">
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.LocalBusinessTripId.name}"
+                     sortable="true" rendered="true"
+                     headerText="Business Trip Id"
+                     id="c24" filterable="true">
+            <af:outputText value="#{row.LocalBusinessTripId}" id="ot25">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.LocalBusinessTripId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PersoneId.name}"
+                     sortable="true"
+                     headerText="BTN"
+                     id="c14" filterable="true">
+            <af:outputText value="#{row.PersoneId}" id="ot45"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PersoneName.name}"
+                     sortable="true"
+                     headerText="Persone Name"
+                     id="c9" filterable="true">
+            <af:outputText value="#{row.PersoneName}" id="ot6"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PersonPosition.name}"
+                     sortable="true"
+                     headerText="Person Position"
+                     id="c40">
+            <af:outputText value="#{row.PersonPosition}" id="ot12"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PersonJob.name}"
+                     sortable="true"
+                     headerText="Person Job"
+                     id="c39">
+            <af:outputText value="#{row.PersonJob}" id="ot30"/>
+          </af:column>
+             <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PersonDepartment.name}"
+                     sortable="true"
+                     headerText="Person Department"
+                     id="c1">
+            <af:outputText value="#{row.PersonDepartment}" id="ot29"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.CostCenter.name}"
+                     sortable="true"
+                     headerText="Cost Center"
+                     id="c15">
+            <af:outputText value="#{row.CostCenter}" id="ot34"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.CostCenterNumber.name}"
+                     sortable="true"
+                     headerText="Cost Center Number"
+                     id="c21" filterable="true">
+            <af:outputText value="#{row.CostCenterNumber}" id="ot46"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.RequestStatus.name}"
+                     sortable="true"
+                     headerText="Request Status"
+                     id="c38" filterable="true">
+            <af:outputText value="#{row.RequestStatus}" id="ot14"/>
+          </af:column>
+             <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.StartDate.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.StartDate.label}"
+                     id="c10" filterable="true">
+            <af:outputText value="#{row.StartDate}" id="ot37">
+              <af:convertDateTime pattern="#{bindings.BusinessTripRequestReportsVO1.hints.StartDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.EndDate.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.EndDate.label}"
+                     id="c36" filterable="true">
+            <af:outputText value="#{row.EndDate}" id="ot17">
+              <af:convertDateTime pattern="#{bindings.BusinessTripRequestReportsVO1.hints.EndDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.Days.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.Days.label}"
+                     id="c37">
+            <af:outputText value="#{row.Days}" id="ot42">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.Days.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.CreationDate.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.CreationDate.label}"
+                     id="c11">
+            <af:outputText value="#{row.CreationDate}" id="ot36">
+              <af:convertDateTime pattern="#{bindings.BusinessTripRequestReportsVO1.hints.CreationDate.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TripType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TripType.label}"
+                     id="c44" filterable="true">
+            <af:outputText value="#{row.TripType}" id="ot31"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.ToCity.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.ToCity.label}"
+                     id="c26" filterable="true">
+            <af:outputText value="#{row.ToCity}" id="ot11"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.SubType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.SubType.label}"
+                     id="c5" filterable="true">
+            <af:outputText value="#{row.SubType}" id="ot35"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PersonLocation.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.PersonLocation.label}"
+                     id="c512" filterable="true">
+            <af:outputText value="#{row.PersonLocation}" id="ot351"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.CourseName.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.CourseName.label}"
+                     id="c4">
+            <af:outputText value="#{row.CourseName}" id="ot26"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.OtherCities.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.OtherCities.label}"
+                     id="c18">
+            <af:outputText value="#{row.OtherCities}" id="ot23"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TotalForInvoice.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TotalForInvoice.label}"
+                     id="c94" filterable="true">
+            <af:outputText value="#{row.TotalForInvoice}" id="ot94"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.BenefitType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.BenefitType.label}"
+                     id="c96" filterable="true">
+            <af:outputText value="#{row.BenefitType}" id="ot96"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.PerDiemAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.PerDiemAmount.label}"
+                     id="c95" filterable="true">
+            <af:outputText value="#{row.PerDiemAmount}" id="ot95"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TrainingCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TrainingCost.label}"
+                     id="c6">
+            <af:outputText value="#{row.TrainingCost}" id="ot5">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.TrainingCost.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.LaundryAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.LaundryAllowanceAmount.label}"
+                     id="c42">
+            <af:outputText value="#{row.LaundryAllowanceAmount}" id="ot39">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.LaundryAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+        
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TransAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TransAllowanceAmount.label}"
+                     id="c22">
+            <af:outputText value="#{row.TransAllowanceAmount}" id="ot38">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.TransAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.HousingAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.HousingAllowanceAmount.label}"
+                     id="c31">
+            <af:outputText value="#{row.HousingAllowanceAmount}" id="ot44">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.HousingAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+         
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.FoodAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.FoodAllowanceAmount.label}"
+                     id="c2">
+            <af:outputText value="#{row.FoodAllowanceAmount}" id="ot15">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.FoodAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TravelCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TravelCost.label}"
+                     id="c13">
+            <af:outputText value="#{row.TravelCost}" id="ot32">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.TravelCost.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.EventCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.EventCost.label}"
+                     id="c30">
+            <af:outputText value="#{row.EventCost}" id="ot13">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.EventCost.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.VisaCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.VisaCost.label}"
+                     id="c7">
+            <af:outputText value="#{row.VisaCost}" id="ot28">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.VisaCost.format}"/>
+            </af:outputText>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.OtherCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.OtherCost.label}"
+                     id="c43">
+            <af:outputText value="#{row.OtherCost}" id="ot18">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.OtherCost.format}"/>
+            </af:outputText>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TotalAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TotalAmount.label}"
+                     id="c4321">
+            <af:outputText value="#{row.TotalAmount}" id="ot2118">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.TotalAmount.format}"/>
+            </af:outputText>
+          </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TransportationAllowanceType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TransportationAllowanceType.label}"
+                     id="c3">
+            <af:outputText value="#{row.TransportationAllowanceType}" id="ot41"/>
+          </af:column>
+              <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.HousingAllowanceType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.HousingAllowanceType.label}"
+                     id="c8">
+            <af:outputText value="#{row.HousingAllowanceType}" id="ot43"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.FoodAllowanceType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.FoodAllowanceType.label}"
+                     id="c16">
+            <af:outputText value="#{row.FoodAllowanceType}" id="ot10"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.MeansTravel.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.MeansTravel.label}"
+                     id="c28" filterable="true">
+            <af:outputText value="#{row.MeansTravel}" id="ot19"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.RejectComments.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.RejectComments.label}"
+                     id="c46">
+            <af:outputText value="#{row.RejectComments}" id="ot4"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.Assignee.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.Assignee.label}"
+                     id="c20">
+            <af:outputText value="#{row.Assignee}" id="ot20"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TripReason.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TripReason.label}"
+                     id="c12">
+            <af:outputText value="#{row.TripReason}" id="ot33"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.EventSubject.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.EventSubject.label}"
+                     id="c45">
+            <af:outputText value="#{row.EventSubject}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.EventType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.EventType.label}"
+                     id="c23">
+            <af:outputText value="#{row.EventType}" id="ot21"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.RequiredVisa.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.RequiredVisa.label}"
+                     id="c47">
+            <af:outputText value="#{row.RequiredVisa}" id="ot27"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TargetedCompetencies.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TargetedCompetencies.label}"
+                     id="c33">
+            <af:outputText value="#{row.TargetedCompetencies}" id="ot7"/>
+          </af:column>
+        
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.ExpenseBusinessTripId.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.ExpenseBusinessTripId.label}"
+                     id="c25">
+            <af:outputText value="#{row.ExpenseBusinessTripId}" id="ot1">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BusinessTripRequestReportsVO1.hints.ExpenseBusinessTripId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.ExpenseType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.ExpenseType.label}"
+                     id="c35">
+            <af:outputText value="#{row.ExpenseType}" id="ot40"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.CancelReason.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.CancelReason.label}"
+                     id="c17">
+            <af:outputText value="#{row.CancelReason}" id="ot24"/>
+          </af:column>
+          
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.NewCity.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.NewCity.label}"
+                     id="c32" filterable="true">
+            <af:outputText value="#{row.NewCity}" id="ot22"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.DestinationType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.DestinationType.label}"
+                     id="c29">
+            <af:outputText value="#{row.DestinationType}" id="ot9"/>
+          </af:column>
+         
+         
+        
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.OtherMeansTravel.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.OtherMeansTravel.label}"
+                     id="c19">
+            <af:outputText value="#{row.OtherMeansTravel}" id="ot8"/>
+          </af:column>
+         
+         
+          <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.TripComment.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.TripComment.label}"
+                     id="c27">
+            <af:outputText value="#{row.TripComment}" id="ot2"/>
+          </af:column>
+         
+             <af:column sortProperty="#{bindings.BusinessTripRequestReportsVO1.hints.StepId.name}"
+                     sortable="true"
+                     headerText="#{bindings.BusinessTripRequestReportsVO1.hints.StepId.label}"
+                     id="c34">
+            <af:outputText value="#{row.StepId}" id="ot47"/>
+          </af:column>
+          
+        </af:table>
+      </af:panelCollection>
+      <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t4">
+            <af:commandToolbarButton text="Export BT Request History" id="ctb3">
+              <af:exportCollectionActionListener exportedId="t2"
+                                                 type="excelHTML"
+                                                 filename="BT Request History.xls"
+                                                 title="BT Request History"/>
+            </af:commandToolbarButton>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.BtHistoryReportsVO1.collectionModel}"
+                  var="row" rows="#{bindings.BtHistoryReportsVO1.rangeSize}"
+                  emptyText="#{bindings.BtHistoryReportsVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.BtHistoryReportsVO1.rangeSize}"
+                  rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.BtHistoryReportsVO1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.BtHistoryReportsVO1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t2" styleClass="AFStretchWidth"
+                  partialTriggers=":::pc1:t1">
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.BtHistoryId.name}"
+                     sortable="true"
+                     headerText="Business History Id"
+                     id="c50" filterable="true">
+            <af:outputText value="#{row.BtHistoryId}" id="ot87">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.BtHistoryId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.LocalBusinessTripId.name}"
+                     sortable="true" rendered="false"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.LocalBusinessTripId.label}"
+                     id="c53">
+            <af:outputText value="#{row.LocalBusinessTripId}" id="ot93">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.LocalBusinessTripId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.PersoneId.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.PersoneId.label}"
+                     id="c76">
+            <af:outputText value="#{row.PersoneId}" id="ot75"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.PersoneName.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.PersoneName.label}"
+                     id="c78">
+            <af:outputText value="#{row.PersoneName}" id="ot57"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.CostCenter.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.CostCenter.label}"
+                     id="c761">
+            <af:outputText value="#{row.CostCenter}" id="ot175"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.CostCenterNumber.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.CostCenterNumber.label}"
+                     id="c41">
+            <af:outputText value="#{row.CostCenterNumber}" id="ot16"/>
+          </af:column>
+         <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.RequestStatus.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.RequestStatus.label}"
+                     id="c81">
+            <af:outputText value="#{row.RequestStatus}" id="ot53"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.StartDate.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.StartDate.label}"
+                     id="c93">
+            <af:outputText value="#{row.StartDate}" id="ot76">
+              <af:convertDateTime pattern="#{bindings.BtHistoryReportsVO1.hints.StartDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.EndDate.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.EndDate.label}"
+                     id="c86">
+            <af:outputText value="#{row.EndDate}" id="ot55">
+              <af:convertDateTime pattern="#{bindings.BtHistoryReportsVO1.hints.EndDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.Days.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.Days.label}"
+                     id="c84">
+            <af:outputText value="#{row.Days}" id="ot80">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.Days.format}"/>
+            </af:outputText>
+          </af:column>
+        <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.CreationDate.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.CreationDate.label}"
+                     id="c62">
+            <af:outputText value="#{row.CreationDate}" id="ot85">
+              <af:convertDateTime pattern="#{bindings.BtHistoryReportsVO1.hints.CreationDate.format}"/>
+            </af:outputText>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TripType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TripType.label}"
+                     id="c80">
+            <af:outputText value="#{row.TripType}" id="ot91"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.ToCity.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.ToCity.label}"
+                     id="c63">
+            <af:outputText value="#{row.ToCity}" id="ot69"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.SubType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.SubType.label}"
+                     id="c75">
+            <af:outputText value="#{row.SubType}" id="ot78"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.CourseName.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.CourseName.label}"
+                     id="c74">
+            <af:outputText value="#{row.CourseName}" id="ot84"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.OtherCities.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.OtherCities.label}"
+                     id="c85">
+            <af:outputText value="#{row.OtherCities}" id="ot49"/>
+          </af:column>
+        <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TotalForInvoice.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TotalForInvoice.label}"
+                     id="c97" filterable="true">
+            <af:outputText value="#{row.TotalForInvoice}" id="ot97"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.BenefitType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.BenefitType.label}"
+                     id="c99" filterable="true">
+            <af:outputText value="#{row.BenefitType}" id="ot99"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.PerDiemAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.PerDiemAmount.label}"
+                     id="c98" filterable="true">
+            <af:outputText value="#{row.PerDiemAmount}" id="ot98"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TransAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TransAllowanceAmount.label}"
+                     id="c70">
+            <af:outputText value="#{row.TransAllowanceAmount}" id="ot64">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.TransAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.HousingAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.HousingAllowanceAmount.label}"
+                     id="c92">
+            <af:outputText value="#{row.HousingAllowanceAmount}" id="ot72">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.HousingAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.LaundryAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.LaundryAllowanceAmount.label}"
+                     id="c68">
+            <af:outputText value="#{row.LaundryAllowanceAmount}" id="ot88">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.LaundryAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.FoodAllowanceAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.FoodAllowanceAmount.label}"
+                     id="c64">
+            <af:outputText value="#{row.FoodAllowanceAmount}" id="ot59">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.FoodAllowanceAmount.format}"/>
+            </af:outputText>
+          </af:column>
+              <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TrainingCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TrainingCost.label}"
+                     id="c58">
+            <af:outputText value="#{row.TrainingCost}" id="ot70">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.TrainingCost.format}"/>
+            </af:outputText>
+          </af:column>
+          
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TravelCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TravelCost.label}"
+                     id="c66">
+            <af:outputText value="#{row.TravelCost}" id="ot77">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.TravelCost.format}"/>
+            </af:outputText>
+          </af:column>
+          
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.EventCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.EventCost.label}"
+                     id="c57">
+            <af:outputText value="#{row.EventCost}" id="ot86">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.EventCost.format}"/>
+            </af:outputText>
+          </af:column>
+          
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.VisaCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.VisaCost.label}"
+                     id="c89">
+            <af:outputText value="#{row.VisaCost}" id="ot51">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.VisaCost.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.OtherCost.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.OtherCost.label}"
+                     id="c71">
+            <af:outputText value="#{row.OtherCost}" id="ot67">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.OtherCost.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TotalAmount.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TotalAmount.label}"
+                     id="c711">
+            <af:outputText value="#{row.TotalAmount}" id="ot167">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.TotalAmount.format}"/>
+            </af:outputText>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TransportationAllowanceType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TransportationAllowanceType.label}"
+                     id="c69">
+            <af:outputText value="#{row.TransportationAllowanceType}"
+                           id="ot61"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.HousingAllowanceType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.HousingAllowanceType.label}"
+                     id="c60">
+            <af:outputText value="#{row.HousingAllowanceType}" id="ot65"/>
+          </af:column>
+             <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.FoodAllowanceType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.FoodAllowanceType.label}"
+                     id="c90">
+            <af:outputText value="#{row.FoodAllowanceType}" id="ot82"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.MeansTravel.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.MeansTravel.label}"
+                     id="c52">
+            <af:outputText value="#{row.MeansTravel}" id="ot54"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.RejectComments.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.RejectComments.label}"
+                     id="c87">
+            <af:outputText value="#{row.RejectComments}" id="ot62"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.Assignee.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.Assignee.label}"
+                     id="c82">
+            <af:outputText value="#{row.Assignee}" id="ot89"/>
+          </af:column>
+              <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TripReason.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TripReason.label}"
+                     id="c61">
+            <af:outputText value="#{row.TripReason}" id="ot79"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.EventSubject.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.EventSubject.label}"
+                     id="c88">
+            <af:outputText value="#{row.EventSubject}" id="ot90"/>
+          </af:column>
+          
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.RequiredVisa.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.RequiredVisa.label}"
+                     id="c72">
+            <af:outputText value="#{row.RequiredVisa}" id="ot92"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TargetedCompetencies.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TargetedCompetencies.label}"
+                     id="c56">
+            <af:outputText value="#{row.TargetedCompetencies}" id="ot63"/>
+          </af:column>
+              
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.ExpenseBusinessTripId.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.ExpenseBusinessTripId.label}"
+                     id="c49">
+            <af:outputText value="#{row.ExpenseBusinessTripId}" id="ot71">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.ExpenseBusinessTripId.format}"/>
+            </af:outputText>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.ExpenseType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.ExpenseType.label}"
+                     id="c54">
+            <af:outputText value="#{row.ExpenseType}" id="ot74"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.NewCity.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.NewCity.label}"
+                     id="c55">
+            <af:outputText value="#{row.NewCity}" id="ot52"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.DestinationType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.DestinationType.label}"
+                     id="c59">
+            <af:outputText value="#{row.DestinationType}" id="ot73"/>
+          </af:column>
+           <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.OtherMeansTravel.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.OtherMeansTravel.label}"
+                     id="c77">
+            <af:outputText value="#{row.OtherMeansTravel}" id="ot60"/>
+          </af:column>
+            <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.TripComment.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.TripComment.label}"
+                     id="c83">
+            <af:outputText value="#{row.TripComment}" id="ot48"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.StepId.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.StepId.label}"
+                     id="c51" filterable="true">
+            <af:outputText value="#{row.StepId}" id="ot81">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.BtHistoryReportsVO1.hints.StepId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.BudgetFlag.name}"
+                     sortable="true" rendered="false"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.BudgetFlag.label}"
+                     id="c48">
+            <af:outputText value="#{row.BudgetFlag}" id="ot56"/>
+          </af:column>
+        
+         
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.EventType.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.EventType.label}"
+                     id="c91">
+            <af:outputText value="#{row.EventType}" id="ot83"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.CancelReason.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.CancelReason.label}"
+                     id="c73">
+            <af:outputText value="#{row.CancelReason}" id="ot50"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.BtHistoryReportsVO1.hints.ActionTaken.name}"
+                     sortable="true"
+                     headerText="#{bindings.BtHistoryReportsVO1.hints.ActionTaken.label}"
+                     id="c79" filterable="true">
+            <af:outputText value="#{row.ActionTaken}" id="ot68"/>
+          </af:column>
+       
+          
+         
+        </af:table>
+      </af:panelCollection>
+    </af:panelGroupLayout>
+  </af:panelBox>
+</jsp:root>

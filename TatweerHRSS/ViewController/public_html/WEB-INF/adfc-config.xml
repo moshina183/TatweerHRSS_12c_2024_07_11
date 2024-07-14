@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="FilmStrip">
+    <page>/pages/FilmStrip.jspx</page>
+  </view>
+  <view id="Login">
+    <page>/Login.jspx</page>
+  </view>
+  <control-flow-rule id="__1">
+    <from-activity-id id="__2">*</from-activity-id>
+    <control-flow-case id="__11">
+      <from-outcome id="__12">login</from-outcome>
+      <to-activity-id id="__10">Login</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__52">
+      <from-outcome id="__53">filmStrip</from-outcome>
+      <to-activity-id id="__51">FilmStrip</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__9">
+    <managed-bean-name id="__7">PersonInfo</managed-bean-name>
+    <managed-bean-class id="__8">com.sbm.selfServices.view.utils.PersonInfo</managed-bean-class>
+    <managed-bean-scope id="__6">session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__312">
+    <managed-bean-name id="__212">SessionState</managed-bean-name>
+    <managed-bean-class id="__412">com.view.beans.filmStrip.SessionState</managed-bean-class>
+    <managed-bean-scope id="__112">session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__712">
+    <managed-bean-name id="__612">UtilsBean</managed-bean-name>
+    <managed-bean-class id="__812">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+    <managed-bean-scope id="__512">backingBean</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__1912">
+    <managed-bean-name id="__2120">FilmStripBean</managed-bean-name>
+    <managed-bean-class id="__2122">com.view.beans.filmStripApp.FilmStripBean</managed-bean-class>
+    <managed-bean-scope id="__2121">backingBean</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name id="__13">LoginMB</managed-bean-name>
+    <managed-bean-class id="__3">com.sbm.selfServices.view.mb.LoginMB</managed-bean-class>
+    <managed-bean-scope id="__5">pageFlow</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

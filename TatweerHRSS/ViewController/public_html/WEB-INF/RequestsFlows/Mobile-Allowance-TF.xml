@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="Mobile-Allowance-TF">
+    <default-activity id="__30">checkSession</default-activity>
+    <managed-bean id="__24">
+      <managed-bean-name id="__23">MobileBean</managed-bean-name>
+      <managed-bean-class id="__22">com.sbm.selfServices.view.mb.MobileFrag</managed-bean-class>
+      <managed-bean-scope id="__21">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__52">
+      <managed-bean-name id="__54">FilmStrip</managed-bean-name>
+      <managed-bean-class id="__53">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__51">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="MobileAllowanceFrag">
+      <page>/RequestsFrags/MobileAllowanceFrag.jsff</page>
+    </view>
+    <view id="MobileAllowanceDetails">
+      <page>/RequestsFrags/MobileAllowanceDetails.jsff</page>
+    </view>
+    <method-call id="CreateWithParameters">
+      <method>#{bindings.CreateWithParams.execute}</method>
+      <outcome id="__15">
+        <fixed-outcome>CreateWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__1">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="checkSession">
+      <method id="__63">#{pageFlowScope.MobileBean.checkSession}</method>
+      <outcome id="__61">
+        <fixed-outcome id="__62">success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case id="__39">
+        <expression id="__41">#{PersonInfo.perosnNumber ne null or
+                              PersonInfo.assignee ne null}</expression>
+        <outcome id="__40">success</outcome>
+      </case>
+      <case id="__44">
+        <expression id="__45">#{PersonInfo.perosnNumber eq null or
+                              PersonInfo.assignee eq null}</expression>
+        <outcome id="__43">expired</outcome>
+      </case>
+      <default-outcome id="__42">expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page id="__4122">/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="Hide_Strip_E">
+      <method>#{backingBeanScope.FilmStrip._hideFilmStrip}</method>
+      <outcome id="__55">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Hide_Strip_C">
+      <method>#{backingBeanScope.FilmStrip._hideFilmStrip}</method>
+      <outcome id="__56">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="show_Strip_B">
+      <method>#{backingBeanScope.FilmStrip._showFilmStrip}</method>
+      <outcome id="__57">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__4">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">MobileAllowanceFrag</from-activity-id>
+      <control-flow-case id="__66">
+        <from-outcome id="__68">edit</from-outcome>
+        <to-activity-id id="__67">Hide_Strip_E</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__75">
+        <from-outcome id="__76">addNew</from-outcome>
+        <to-activity-id id="__74">Hide_Strip_C</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__10">
+      <from-activity-id id="__11">MobileAllowanceDetails</from-activity-id>
+      <control-flow-case id="__77">
+        <from-outcome id="__79">back</from-outcome>
+        <to-activity-id id="__78">show_Strip_B</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__17">CreateWithParameters</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__18">CreateWithParams</from-outcome>
+        <to-activity-id id="__19">MobileAllowanceDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__25">
+      <from-activity-id id="__26">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome id="__27">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__28">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__31">
+      <from-activity-id id="__32">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__34">
+        <from-outcome id="__33">expired</from-outcome>
+        <to-activity-id id="__35">SessionExpired</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__38">
+        <from-outcome id="__36">success</from-outcome>
+        <to-activity-id id="__37">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__46">
+      <from-activity-id id="__47">checkSession</from-activity-id>
+      <control-flow-case id="__49">
+        <from-outcome id="__48">success</from-outcome>
+        <to-activity-id id="__50">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__58">
+      <from-activity-id id="__59">Hide_Strip_E</from-activity-id>
+      <control-flow-case id="__64">
+        <from-outcome id="__60">next</from-outcome>
+        <to-activity-id id="__65">MobileAllowanceDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__69">
+      <from-activity-id id="__70">Hide_Strip_C</from-activity-id>
+      <control-flow-case id="__71">
+        <from-outcome id="__72">next</from-outcome>
+        <to-activity-id id="__73">CreateWithParameters</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__80">
+      <from-activity-id id="__81">show_Strip_B</from-activity-id>
+      <control-flow-case id="__82">
+        <from-outcome id="__83">next</from-outcome>
+        <to-activity-id id="__84">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__5">
+      <from-activity-id id="__6">Execute</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome id="__7">Execute</from-outcome>
+        <to-activity-id id="__9">MobileAllowanceFrag</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

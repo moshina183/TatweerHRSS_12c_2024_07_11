@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TotalMonthsInYear"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="com.sbm.selfServices.model.views.ro.TotalMonthsInYearRowImpl"
+  ComponentClass="com.sbm.selfServices.model.views.ro.TotalMonthsInYearImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.ro.TotalMonthsInYear_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="Bind_Emp_No"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[Select Distinct  Lreq.Person_Id,(Select Sum(Lreq.No_Of_Months ) 
+From Loan_Request Lreq
+Where  Lreq.Year_End > Sysdate
+And Lreq.Request_Status != 'REJECTED'
+And Lreq.Request_Status != 'SAVED'
+And Lreq.Person_Id=:Bind_Emp_No ) Total_Months_In_Year ,(Select Count (*)  
+From Loan_Request Lreq
+Where  Lreq.Year_End > Sysdate
+And Lreq.Request_Status != 'REJECTED'
+And Lreq.Request_Status != 'SAVED'
+And Lreq.Person_Id=:Bind_Emp_No ) Number_Of_Rows ,Lreq.Year_End
+From Loan_Request Lreq
+Where  Lreq.Year_End > Sysdate
+And Lreq.Request_Status != 'REJECTED'
+And Lreq.Person_Id=:Bind_Emp_No
+And Lreq.Request_Status != 'SAVED']]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="PersonId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="50"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PERSON_ID"
+    Expression="PERSON_ID"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TotalMonthsInYear"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TOTAL_MONTHS_IN_YEAR"
+    Expression="TOTAL_MONTHS_IN_YEAR"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="NumberOfRows"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="NUMBER_OF_ROWS"
+    Expression="NUMBER_OF_ROWS"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="YearEnd"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="YEAR_END"
+    Expression="YEAR_END"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

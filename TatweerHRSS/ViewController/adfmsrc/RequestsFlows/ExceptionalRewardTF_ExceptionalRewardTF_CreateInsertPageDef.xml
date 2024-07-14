@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="ExceptionalRewardTF_ExceptionalRewardTF_CreateInsertPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ExceptionalRewardView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExceptionalRewardView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ExceptionalRewardView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createWithParams"
+            InstanceName="SBMModuleDataControl.ExceptionalRewardView1"
+            DataControl="SBMModuleDataControl">
+            <NamedData NDName="PersonNumber" NDValue="#{pageFlowScope.eRPersonNummber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PersonName"
+                 NDValue="#{pageFlowScope.eRPersonName}" NDType="java.lang.String"/>
+            </action>
+  </bindings>
+</pageDefinition>

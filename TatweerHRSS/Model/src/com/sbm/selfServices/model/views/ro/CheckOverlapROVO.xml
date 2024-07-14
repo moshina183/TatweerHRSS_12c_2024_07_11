@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="CheckOverlapROVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.ro.CheckOverlapROVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="p_person_number"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_over_time"
+    Kind="where"
+    Type="oracle.jbo.domain.Date"/>
+  <SQLQuery>
+    <![CDATA[select oth.PERSONE_ID ,olr.OVER_TIME_DATE,oth.REQUEST_STATUS from 
+OVERTIME_REQUEST oth, OVERTIME_LINE_REQUEST olr 
+where oth.OVERTIME_REQUEST_ID=olr.OVERTIME_REQUEST_ID
+and oth.PERSONE_ID=:p_person_number and olr.OVER_TIME_DATE=:p_over_time and oth.REQUEST_STATUS IN('PENDING','APPROVED')]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="PersoneId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PERSONE_ID"
+    Expression="PERSONE_ID"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OverTimeDate"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="OVER_TIME_DATE"
+    Expression="OVER_TIME_DATE"
+    SQLType="DATE">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RequestStatus"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="20"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="REQUEST_STATUS"
+    Expression="REQUEST_STATUS"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

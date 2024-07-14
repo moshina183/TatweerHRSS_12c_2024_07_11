@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AssigneesTraineeExitForm_ROVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="BV_TYPE_ID"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="BV_ID"
+    Kind="where"
+    Type="java.lang.String"/>
+  <ViewAccessor
+    Name="ApproverStepsExitClearance_Stat1"
+    ViewObjectName="com.sbm.selfServices.model.views.staticlov.ApproverStepsExitClearance_Stat"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_StepType"
+    ListVOName="ApproverStepsExitClearance_Stat1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StepType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="VALUE"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DISPLAY_NAME"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[select 
+RS.REQUEST_TYPE_ID, RS.STEP_ID, RS.STEP_NAME, RS.STEP_TYPE,
+AP.PERSON_NAME, AP.PERSON_EMAIL,
+HIST.ASSIGNEE_NAME, HIST.SUBMITTTED_ON, HIST.APPROVAL_ON, HIST.ACTION_TAKEN
+from 
+REQUEST_STEPS RS, ALL_PERSONS AP,
+(select REQUEST_ID, STEP_ID, ASSIGNEE_NAME, SUBMITTTED_ON, APPROVAL_ON, ACTION_TAKEN, APPROVAL_TYPE
+from APPROVAL_HISTORY where REQUEST_TYPE = 'TraineesExitForm' and REQUEST_ID = :BV_ID) HIST
+where RS.REQUEST_TYPE_ID = :BV_TYPE_ID
+and 
+RS.STEP_ID = HIST.STEP_ID(+) and
+RS.STEP_NAME = AP.PERSON_NUMBER(+)
+and RS.STEP_NAME not in ('Employee','Finished')
+order by RS.STEP_ID]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="RequestTypeId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REQUEST_TYPE_ID"
+    Expression="REQUEST_TYPE_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="STEP_ID"
+    Expression="STEP_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STEP_NAME"
+    Expression="STEP_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepType"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="STEP_TYPE"
+    Expression="STEP_TYPE"
+    SQLType="VARCHAR"
+    LOVName="LOV_StepType">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PersonName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PERSON_NAME"
+    Expression="PERSON_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PersonEmail"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="400"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="PERSON_EMAIL"
+    Expression="PERSON_EMAIL"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="400"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AssigneeName"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="150"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ASSIGNEE_NAME"
+    Expression="ASSIGNEE_NAME"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SubmitttedOn"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="SUBMITTTED_ON"
+    Expression="SUBMITTTED_ON"
+    SQLType="TIMESTAMP">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ApprovalOn"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    AliasName="APPROVAL_ON"
+    Expression="APPROVAL_ON"
+    SQLType="TIMESTAMP">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionTaken"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="30"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="ACTION_TAKEN"
+    Expression="ACTION_TAKEN"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="30"/>
+    </DesignTime>
+  </ViewAttribute>
+</ViewObject>

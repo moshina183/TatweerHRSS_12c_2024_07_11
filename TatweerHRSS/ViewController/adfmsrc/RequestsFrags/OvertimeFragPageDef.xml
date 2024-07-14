@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="OvertimeFragPageDef" ControllerClass="com.view.beans.filmStrip.RegionPhaseListener"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="OvertimeRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="OvertimeRequestViewIterator"/>
+    <searchRegion Binds="OvertimeRequestViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="OvertimeRequestViewQuery"/>
+    <iterator id="ApprovalHistoryOverTimeIterator"
+              Binds="ApprovalHistoryOverTime" DataControl="SBMModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="OverTimeLineVOIterator" Binds="OverTimeLineVo"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_OverTime_ROVOIterator"
+              Binds="StatusCount_OverTime_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <action IterBinding="OvertimeRequestViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.OvertimeRequestView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <tree IterBinding="OvertimeRequestViewIterator" id="OvertimeRequestView">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.OvertimeRequestView"
+                      Name="OvertimeRequestView0">
+        <AttrNames>
+          <Item Value="OvertimeRequestId"/>
+          <Item Value="PersoneId"/>
+          <Item Value="PersoneName"/>
+          <Item Value="StepId"/>
+          <Item Value="Assignee"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="NumberOfHours"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="ReqDate"/>
+          <Item Value="RejectComments"/>
+          <Item Value="CancelReason"/>
+          <Item Value="RowID"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.OvertimeTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="OvertimeRequestId">
+      <AttrNames>
+        <Item Value="OvertimeRequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="StatusCount_OverTime_ROVOIterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_OverTime_ROVOIterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_OverTime_ROVOIterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

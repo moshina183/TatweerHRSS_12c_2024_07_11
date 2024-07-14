@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="LoanSettlementRequestPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="LoanSettlement_VO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="LoanSettlement_VOIterator"/>
+    <searchRegion Binds="LoanSettlement_VOIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="LoanSettlement_VOQuery"/>
+    <iterator id="ApprovalHistoryVO1Iterator" Binds="ApprovalHistoryVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_LoanSettlement_ROVOIterator"
+              Binds="StatusCount_LoanSettlement_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="LoanSettlement_VOIterator" id="LoanSettlement_VO">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.LoanSettlement_VO"
+                      Name="LoanSettlement_VO0">
+        <AttrNames>
+          <Item Value="LoanPreclosureId"/>
+          <Item Value="PersonNumber"/>
+          <Item Value="PersonName"/>
+          <Item Value="LoanTotalAmount"/>
+          <Item Value="LoanRemainingAmount"/>
+          <Item Value="StepId"/>
+          <Item Value="Assignee"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedOn"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="getLastLoanDetails"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getLastLoanDetails"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getLastLoanDetails_SBMModuleDataControl_dataProvider_getLastLoanDetails_result">
+      <NamedData NDName="personNumber" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="LoanSettlement_VOIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.LoanSettlementTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="LoanSettlement_VOIterator"
+                     id="LoanPreclosureId">
+      <AttrNames>
+        <Item Value="LoanPreclosureId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="LoanSettlement_VOIterator" id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="LoanSettlement_VOIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.LoanSettlement_VO"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="StatusCount_LoanSettlement_ROVOIterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_LoanSettlement_ROVOIterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_LoanSettlement_ROVOIterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

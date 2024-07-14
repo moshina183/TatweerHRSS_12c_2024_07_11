@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1"
+                 title="Tatweer HR Self Service">
+    <f:facet name="metaContainer">      
+     <af:outputText escape="false"              
+            value="&lt;link href=&quot;#{facesContext.externalContext.requestContextPath}/about_tatweer.jpg&quot; rel=&quot;shortcut icon&quot;>" id="o1"/>
+    </f:facet>
+          <af:form id="f1" usesUpload="true">
+            <af:resource type="javascript" source="js/jquery-3.1.1.js"/>
+            <af:resource type="javascript" source="js/svgIcons.js"/>
+            <af:resource type="javascript" source="js/filmStrip.js"/>
+            <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/SimpleUIShell.jspx"
+                             id="pt1">
+                             <f:attribute name="home" value="https://egwo-dev1.fa.em2.oraclecloud.com/fscmUI/faces/FuseWelcome"/>
+                            <f:attribute name="fullName" value="#{PersonInfo.personName}"/>
+              <f:facet name="pageContents">
+                <af:switcher id="s12"
+                  facetName="#{sessionScope.redirect}" rendered="true"
+                   defaultFacet="Error">
+                        <f:facet name="Dashboard">
+                <af:panelGroupLayout id="pgl2" layout="vertical">
+                  <af:commandButton id="amHidden" clientComponent="true"
+                                    visible="false" shortDesc="Hidden">
+                    <af:serverListener type="iconClicked"
+                                       method="#{backingBeanScope.FilmStripBean.handleFilmStripCardClick}"/>
+                  </af:commandButton>
+                  <af:panelGroupLayout id="filmStripPG" layout="vertical">
+                    <af:spacer height="10" rendered="#{sessionScope.hideStrip}"
+                               id="s2"/>
+                    <af:panelGroupLayout id="pgl2Film" halign="center"
+                                         layout="vertical"
+                                         rendered="#{!sessionScope.hideStrip}">
+                      <af:outputText id="ot2"
+                                     value="#{backingBeanScope.FilmStripBean.filmStripLayout[sessionScope.selectedItemId]}"/>
+                      <af:conveyorBelt id="cb2" clientComponent="true">
+                        <f:verbatim>
+                          <div class="strip-container AFStretchWidth"
+                               id="app-strip"/>
+                        </f:verbatim>
+                      </af:conveyorBelt>
+                    </af:panelGroupLayout>
+                    <af:spacer height="30" id="s1"
+                               rendered="#{sessionScope.hideStrip}"/>
+                  </af:panelGroupLayout>
+                  <af:region value="#{bindings.dynamicRegion1.regionModel}"
+                             id="r1"
+                             binding="#{backingBeanScope.FilmStripBean.dynamicRegionBinding}"/>
+                </af:panelGroupLayout>
+                </f:facet>
+                 <f:facet name="Error">
+                   <af:richTextEditor 
+                                           id="rte1"
+                                           readOnly="true" editMode="source" rows="25"
+                                           columns="50"
+                                         value="&lt;html> &lt;head> &lt;title>&lt;/title> &lt;style> body{ background-color:#1C4E89; font-family: verdana; } .container{     position: fixed;     top: 40%;     left: 25%;     width: 700px;     background-color: white;     border-radius: 10px;     opacity: 0.85;     border: 3px solid white; } h2{ position:relative; left:2%; font-family:Arial Black; } .words{     padding-left: 40px; } &lt;/style> &lt;/head> &lt;body> &lt;div class=container> &lt;div class=words> &lt;h2>Session Expired! Please open the applicaiton through SAAS!&lt;/h2> &lt;p>&lt;/p> &lt;/div> &lt;/div> &lt;/body> &lt;/html>">
+                          <f:facet name="footer"/>
+                        </af:richTextEditor>
+                    </f:facet>
+                  </af:switcher>
+              </f:facet>
+            </af:pageTemplate>
+             <af:popup id="templatep1" contentDelivery="lazyUncached">
+                <af:dialog closeIconVisible="false" type="ok" id="d2" title="Error" >
+                <af:spacer height="5" id="s3"/>
+                <af:outputText value="#{sessionScope.templateErrorMessage}"
+                               id="ot1"/>
+                <af:spacer height="5" id="s4"/>
+                </af:dialog>
+            </af:popup>
+          </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

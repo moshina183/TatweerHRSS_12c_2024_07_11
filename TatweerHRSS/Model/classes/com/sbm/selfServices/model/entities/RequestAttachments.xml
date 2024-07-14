@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RequestAttachments"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="REQUEST_ATTACHMENTS"
+  AliasName="RequestAttachments"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="AttachId"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    ColumnName="ATTACH_ID"
+    SQLType="NUMERIC"
+    Domain="oracle.jbo.domain.DBSequence"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="REQUEST_ATTACHMENTS"
+    PrimaryKey="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileName"
+    Precision="50"
+    ColumnName="FILE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.entities.RequestAttachments.FileName_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="FileType"
+    Precision="300"
+    ColumnName="FILE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AttachmentFile"
+    IsQueriable="false"
+    ColumnName="ATTACHMENT_FILE"
+    SQLType="BLOB"
+    Type="oracle.jbo.domain.BlobDomain"
+    ColumnType="BLOB"
+    TableName="REQUEST_ATTACHMENTS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.entities.RequestAttachments.AttachmentFile_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <Attribute
+    Name="LocalBusinessTripId"
+    ColumnName="LOCAL_BUSINESS_TRIP_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="REQUEST_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UploadedBy"
+    Precision="20"
+    ColumnName="UPLOADED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.entities.RequestAttachments.UploadedBy_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Attribute>
+  <AccessorAttribute
+    Name="BusinessTripRequest"
+    Association="com.sbm.selfServices.model.assocs.RequestAttachmentsFk1AssocAss"
+    AssociationEnd="com.sbm.selfServices.model.assocs.RequestAttachmentsFk1AssocAss.BusinessTripRequest"
+    AssociationOtherEnd="com.sbm.selfServices.model.assocs.RequestAttachmentsFk1AssocAss.RequestAttachments1"
+    Type="com.sbm.selfServices.model.entities.BusinessTripRequestImpl"
+    IsUpdateable="true"/>
+  <AccessorAttribute
+    Name="BusinessTripRequest1"
+    Association="com.sbm.selfServices.model.assocs.RequestAttachmentsFk1Assoc1Ass"
+    AssociationEnd="com.sbm.selfServices.model.assocs.RequestAttachmentsFk1Assoc1Ass.BusinessTripRequest1"
+    AssociationOtherEnd="com.sbm.selfServices.model.assocs.RequestAttachmentsFk1Assoc1Ass.RequestAttachments2"
+    Type="com.sbm.selfServices.model.entities.BusinessTripRequestImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="RequestAttachmentsPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="REQUEST_ATTACHMENTS_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RequestAttachments.AttachId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0015693">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0015693"/>
+      <Attr Name="_checkCondition" Value='"ATTACH_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="RequestAttachmentsFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="LOCAL_BUSINESS_TRIP_REQUE_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="REQUEST_ATTACHMENTS_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RequestAttachments.LocalBusinessTripId"/>
+    </AttrArray>
+  </Key>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</Entity>

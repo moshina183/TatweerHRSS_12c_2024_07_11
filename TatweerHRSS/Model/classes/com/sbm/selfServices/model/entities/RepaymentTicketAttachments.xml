@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RepaymentTicketAttachments"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="REPAYMENT_ATTACHMENTS"
+  AliasName="RepaymentTicketAttachments"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="AttachId"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    ColumnName="ATTACH_ID"
+    SQLType="NUMERIC"
+    Domain="oracle.jbo.domain.DBSequence"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="REPAYMENT_ATTACHMENTS"
+    PrimaryKey="true"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileName"
+    Precision="150"
+    ColumnName="FILE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REPAYMENT_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="150"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileType"
+    Precision="300"
+    ColumnName="FILE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REPAYMENT_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AttachmentFile"
+    IsQueriable="false"
+    ColumnName="ATTACHMENT_FILE"
+    SQLType="BLOB"
+    Type="oracle.jbo.domain.BlobDomain"
+    ColumnType="BLOB"
+    TableName="REPAYMENT_ATTACHMENTS"/>
+  <Attribute
+    Name="RepaymentTicketsId"
+    ColumnName="REPAYMENT_TICKETS_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="REPAYMENT_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UploadedBy"
+    Precision="100"
+    ColumnName="UPLOADED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REPAYMENT_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="RepaymentTickets"
+    Association="com.sbm.selfServices.model.entities.RepaymentTicketsAttachmentsFk1Assoc"
+    AssociationEnd="com.sbm.selfServices.model.entities.RepaymentTicketsAttachmentsFk1Assoc.RepaymentTickets"
+    AssociationOtherEnd="com.sbm.selfServices.model.entities.RepaymentTicketsAttachmentsFk1Assoc.RepaymentTicketAttachments"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="RepaymentTicketsAttachmentsPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="REPAYMENT_TICKETS_ATTACHMENTS_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RepaymentTicketAttachments.AttachId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="RepaymentTicketsAttachmentsFk1">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="REPAYMENT_TICKETS_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="REPAYMENT_TICKETS_ATTACHMENTS__FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RepaymentTicketAttachments.RepaymentTicketsId"/>
+    </AttrArray>
+  </Key>
+</Entity>

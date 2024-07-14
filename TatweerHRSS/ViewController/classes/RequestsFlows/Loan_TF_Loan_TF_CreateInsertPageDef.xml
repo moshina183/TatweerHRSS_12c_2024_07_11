@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="Loan_TF_Loan_TF_CreateInsertPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="LoanRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl" id="LoanRequestViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="LoanRequestViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createWithParams"
+            InstanceName="SBMModuleDataControl.LoanRequestView"
+            DataControl="SBMModuleDataControl">
+            
+            <NamedData NDName="PersonId" NDValue="#{pageFlowScope.loanPersonId}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PersonName"
+                 NDValue="#{pageFlowScope.loanPersonName}" NDType="java.lang.String"/>
+      <NamedData NDName="EmpBasicSalary" NDType="java.lang.String"
+                 NDValue="#{pageFlowScope.empSalary}"/>
+    </action>
+  </bindings>
+</pageDefinition>

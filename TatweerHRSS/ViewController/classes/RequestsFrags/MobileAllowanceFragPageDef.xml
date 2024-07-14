@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="MobileAllowanceFragPageDef" ControllerClass="com.view.beans.filmStrip.RegionPhaseListener"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="MobileAllowanceRequestUPView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="MobileAllowanceRequestUPViewIterator"/>
+    <searchRegion Binds="MobileAllowanceRequestUPViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="MobileAllowanceRequestUPViewQuery"/>
+    <iterator id="ApprovalHistoryMobileIterator" Binds="ApprovalHistoryMobile"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_Mobile_ROVO1Iterator"
+              Binds="StatusCount_Mobile_ROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="MobileAllowanceRequestUPViewIterator"
+          id="MobileAllowanceRequestUPView">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.MobileAllowanceRequestUPView"
+                      Name="MobileAllowanceRequestUPView0">
+        <AttrNames>
+          <Item Value="RequestId"/>
+          <Item Value="PersoneNumber"/>
+          <Item Value="PersoneName"/>
+          <Item Value="StepId"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="CreationDate"/>
+          <Item Value="Assignee"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="MobileAllowanceRequestUPViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.MobileAllowanceRequestUPView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName" NDValue="#{pageFlowScope.MobileTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="RequestId">
+      <AttrNames>
+        <Item Value="RequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_Mobile_ROVO1Iterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_Mobile_ROVO1Iterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_Mobile_ROVO1Iterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

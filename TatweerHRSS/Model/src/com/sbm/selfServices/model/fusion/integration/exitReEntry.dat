@@ -1,0 +1,5 @@
+METADATA|ElementEntry|EffectiveStartDate|ElementName|LegislativeDataGroupName|AssignmentNumber|MultipleEntryCount|EntryType
+MERGE|ElementEntry|PLACEHOLDER_Date|Exit Re Rentry Visa|THC LDG|PLACEHOLDER_AssignmentNumber|PLACEHOLDER_Count|E
+
+METADATA|ElementEntryValue|EffectiveStartDate|InputValueName|ScreenEntryValue|AssignmentNumber|ElementName|LegislativeDataGroupName|MultipleEntryCount|EntryType
+MERGE|ElementEntryValue|PLACEHOLDER_Date|Amount|PLACEHOLDER_Amount|PLACEHOLDER_AssignmentNumber|Exit Re Rentry Visa|THC LDG|PLACEHOLDER_Count|E

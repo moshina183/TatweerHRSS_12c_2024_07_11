@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="AllowancesUPView"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  SelectList="Allowances.TRIP_TYPE, 
+       Allowances.CLASS_TYPE, 
+       Allowances.ALLOWANCE_TYPE, 
+       Allowances.ALLOWANCE_AMOUNT, 
+       Allowances.ROWID"
+  FromList="ALLOWANCES Allowances"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="TripTypeStaticView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.TripTypeStaticView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="postionStaticView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.postionStaticView"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_TripType"
+    ListVOName="TripTypeStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TripType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="trip"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="trip"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ClassType"
+    ListVOName="postionStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ClassType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="postion"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="value"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="Allowances"
+    Entity="com.sbm.selfServices.model.entities.Allowances"/>
+  <ViewAttribute
+    Name="TripType"
+    LOVName="LOV_TripType"
+    PrecisionRule="true"
+    EntityAttrName="TripType"
+    EntityUsage="Allowances"
+    AliasName="TRIP_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ClassType"
+    LOVName="LOV_ClassType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="ClassType"
+    EntityUsage="Allowances"
+    AliasName="CLASS_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="AllowanceType"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AllowanceType"
+    EntityUsage="Allowances"
+    AliasName="ALLOWANCE_TYPE"/>
+  <ViewAttribute
+    Name="AllowanceAmount"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="AllowanceAmount"
+    EntityUsage="Allowances"
+    AliasName="ALLOWANCE_AMOUNT"/>
+  <ViewAttribute
+    Name="RowID"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="RowID"
+    EntityUsage="Allowances"
+    AliasName="ROWID"/>
+  <ViewCriteria
+    Name="AllowancesUPViewCriteria"
+    ViewObjectName="com.sbm.selfServices.model.views.up.AllowancesUPView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow5"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="TripType"
+        ViewAttribute="TripType"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="ClassType"
+        ViewAttribute="ClassType"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+</ViewObject>

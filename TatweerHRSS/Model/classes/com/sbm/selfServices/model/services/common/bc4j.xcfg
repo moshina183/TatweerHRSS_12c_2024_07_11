@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="com.sbm.selfServices.model.services.SBMModule" default="SBMModuleLocal">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="com.sbm.selfServices.model.Model" name="SBMModuleLocal" ApplicationName="com.sbm.selfServices.model.services.SBMModule">
+         <Security AppModuleJndiName="com.sbm.selfServices.model.services.SBMModule"/>
+         <Custom JDBCDataSource="ORADBSDEV_TATWEERDB"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="com.sbm.selfServices.model.Model" name="SBMModuleShared" ApplicationName="com.sbm.selfServices.model.services.SBMModule">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Security AppModuleJndiName="com.sbm.selfServices.model.services.SBMModule"/>
+         <Custom JDBCDataSource="ORADBSDEV_TATWEERDB"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+    <af:panelGroupLayout layout="vertical" id="pgl1">
+    <af:panelBox text="Budget Validation Setup" id="ph1" inlineStyle="background-color:#ffffff;">
+     <af:query id="qryId1" headerText="Search" disclosed="true" 
+                      value="#{bindings.FilterbyRequestNameQuery.queryDescriptor}"  
+                      model="#{bindings.FilterbyRequestNameQuery.queryModel}"   saveQueryMode="hidden"  
+                      queryListener="#{bindings.FilterbyRequestNameQuery.processQuery}" modeChangeVisible="false" 
+                      queryOperationListener="#{bindings.FilterbyRequestNameQuery.processQueryOperation}"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t1">
+          <af:commandToolbarButton text="Save" id="ctb1"
+                                   actionListener="#{pageFlowScope.BudgetBean.save_action}"/>
+          <af:commandToolbarButton text="Cancel" id="ctb2"
+                                   actionListener="#{pageFlowScope.BudgetBean.cancel_action}"
+                                   immediate="true">
+          </af:commandToolbarButton>
+        </af:toolbar>
+      </f:facet>
+      </af:panelBox>  
+  <af:panelCollection id="pc1" styleClass="AFStretchWidth" inlineStyle="background-color:#ffffff;">
+    <f:facet name="menus"/>
+    <f:facet name="toolbar"/>
+    <f:facet name="statusbar"/>
+    <af:table value="#{bindings.BudgetValidationStepsVO.collectionModel}"
+            var="row" rows="#{bindings.BudgetValidationStepsVO.rangeSize}"
+              partialTriggers=":::qryId1 :::ctb1 :::ctb2"
+            emptyText="#{bindings.BudgetValidationStepsVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+            fetchSize="#{bindings.BudgetValidationStepsVO.rangeSize}"
+            rowBandingInterval="0" binding="#{pageFlowScope.BudgetBean.t1}"
+            filterModel="#{bindings.BudgetValidationStepsVOQuery.queryDescriptor}"
+            queryListener="#{bindings.BudgetValidationStepsVOQuery.processQuery}"
+            filterVisible="true" varStatus="vs"
+            selectedRowKeys="#{bindings.BudgetValidationStepsVO.collectionModel.selectedRow}"
+            selectionListener="#{bindings.BudgetValidationStepsVO.collectionModel.makeCurrent}"
+            rowSelection="single" id="t2">
+    <af:column sortProperty="#{bindings.BudgetValidationStepsVO.hints.StepId.name}"
+               filterable="true" sortable="false" headerText="Step number"
+               id="c3" width="100" inlineStyle="text-align:center;">
+      <af:inputText value="#{row.bindings.StepId.inputValue}" readOnly="true"
+                    label="#{bindings.BudgetValidationStepsVO.hints.StepId.label}"
+                    required="#{bindings.BudgetValidationStepsVO.hints.StepId.mandatory}"
+                    maximumLength="#{bindings.BudgetValidationStepsVO.hints.StepId.precision}"
+                    shortDesc="#{bindings.BudgetValidationStepsVO.hints.StepId.tooltip}"
+                    id="it1">
+        <f:validator binding="#{row.bindings.StepId.validator}"/>
+        <af:convertNumber groupingUsed="false"
+                          pattern="#{bindings.BudgetValidationStepsVO.hints.StepId.format}"/>
+      </af:inputText>
+    </af:column>
+    <af:column sortProperty="#{bindings.BudgetValidationStepsVO.hints.StepName.name}"
+               filterable="true" sortable="false" headerText="Step name"
+               id="c1" width="350">
+      <af:inputText value="#{row.bindings.StepName.inputValue}" readOnly="true"
+                    label="#{bindings.BudgetValidationStepsVO.hints.StepName.label}"
+                    required="#{bindings.BudgetValidationStepsVO.hints.StepName.mandatory}"
+                    maximumLength="#{bindings.BudgetValidationStepsVO.hints.StepName.precision}"
+                    shortDesc="#{bindings.BudgetValidationStepsVO.hints.StepName.tooltip}"
+                    id="it2">
+        <f:validator binding="#{row.bindings.StepName.validator}"/>
+      </af:inputText>
+    </af:column>
+        <af:column headerText="#{bindings.BudgetValidationStepsVO.hints.Trans_Budget_CheckBox.label}"
+                   id="c2" width="150" inlineStyle="text-align:center;">
+          <af:selectBooleanCheckbox value="#{row.bindings.Trans_Budget_CheckBox.inputValue}"
+                                    label="#{row.bindings.Trans_Budget_CheckBox.label}" autoSubmit="true"
+                                    shortDesc="#{bindings.BudgetValidationStepsVO.hints.Trans_Budget_CheckBox.tooltip}"
+                                    id="sbc1"/>
+        </af:column>
+      </af:table>
+        
+  </af:panelCollection>
+   <af:popup id="p1" contentDelivery="lazyUncached">
+                <af:dialog closeIconVisible="false" type="ok" id="d2" title="Information" >
+                <af:spacer height="5" id="s3"/>
+                <af:outputText value="#{pageFlowScope.message}"
+                               id="ot1"/>
+                <af:spacer height="5" id="s4"/>
+                </af:dialog>
+            </af:popup>
+  </af:panelGroupLayout>
+
+</jsp:root>

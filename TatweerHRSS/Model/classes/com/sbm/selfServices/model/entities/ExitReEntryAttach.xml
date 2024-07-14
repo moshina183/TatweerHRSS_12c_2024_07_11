@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ExitReEntryAttach"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="EXIT_RE_ENTRY_ATTACH"
+  AliasName="ExitReEntryAttach"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="AttachId"
+    ColumnName="ATTACH_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="EXIT_RE_ENTRY_ATTACH"
+    PrimaryKey="true"
+    IsUpdateable="while_insert"
+    DefaultValue="@0"
+    Domain="oracle.jbo.domain.DBSequence"
+    RetrievedOnInsert="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileName"
+    Precision="150"
+    ColumnName="FILE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="EXIT_RE_ENTRY_ATTACH">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileType"
+    Precision="300"
+    ColumnName="FILE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="EXIT_RE_ENTRY_ATTACH">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AttachmentFile"
+    IsQueriable="false"
+    ColumnName="ATTACHMENT_FILE"
+    SQLType="BLOB"
+    Type="oracle.jbo.domain.BlobDomain"
+    ColumnType="BLOB"
+    TableName="EXIT_RE_ENTRY_ATTACH"/>
+  <Attribute
+    Name="ExitReEntryId"
+    ColumnName="EXIT_RE_ENTRY_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="EXIT_RE_ENTRY_ATTACH">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UploadedBy"
+    Precision="100"
+    ColumnName="UPLOADED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="EXIT_RE_ENTRY_ATTACH">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="100"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="ExitReEntryEO"
+    Association="com.sbm.selfServices.model.entities.assoc.ExitReentryAttachAssoc"
+    AssociationEnd="com.sbm.selfServices.model.entities.assoc.ExitReentryAttachAssoc.ExitReEntryEO"
+    AssociationOtherEnd="com.sbm.selfServices.model.entities.assoc.ExitReentryAttachAssoc.ExitReEntryAttach"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="ExitReEntryAttachPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="EXIT_RE_ENTRY_ATTACH_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.ExitReEntryAttach.AttachId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC008453">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C008453"/>
+      <Attr Name="_checkCondition" Value='"ATTACH_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes"/>
+  </Key>
+  <Key
+    Name="ExitReEntryAttachFk1">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="EXIT_RE_ENTRY_REQUEST_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="EXIT_RE_ENTRY_ATTACH_FK1"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.ExitReEntryAttach.ExitReEntryId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_ExitReEntryAttach">
+    <DesignTime>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+      <Attr Name="_referencedKey" Value="EXIT_RE_ENTRY_REQUEST_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_EXIT_RE_ENTRY_ATTACH"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.ExitReEntryAttach.ExitReEntryId"/>
+    </AttrArray>
+  </Key>
+</Entity>

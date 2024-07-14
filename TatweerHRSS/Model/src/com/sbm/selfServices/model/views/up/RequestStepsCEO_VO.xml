@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RequestStepsCEO_VO"
+  Version="12.2.1.9.14"
+  InheritPersonalization="merge"
+  SelectList="RequestStepsCEO_EO.BUDGET_VALIDATION, 
+       RequestStepsCEO_EO.CREATED_BY, 
+       RequestStepsCEO_EO.CREATED_ON, 
+       RequestStepsCEO_EO.LAST_UPDATED_BY, 
+       RequestStepsCEO_EO.LAST_UPDATED_ON, 
+       RequestStepsCEO_EO.NEXT_STEP_ID, 
+       RequestStepsCEO_EO.REQUEST_TYPE_ID, 
+       RequestStepsCEO_EO.ROWID, 
+       RequestStepsCEO_EO.SPECIAL_EDIT, 
+       RequestStepsCEO_EO.STEP_ID, 
+       RequestStepsCEO_EO.STEP_NAME, 
+       RequestStepsCEO_EO.STEP_TYPE"
+  FromList="REQUEST_STEPS_CEO RequestStepsCEO_EO"
+  OrderBy="RequestStepsCEO_EO.STEP_ID"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  RowClass="com.sbm.selfServices.model.views.up.RequestStepsCEO_VORowImpl"
+  ComponentClass="com.sbm.selfServices.model.views.up.RequestStepsCEO_VOImpl"
+  PageIterMode="Full">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewAccessor
+    Name="RequestTypesVO1"
+    ViewObjectName="com.sbm.selfServices.model.views.up.RequestTypesVO"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ApproverStepType_Stat1"
+    ViewObjectName="com.sbm.selfServices.model.views.staticlov.ApproverStepType_Stat"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ApproverStepsExitClearance_Stat1"
+    ViewObjectName="com.sbm.selfServices.model.views.staticlov.ApproverStepsExitClearance_Stat"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="TraineeExitApprovalSteps1"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.TraineeExitApprovalSteps"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="SpecialEditStatVO1"
+    ViewObjectName="com.sbm.selfServices.model.views.staticlov.SpecialEditStatVO"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_RequestTypeId"
+    ListVOName="RequestTypesVO1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="RequestTypeId"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="RequestTypeId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="RequestName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_StepType"
+    ListVOName="ApproverStepType_Stat1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StepType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="STEP_TYPE"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DISPLAY_NAME"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_StepTypeEXIT"
+    ListVOName="ApproverStepsExitClearance_Stat1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StepType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="VALUE"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DISPLAY_NAME"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TraineeEXIT"
+    ListVOName="TraineeExitApprovalSteps1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StepType"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="VALUE"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DISPLAY_NAME"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ListBinding
+    Name="LOV_SpecialEdit"
+    ListVOName="SpecialEditStatVO1"
+    NullValueFlag="none"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="SpecialEdit"/>
+    </AttrArray>
+    <AttrArray Name="AttrExpressions"/>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="Value"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ValueName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <EntityUsage
+    Name="RequestStepsCEO_EO"
+    Entity="com.sbm.selfServices.model.entities.RequestStepsCEO_EO"/>
+  <ViewAttribute
+    Name="BudgetValidation"
+    PrecisionRule="true"
+    EntityAttrName="BudgetValidation"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="BUDGET_VALIDATION"/>
+  <ViewAttribute
+    Name="CreatedBy"
+    PrecisionRule="true"
+    EntityAttrName="CreatedBy"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="CREATED_BY"/>
+  <ViewAttribute
+    Name="CreatedOn"
+    PrecisionRule="true"
+    EntityAttrName="CreatedOn"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="CREATED_ON"/>
+  <ViewAttribute
+    Name="LastUpdatedBy"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedBy"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="LAST_UPDATED_BY"/>
+  <ViewAttribute
+    Name="LastUpdatedOn"
+    PrecisionRule="true"
+    EntityAttrName="LastUpdatedOn"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="LAST_UPDATED_ON"/>
+  <ViewAttribute
+    Name="NextStepId"
+    PrecisionRule="true"
+    EntityAttrName="NextStepId"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="NEXT_STEP_ID"/>
+  <ViewAttribute
+    Name="RequestTypeId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="RequestTypeId"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="REQUEST_TYPE_ID"
+    LOVName="LOV_RequestTypeId">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO.RequestTypeId_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RowID"
+    IsUpdateable="false"
+    PrecisionRule="true"
+    EntityAttrName="RowID"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="ROWID"/>
+  <ViewAttribute
+    Name="SpecialEdit"
+    PrecisionRule="true"
+    EntityAttrName="SpecialEdit"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="SPECIAL_EDIT"
+    LOVName="LOV_SpecialEdit">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO.SpecialEdit_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="StepId"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="STEP_ID"/>
+  <ViewAttribute
+    Name="StepName"
+    PrecisionRule="true"
+    EntityAttrName="StepName"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="STEP_NAME"/>
+  <ViewAttribute
+    Name="StepType"
+    PrecisionRule="true"
+    EntityAttrName="StepType"
+    EntityUsage="RequestStepsCEO_EO"
+    AliasName="STEP_TYPE"
+    LOVName="LOV_StepType"
+    LOVFinder="StepTypeSwitch">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SpecialEditFlag"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="check_box"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepTypeSwitch"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewCriteria
+    Name="RequestStepsCEO_VOCriteria"
+    ViewObjectName="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO"
+    Conjunction="AND">
+    <Properties Name="_Props">
+      <CustomProperties>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="RequestStepsCEO_VOCriteria_row_0"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="RequestTypeId"
+        ViewAttribute="RequestTypeId"
+        Operator="="
+        Conjunction="AND"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

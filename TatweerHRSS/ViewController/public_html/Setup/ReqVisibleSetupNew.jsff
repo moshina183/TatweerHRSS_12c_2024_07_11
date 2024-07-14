@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Request Show/Hide" id="pb1" showDisclosure="false"
+               inlineStyle="height:12.0cm;background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t3">
+       <af:commandButton text="Import" id="cb1" rendered="false"
+                          actionListener="#{backingBeanScope.ReqVisibleSetupBB.onImport}"/>
+        <af:commandButton text="Save" id="cb3"
+                          actionListener="#{backingBeanScope.ReqVisibleSetupBB.onClickSaveNew}"/>
+        <af:commandButton text="Cancel" id="cb2"
+                          actionListener="#{backingBeanScope.ReqVisibleSetupBB.onClickRevertNew}"/>
+        <af:spacer width="50" height="10" id="s1"/>
+      </af:toolbar>
+    </f:facet>
+    <af:panelGroupLayout layout="vertical" id="pgl1">
+        <af:query id="qryId1" headerText="Search" disclosed="true"
+                  modeChangeVisible="false" saveQueryMode="hidden" displayMode="default"
+                  value="#{bindings.findByLocationQuery.queryDescriptor}"
+                  model="#{bindings.findByLocationQuery.queryModel}"
+                  queryListener="#{bindings.findByLocationQuery.processQuery}"
+                  queryOperationListener="#{bindings.findByLocationQuery.processQueryOperation}"
+                  resultComponentId="::pc1:t1"/>
+    </af:panelGroupLayout>
+    <af:spacer width="10" height="10" id="s2"/>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                        inlineStyle="background-color:#ffffff;height:12.0cm;">
+      <af:table value="#{bindings.RequestVisibleSetupVO1.collectionModel}"
+                var="row" rows="#{bindings.RequestVisibleSetupVO1.rangeSize}"
+                emptyText="#{bindings.RequestVisibleSetupVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="8" scrollPolicy="page"
+                rowBandingInterval="0" varStatus="vs"
+                selectedRowKeys="#{bindings.RequestVisibleSetupVO1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.RequestVisibleSetupVO1.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" autoHeightRows="0">
+        <af:column id="c1" headerText="S.No" align="center" width="100">
+          <af:outputText value="#{vs.index + 1}" id="ot1"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.RequestSetupId.name}"
+                   sortable="true" rendered="false"
+                   headerText="#{bindings.RequestVisibleSetupVO1.hints.RequestSetupId.label}"
+                   id="c7">
+          <af:outputText value="#{row.RequestSetupId}" id="ot3">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.RequestVisibleSetupVO1.hints.RequestSetupId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.LocationsId.name}"
+                   sortable="true" visible="false"
+                   headerText="#{bindings.RequestVisibleSetupVO1.hints.LocationsId.label}"
+                   id="c6" width="200">
+          <af:outputText value="#{row.LocationsId}" id="ot7">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.RequestVisibleSetupVO1.hints.LocationsId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.RequestTypeId.name}"
+                   sortable="true"
+                   headerText="Request Type"
+                   id="c5" width="450">
+          <af:outputText value="#{row.RequestTypeId eq '9' ? 'Manpower' : row.RequestTypeId eq '19' ? 'ExitClearnace' : row.RequestTypeId eq '24' ? 'TraineesExitForm' : row.RequestTypeId}" id="ot11" rendered="#{row.RequestTypeId eq '24' || row.RequestTypeId eq '19' || row.RequestTypeId eq '9'}"/>
+          <af:selectOneChoice value="#{row.bindings.RequestTypeId.inputValue}"
+                              label="#{row.bindings.RequestTypeId.label}"
+                              readOnly="true"
+                              required="#{bindings.RequestVisibleSetupVO1.hints.RequestTypeId.mandatory}"
+                              shortDesc="#{bindings.RequestVisibleSetupVO1.hints.RequestTypeId.tooltip}"
+                              id="soc2" rendered="#{row.RequestTypeId ne '24' and row.RequestTypeId ne '19' and row.RequestTypeId ne '9'}">
+            <f:selectItems value="#{row.bindings.RequestTypeId.items}"
+                           id="si2"/>
+          </af:selectOneChoice> 
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.ReqVisibleFlagTrans.name}"
+                   filterable="false" sortable="true" align="center"
+                   headerText="Request Visible" id="c2">
+          <af:selectBooleanCheckbox value="#{row.bindings.ReqVisibleFlagTrans.inputValue}"
+                                    label="#{row.bindings.ReqVisibleFlagTrans.label}"
+                                    shortDesc="#{bindings.RequestVisibleSetupVO1.hints.ReqVisibleFlagTrans.tooltip}"
+                                    id="sbc1" autoSubmit="true"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.LastUpdatedOn.name}"
+                   sortable="true" headerText="Last Updated On" visible="false"
+                   id="c8" width="150">
+          <af:outputText value="#{row.LastUpdatedOn}" id="ot6">
+            <af:convertDateTime pattern="#{bindings.RequestVisibleSetupVO1.hints.LastUpdatedOn.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.LastUpdatedBy.name}"
+                   sortable="true" visible="false" headerText="Last Updated By"
+                   id="c4" width="200">
+          <af:outputText value="#{row.LastUpdatedBy}" id="ot5"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisibleSetupVO1.hints.ReqVisibleFlag.name}"
+                   sortable="true"
+                   headerText="#{bindings.RequestVisibleSetupVO1.hints.ReqVisibleFlag.label}"
+                   id="c3" rendered="false">
+          <af:outputText value="#{row.ReqVisibleFlag}" id="ot4"/>
+        </af:column>
+        <af:column headerText="#{bindings.RequestVisibleSetupVO1.hints.Location.label}"
+                   id="c9" width="300">
+          <af:outputText value="#{row.Location}" id="ot10"/>
+        </af:column>
+      </af:table>
+      <f:facet name="toolbar">
+        <af:toolbar id="t2" flex="10">
+          <af:panelGroupLayout id="pgl2" visible="#{bindings.RequestVisibleSetupVO1.estimatedRowCount == 0}"
+                               partialTriggers="::qryId1 t1">
+            <af:spacer width="500" height="10" id="s5"/>
+            <af:outputText value="If the request details are not configured for selected location, Click " id="ot8"/>
+            <af:commandLink text="Import" id="cl1"
+                            actionListener="#{backingBeanScope.ReqVisibleSetupBB.onImport}"/>
+            <af:outputText value=" to update request mapping list." id="ot9"/>
+          </af:panelGroupLayout>
+        </af:toolbar>
+      </f:facet>
+    </af:panelCollection>
+    <af:popup id="p1" contentDelivery="lazyUncached">
+      <af:dialog closeIconVisible="true" type="ok" id="d2" title="Information">
+        <af:spacer height="5" id="s3"/>
+        <af:outputText value="#{pageFlowScope.message}" id="ot2"
+                       inlineStyle="border-width:thin;"/>
+        <af:spacer height="5" id="s4" width="200"/>
+      </af:dialog>
+    </af:popup>
+  </af:panelBox>
+</jsp:root>

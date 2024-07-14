@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+<!---->
+<Association
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="OvertimeAttachements"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <AssociationEnd
+    Name="OvertimeRequest"
+    Cardinality="1"
+    Source="true"
+    Owner="com.sbm.selfServices.model.entities.OvertimeRequest"
+    LockLevel="NONE">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="OvertimeRequest"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.OvertimeRequest.uk_OvertimeRequest"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OvertimeRequest.OvertimeRequestId"/>
+    </AttrArray>
+  </AssociationEnd>
+  <AssociationEnd
+    Name="OvertimeAttachments"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.entities.OvertimeAttachments">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="OvertimeAttachments"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.OvertimeAttachments.fk_OvertimeAttachments"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OvertimeAttachments.OvertimeReqId"/>
+    </AttrArray>
+  </AssociationEnd>
+</Association>

@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="ExitClearanceFormPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ExitClearanceForm_VO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExitClearanceForm_VOIterator"/>
+    <iterator Binds="ApprovalHistoryVO2" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistoryVO2Iterator"/>
+    <invokeAction id="executeWhere" Binds="ExecuteWithParams1"
+                  Refresh="ifNeeded"/>
+    <iterator id="AllPersons_VOIterator" Binds="AllPersons_VO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator Binds="AllAssigneesExitForm_ROVO1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="AllAssigneesExitForm_ROVO1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="HireDate">
+      <AttrNames>
+        <Item Value="HireDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="Administration">
+      <AttrNames>
+        <Item Value="Administration"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="CreatedOn">
+      <AttrNames>
+        <Item Value="CreatedOn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="Department">
+      <AttrNames>
+        <Item Value="Department"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="LastWorkingDate">
+      <AttrNames>
+        <Item Value="LastWorkingDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="LengthOfService">
+      <AttrNames>
+        <Item Value="LengthOfService"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="ManagerName">
+      <AttrNames>
+        <Item Value="ManagerName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="PersonName">
+      <AttrNames>
+        <Item Value="PersonName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="ReasonForExit">
+      <AttrNames>
+        <Item Value="ReasonForExit"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating1" id="Rating1" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating2" id="Rating2" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating3" id="Rating3" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating4" id="Rating4" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating5" id="Rating5" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating6" id="Rating6" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating7" id="Rating7" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating8" id="Rating8" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating9" id="Rating9" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating10" id="Rating10" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating11" id="Rating11" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating12" id="Rating12" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating13" id="Rating13" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating14" id="Rating14" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating15" id="Rating15" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating16" id="Rating16" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="ExitClearanceForm_VOIterator" StaticList="false"
+          Uses="LOV_Rating17" id="Rating17" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="LikeInCompany">
+      <AttrNames>
+        <Item Value="LikeInCompany"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="DislikeInCompany">
+      <AttrNames>
+        <Item Value="DislikeInCompany"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="SuggestionsToDepart">
+      <AttrNames>
+        <Item Value="SuggestionsToDepart"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="SuggestionsToCompany">
+      <AttrNames>
+        <Item Value="SuggestionsToCompany"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="RealReasonForEnd">
+      <AttrNames>
+        <Item Value="RealReasonForEnd"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="SuggObservInCompany">
+      <AttrNames>
+        <Item Value="SuggObservInCompany"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="FinQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FinQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="DhDate">
+      <AttrNames>
+        <Item Value="DhDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="DhName">
+      <AttrNames>
+        <Item Value="DhName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="DhQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DhQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="DhQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DhQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="DhQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DhQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="FmuDate">
+      <AttrNames>
+        <Item Value="FmuDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="FmuName">
+      <AttrNames>
+        <Item Value="FmuName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="FmuQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FmuQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="FmuQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FmuQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="FmuQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FmuQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="FmuOthers">
+      <AttrNames>
+        <Item Value="FmuOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ItcDate">
+      <AttrNames>
+        <Item Value="ItcDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ItcName">
+      <AttrNames>
+        <Item Value="ItcName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="ItcQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="ItcQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="ItcQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="ItcQues4"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues4"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ItcOthers">
+      <AttrNames>
+        <Item Value="ItcOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="AdsDate">
+      <AttrNames>
+        <Item Value="AdsDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="AdsName">
+      <AttrNames>
+        <Item Value="AdsName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="AdsQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AdsQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="AdsQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AdsQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="AdsQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AdsQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="AdsQues4"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AdsQues4"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="HroDate">
+      <AttrNames>
+        <Item Value="HroDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="HroName">
+      <AttrNames>
+        <Item Value="HroName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="HrdQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HrdQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="HroQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HroQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="HroOthers">
+      <AttrNames>
+        <Item Value="HroOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="LauDate">
+      <AttrNames>
+        <Item Value="LauDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="LauName">
+      <AttrNames>
+        <Item Value="LauName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="LauQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="LauQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="FinDate">
+      <AttrNames>
+        <Item Value="FinDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="FinName">
+      <AttrNames>
+        <Item Value="FinName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="FinQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FinQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="HrdDate">
+      <AttrNames>
+        <Item Value="HrdDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="HrdName">
+      <AttrNames>
+        <Item Value="HrdName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ChrDate">
+      <AttrNames>
+        <Item Value="ChrDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ChrName">
+      <AttrNames>
+        <Item Value="ChrName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="ChrQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ChrQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="GdDate">
+      <AttrNames>
+        <Item Value="GdDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="GdName">
+      <AttrNames>
+        <Item Value="GdName"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="GdQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="GdQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ExitClearanceForm_VOIterator" id="FmuQues4"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FmuQues4"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.ExitClearanceTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="RequestId">
+      <AttrNames>
+        <Item Value="RequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ApprovalHistoryVO2Iterator" id="ApprovalHistoryVO2">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistoryVO20">
+        <AttrNames>
+          <Item Value="ApprovalType"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalHistoryVO2Iterator" id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistoryVO2"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="ExitClearnace"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="RejectComment">
+      <AttrNames>
+        <Item Value="RejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="AssigneePosition">
+      <AttrNames>
+        <Item Value="AssigneePosition"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ItcDate2">
+      <AttrNames>
+        <Item Value="ItcDate2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="ItcName2">
+      <AttrNames>
+        <Item Value="ItcName2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="DhComments">
+      <AttrNames>
+        <Item Value="DhComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="ChrComments">
+      <AttrNames>
+        <Item Value="ChrComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="GdComments">
+      <AttrNames>
+        <Item Value="GdComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="AdsComments">
+      <AttrNames>
+        <Item Value="AdsComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="LauComments">
+      <AttrNames>
+        <Item Value="LauComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="FinComments">
+      <AttrNames>
+        <Item Value="FinComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="HrdComments">
+      <AttrNames>
+        <Item Value="HrdComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="ItcComments">
+      <AttrNames>
+        <Item Value="ItcComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="ExitClearanceForm_VOIterator"
+            id="ExpCertificationFlag" DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ExpCertificationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonalEmail">
+      <AttrNames>
+        <Item Value="PersonalEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="sendExperienceCertificate"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="sendExperienceCertificate"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.sendExperienceCertificate_SBMModuleDataControl_dataProvider_sendExperienceCertificate_result">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+      <NamedData NDName="requestId" NDType="java.lang.Integer"/>
+    </methodAction>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="ExpCertification">
+      <AttrNames>
+        <Item Value="ExpCertification"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="PersonNameArabic">
+      <AttrNames>
+        <Item Value="PersonNameArabic"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="CreatedBy">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator" id="PersonType">
+      <AttrNames>
+        <Item Value="PersonType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AllAssigneesExitForm_ROVO1Iterator"
+          id="AllAssigneesExitForm_ROVO1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.ro.AllAssigneesExitForm_ROVO"
+                      Name="AllAssigneesExitForm_ROVO10">
+        <AttrNames>
+          <Item Value="RequestTypeId"/>
+          <Item Value="StepId"/>
+          <Item Value="StepName"/>
+          <Item Value="StepType"/>
+          <Item Value="PersonName"/>
+          <Item Value="PersonEmail"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="ExitClearanceForm_VOIterator"
+                     id="LastAssignedTime">
+      <AttrNames>
+        <Item Value="LastAssignedTime"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AllAssigneesExitForm_ROVO1Iterator"
+            id="ExecuteWithParams1"
+            InstanceName="SBMModuleDataControl.AllAssigneesExitForm_ROVO1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="BV_TYPE_ID"
+                 NDValue="#{pageFlowScope.ExitClearanceTypeName eq 'ExitClearnace-Makka' ? '20' : pageFlowScope.ExitClearanceTypeName eq 'ExitClearnace-Sultan' ? '21' :pageFlowScope.ExitClearanceTypeName eq 'ExitClearnace-Alkhobar' ? '22' :pageFlowScope.ExitClearanceTypeName eq 'ExitClearnace-Qassim' ? '23' : '19'}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="BV_ID" NDValue="#{bindings.RequestId.inputValue}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

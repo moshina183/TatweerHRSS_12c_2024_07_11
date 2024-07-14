@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='windows-1252' ?>
+<!DOCTYPE JboProject SYSTEM "jbo_03_01.dtd">
+<!---->
+
+<JboProject
+   xmlns="http://xmlns.oracle.com/bc4j"
+   Name="Model"
+   Version="12.2.1.9.14"
+   SeparateXMLFiles="true"
+   PackageName="com.sbm.selfServices.model">
+   <DesignTime>
+      <Attr Name="_jprName" Value="../../../../../Model.jpr"/>
+      <Attr Name="_appModuleNames0"
+         Value="com.sbm.selfServices.model.services.SBMModule"/>
+      <Attr Name="_NamedConnection" Value="Tatweer"/>
+   </DesignTime>
+   <Containee
+      Name="assocs"
+      PackageName="com.sbm.selfServices.model.assocs"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_AS" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="assoc"
+      PackageName="com.sbm.selfServices.model.entities.assoc"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_AS" Value="true"/>
+         <Attr Name="_VL" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="entities"
+      PackageName="com.sbm.selfServices.model.entities"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_EO" Value="true"/>
+         <Attr Name="_AS" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="services"
+      PackageName="com.sbm.selfServices.model.services"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_AM" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="reports"
+      PackageName="com.sbm.selfServices.model.views.reports"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+         <Attr Name="_VL" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="ro"
+      PackageName="com.sbm.selfServices.model.views.ro"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="staticlov"
+      PackageName="com.sbm.selfServices.model.views.staticlov"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="up"
+      PackageName="com.sbm.selfServices.model.views.up"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="views"
+      PackageName="com.sbm.selfServices.model.views"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
+   <Containee
+      Name="vl"
+      PackageName="com.sbm.selfServices.model.views.vl"
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VL" Value="true"/>
+      </DesignTime>
+   </Containee>
+</JboProject>

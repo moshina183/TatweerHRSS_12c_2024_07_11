@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="AllowancesFragPageDef"
+                Package="Setup">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="AllowancesUPView" RangeSize="25"
+              DataControl="SBMModuleDataControl" id="AllowancesUPViewIterator"/>
+    <searchRegion Criteria="AllowancesUPViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AllowancesUPViewIterator"
+                  id="AllowancesUPViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AllowancesUPViewIterator" id="AllowancesUPView">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.AllowancesUPView"
+                      Name="AllowancesUPView0">
+        <AttrNames>
+          <Item Value="TripType"/>
+          <Item Value="ClassType"/>
+          <Item Value="AllowanceType"/>
+          <Item Value="AllowanceAmount"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

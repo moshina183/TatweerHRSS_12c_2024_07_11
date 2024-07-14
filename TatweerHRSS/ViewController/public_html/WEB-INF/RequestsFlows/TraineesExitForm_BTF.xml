@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="TraineesExitForm_BTF">
+    <default-activity id="__1">ExecuteWithParams</default-activity>
+    <managed-bean id="__2">
+      <managed-bean-name id="__4">FilmStripBean</managed-bean-name>
+      <managed-bean-class id="__3">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__5">backingBean</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__41">
+      <managed-bean-name id="__40">TraineesExitFormMB</managed-bean-name>
+      <managed-bean-class id="__39">com.sbm.selfServices.view.mb.TraineesExitFormMB</managed-bean-class>
+      <managed-bean-scope id="__38">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="TraineesExitRequests">
+      <page>/RequestsFrags/TraineesExitRequests.jsff</page>
+    </view>
+    <view id="TraineesExitForm">
+      <page>/RequestsFrags/TraineesExitForm.jsff</page>
+    </view>
+    <method-call id="showFS">
+      <method>#{backingBeanScope.FilmStripBean._showFilmStrip}</method>
+      <outcome id="__31">
+        <fixed-outcome>show</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="hideFS">
+      <method>#{backingBeanScope.FilmStripBean._hideFilmStrip}</method>
+      <outcome id="__30">
+        <fixed-outcome>hide</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__32">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__6">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute1">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__44">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute2">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__50">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__10">
+      <from-activity-id id="__11">TraineesExitForm</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome id="__14">back</from-outcome>
+        <to-activity-id id="__13">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__16">hideFS</from-activity-id>
+      <control-flow-case id="__18">
+        <from-outcome id="__19">hide</from-outcome>
+        <to-activity-id id="__17">Execute1</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__20">
+      <from-activity-id id="__21">TraineesExitRequests</from-activity-id>
+      <control-flow-case id="__23">
+        <from-outcome id="__24">edit</from-outcome>
+        <to-activity-id id="__22">hideFS</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__25">
+      <from-activity-id id="__26">showFS</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__29">show</from-outcome>
+        <to-activity-id id="__28">Execute2</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__33">
+      <from-activity-id id="__34">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__36">
+        <from-outcome id="__37">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__35">Execute2</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">Execute</from-activity-id>
+      <control-flow-case id="__42">
+        <from-outcome id="__9">Execute</from-outcome>
+        <to-activity-id id="__43">showFS</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__45">
+      <from-activity-id id="__46">Execute1</from-activity-id>
+      <control-flow-case id="__49">
+        <from-outcome id="__47">Execute</from-outcome>
+        <to-activity-id id="__48">TraineesExitForm</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__51">
+      <from-activity-id id="__52">Execute2</from-activity-id>
+      <control-flow-case id="__54">
+        <from-outcome id="__55">Execute</from-outcome>
+        <to-activity-id id="__53">TraineesExitRequests</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

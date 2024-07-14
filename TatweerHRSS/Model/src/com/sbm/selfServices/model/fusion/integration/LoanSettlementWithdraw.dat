@@ -1,0 +1,5 @@
+METADATA|ElementEntry|EffectiveStartDate|ElementName|LegislativeDataGroupName|AssignmentNumber|MultipleEntryCount|EntryType
+DELETE|ElementEntry|PLACEHOLDER_Date|Adjust Loan Balance Deductions|THC LDG|PLACEHOLDER_AssignmentNo|PLACEHOLDER_Count|E
+
+METADATA|ElementEntryValue|EffectiveStartDate|InputValueName|ScreenEntryValue|AssignmentNumber|ElementName|LegislativeDataGroupName|MultipleEntryCount|EntryType
+DELETE|ElementEntryValue|PLACEHOLDER_Date|Pay Value|PLACEHOLDER_RemainingAmount|PLACEHOLDER_AssignmentNo|Adjust Loan Balance Deductions|THC LDG|PLACEHOLDER_Count|E

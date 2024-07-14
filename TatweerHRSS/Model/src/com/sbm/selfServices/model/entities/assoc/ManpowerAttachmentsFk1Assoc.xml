@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+<!---->
+<Association
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ManpowerAttachmentsFk1Assoc"
+  Version="11.1.1.66.73"
+  InheritPersonalization="true">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <AssociationEnd
+    Name="ManPowerRequest"
+    Cardinality="1"
+    Source="true"
+    Owner="com.sbm.selfServices.model.entities.ManPowerRequest"
+    CascadeDelete="true"
+    DeleteContainee="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="ManPowerRequest"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.ManPowerRequest.ManPowerRequisitionPk"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.ManPowerRequest.ManPowerReqId"/>
+    </AttrArray>
+  </AssociationEnd>
+  <AssociationEnd
+    Name="ManpowerAttachmentsEO"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.entities.ManpowerAttachmentsEO"
+    HasOwner="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="ManpowerAttachmentsEO"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.ManpowerAttachmentsEO.ManpowerAttachmentsFk1"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.ManpowerAttachmentsEO.ManpowerReqId"/>
+    </AttrArray>
+  </AssociationEnd>
+</Association>

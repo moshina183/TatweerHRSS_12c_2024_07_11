@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:panelGroupLayout layout="vertical" id="pgl1">
+    <af:panelBox text="Allowances Setup" id="ph1" inlineStyle="background-color:#ffffff;">
+      <af:query id="qryId1" headerText="Search" disclosed="true"
+                value="#{bindings.AllowancesUPViewCriteriaQuery.queryDescriptor}"
+                model="#{bindings.AllowancesUPViewCriteriaQuery.queryModel}"
+                queryListener="#{bindings.AllowancesUPViewCriteriaQuery.processQuery}"
+                queryOperationListener="#{bindings.AllowancesUPViewCriteriaQuery.processQueryOperation}"
+                resultComponentId="::pc1:resId1" saveQueryMode="hidden"
+                modeChangeVisible="false">
+        <f:facet name="toolbar"/>
+      </af:query>
+      <f:facet name="toolbar">
+        <af:toolbar id="t1">
+          <af:commandToolbarButton text="Save" id="ctb1"
+                                   actionListener="#{pageFlowScope.SetupBean.save_action}"/>
+          <af:commandToolbarButton text="Cancel" id="ctb2"
+                                   actionListener="#{pageFlowScope.SetupBean.cancel_action}"
+                                   immediate="true">
+            <af:resetActionListener/>
+          </af:commandToolbarButton>
+        </af:toolbar>
+      </f:facet>
+    </af:panelBox>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth" inlineStyle="background-color:#ffffff;">
+      <f:facet name="menus"/>
+      <f:facet name="toolbar"/>
+      <f:facet name="statusbar"/>
+      <af:table value="#{bindings.AllowancesUPView.collectionModel}" var="row"
+                rows="#{bindings.AllowancesUPView.rangeSize}"
+                emptyText="#{bindings.AllowancesUPView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.AllowancesUPView.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.AllowancesUPViewCriteriaQuery.queryDescriptor}"
+                queryListener="#{bindings.AllowancesUPViewCriteriaQuery.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.AllowancesUPView.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AllowancesUPView.collectionModel.makeCurrent}"
+                rowSelection="single" id="resId1" columnStretching="multiple">
+        <af:column sortProperty="#{bindings.AllowancesUPView.hints.TripType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AllowancesUPView.hints.TripType.label}"
+                   id="resId1c1" width="10%">
+          <af:outputText value="#{row.TripType}" id="ot1"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AllowancesUPView.hints.ClassType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AllowancesUPView.hints.ClassType.label}"
+                   id="resId1c2" width="10%">
+          <af:outputText value="#{row.ClassType}" id="ot4"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AllowancesUPView.hints.AllowanceType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AllowancesUPView.hints.AllowanceType.label}"
+                   id="resId1c3" width="10%">
+          <af:outputText value="#{row.AllowanceType}" id="ot3"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AllowancesUPView.hints.AllowanceAmount.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AllowancesUPView.hints.AllowanceAmount.label}"
+                   id="resId1c4" width="10%">
+          <af:inputNumberSpinbox value="#{row.AllowanceAmount}" id="ot2" minimum="0" stepSize="5"
+                                 simple="true">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AllowancesUPView.hints.AllowanceAmount.format}"/>
+          </af:inputNumberSpinbox>
+        </af:column>
+      </af:table>
+    </af:panelCollection>
+  </af:panelGroupLayout>
+</jsp:root>

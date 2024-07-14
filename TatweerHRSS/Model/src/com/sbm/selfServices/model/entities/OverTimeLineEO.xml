@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="OverTimeLineEO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="OVERTIME_LINE_REQUEST"
+  AliasName="OverTimeLineEO"
+  BindingStyle="OracleName"
+  UseGlueCode="false"
+  xmlns:validation="http://xmlns.oracle.com/adfm/validation">
+  <DesignTime>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="OvertimeLineRequestId"
+    ColumnName="OVERTIME_LINE_REQUEST_ID"
+    SQLType="VARCHAR"
+    Type="oracle.jbo.domain.DBSequence"
+    ColumnType="NUMBER"
+    TableName="OVERTIME_LINE_REQUEST"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+    <TransientExpression><![CDATA[(new oracle.jbo.server.SequenceImpl("over_time_request_seq",adf.object.getDBTransaction())).getSequenceNumber()]]></TransientExpression>
+  </Attribute>
+  <Attribute
+    Name="OvertimeRequestId"
+    ColumnName="OVERTIME_REQUEST_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="OVERTIME_LINE_REQUEST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Hours"
+    ColumnName="HOURS"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OVERTIME_LINE_REQUEST"
+    Precision="6">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="OverTimeDate"
+    ColumnName="OVER_TIME_DATE"
+    SQLType="TIMESTAMP"
+    Type="oracle.jbo.domain.Date"
+    ColumnType="DATE"
+    TableName="OVERTIME_LINE_REQUEST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="7"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="Description"
+    Precision="250"
+    ColumnName="DESCRIPTION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OVERTIME_LINE_REQUEST">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="250"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="OvertimeRequest"
+    Association="com.sbm.selfServices.model.entities.assoc.OverTimeLineAssoc"
+    AssociationEnd="com.sbm.selfServices.model.entities.assoc.OverTimeLineAssoc.OvertimeRequest"
+    AssociationOtherEnd="com.sbm.selfServices.model.entities.assoc.OverTimeLineAssoc.OverTimeLineEO"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <ViewLinkAccessor
+    Name="OvertimeRequestView"
+    ViewLink="com.sbm.selfServices.model.views.vl.OverTimeLineVL"
+    ViewLinkEnd="com.sbm.selfServices.model.views.vl.OverTimeLineVL.OvertimeRequestView"
+    ViewLinkOtherEnd="com.sbm.selfServices.model.views.vl.OverTimeLineVL.OverTimeLineVo"
+    Type="com.sbm.selfServices.model.views.up.OvertimeRequestViewRowImpl"
+    IsUpdateable="false"/>
+  <Key
+    Name="AltKey"
+    AltKey="true">
+    <DesignTime>
+      <Attr Name="_isUnique" Value="true"/>
+      <Attr Name="_DBObjectName" Value="OVERTIME_LINE_REQUEST"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.OverTimeDate"/>
+      <Item
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.OvertimeRequestId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="OvertimelineeoPrimaryKey"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="OVERTIMELINEEO_PRIMARY_KEY"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.OvertimeLineRequestId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="FkOvertimeAssoc">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="OVERTIME_REQUEST_PK"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_OVERTIME_ASSOC"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.OvertimeRequestId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="fk_OverTimeLineEO">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="UK_OVERTIME_REQUEST"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_OVER_TIME_LINE_EO"/>
+      <Attr Name="_isCascadeDelete" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OverTimeLineEO.OvertimeRequestId"/>
+    </AttrArray>
+  </Key>
+  <validation:UniqueKeyValidationBean
+    Name="OverTimeLineEO_Rule_0"
+    ResId="com.sbm.selfServices.model.entities.OverTimeLineEO_Rule_2"
+    KeyName="AltKey">
+    <validation:OnAttributes>
+      <validation:Item
+        Value="OverTimeDate"/>
+      <validation:Item
+        Value="OvertimeRequestId"/>
+    </validation:OnAttributes>
+  </validation:UniqueKeyValidationBean>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</Entity>

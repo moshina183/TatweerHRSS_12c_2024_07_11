@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="Business_Trip_Task_Flow_BusinessTripTaskFlow_CreateInsertPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="BusinessTripRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="BusinessTripRequestViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="BusinessTripRequestViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createWithParams"
+            InstanceName="SBMModuleDataControl.BusinessTripRequestView"
+            DataControl="SBMModuleDataControl">
+      <NamedData NDName="PersoneId" NDValue="#{pageFlowScope.reqPersonNumber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PersoneName"
+                 NDValue="#{pageFlowScope.reqPersonName}" NDType="java.lang.String"/>
+	  <NamedData NDName="TripType"
+                 NDValue="#{sessionScope.tripType}" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

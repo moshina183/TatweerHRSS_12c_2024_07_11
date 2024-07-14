@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RepaymentAttachmentsView"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  SelectList="RepaymentAttachments.ATTACH_ID, 
+       RepaymentAttachments.ATTACHMENT_FILE, 
+       RepaymentAttachments.FILE_NAME, 
+       RepaymentAttachments.FILE_TYPE, 
+       RepaymentAttachments.REPAYMENT_TICKETS_ID, 
+       RepaymentAttachments.UPLOADED_BY"
+  FromList="REPAYMENT_ATTACHMENTS RepaymentAttachments"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.up.RepaymentAttachmentsView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="RepaymentAttachments"
+    Entity="com.sbm.selfServices.model.entities.RepaymentAttachments"/>
+  <ViewAttribute
+    Name="AttachId"
+    IsUpdateable="while_insert"
+    PrecisionRule="true"
+    EntityAttrName="AttachId"
+    EntityUsage="RepaymentAttachments"
+    AliasName="ATTACH_ID"/>
+  <ViewAttribute
+    Name="AttachmentFile"
+    IsQueriable="false"
+    PrecisionRule="true"
+    EntityAttrName="AttachmentFile"
+    EntityUsage="RepaymentAttachments"
+    AliasName="ATTACHMENT_FILE"/>
+  <ViewAttribute
+    Name="FileName"
+    PrecisionRule="true"
+    EntityAttrName="FileName"
+    EntityUsage="RepaymentAttachments"
+    AliasName="FILE_NAME"/>
+  <ViewAttribute
+    Name="FileType"
+    PrecisionRule="true"
+    EntityAttrName="FileType"
+    EntityUsage="RepaymentAttachments"
+    AliasName="FILE_TYPE"/>
+  <ViewAttribute
+    Name="RepaymentTicketsId"
+    PrecisionRule="true"
+    EntityAttrName="RepaymentTicketsId"
+    EntityUsage="RepaymentAttachments"
+    AliasName="REPAYMENT_TICKETS_ID"/>
+  <ViewAttribute
+    Name="UploadedBy"
+    PrecisionRule="true"
+    EntityAttrName="UploadedBy"
+    EntityUsage="RepaymentAttachments"
+    AliasName="UPLOADED_BY"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

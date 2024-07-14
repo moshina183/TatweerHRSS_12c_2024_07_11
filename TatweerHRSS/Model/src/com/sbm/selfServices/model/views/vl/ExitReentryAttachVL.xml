@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="ExitReentryAttachVL"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  EntityAssociation="com.sbm.selfServices.model.entities.assoc.ExitReentryAttachAssoc">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.vl.ExitReentryAttachVL_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewLinkDefEnd
+    Name="ExitReEntryVO"
+    Cardinality="1"
+    Owner="com.sbm.selfServices.model.views.up.ExitReEntryVO"
+    Source="true">
+    <DesignTime>
+      <Attr Name="_finderName" Value="ExitReEntryVO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.views.up.ExitReEntryVO.ExitReEntryId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="ExitReEntryAttachView"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.views.up.ExitReEntryAttachView">
+    <DesignTime>
+      <Attr Name="_finderName" Value="ExitReEntryAttachView"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.views.up.ExitReEntryAttachView.ExitReEntryId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewLink>

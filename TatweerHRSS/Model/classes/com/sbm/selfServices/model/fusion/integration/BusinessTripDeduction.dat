@@ -1,0 +1,5 @@
+METADATA|ElementEntry|EffectiveStartDate|ElementName|LegislativeDataGroupName|AssignmentNumber|MultipleEntryCount|EntryType
+MERGE|ElementEntry|PLACEHOLDER_CreationDate|Business Trip Deduction|THC LDG|PLACEHOLDER_AssignmentNo|PLACEHOLDER_Count|E
+
+METADATA|ElementEntryValue|EffectiveStartDate|InputValueName|ScreenEntryValue|AssignmentNumber|ElementName|LegislativeDataGroupName|MultipleEntryCount|EntryType
+MERGE|ElementEntryValue|PLACEHOLDER_CreationDate|Pay Value|PLACEHOLDER_BusinessTripAmount|PLACEHOLDER_AssignmentNo|Business Trip Deduction|THC LDG|PLACEHOLDER_Count|E

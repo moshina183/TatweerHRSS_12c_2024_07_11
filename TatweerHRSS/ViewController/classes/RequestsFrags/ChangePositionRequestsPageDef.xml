@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="ChangePositionRequestsPageDef"
+                Package="RequestsFrags" ControllerClass="com.view.beans.filmStrip.RegionPhaseListener">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ChangePositionView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ChangePositionView1Iterator"/>
+    <searchRegion Binds="ChangePositionView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ChangePositionView1Query"/>
+    <iterator id="PositionsVO1Iterator" Binds="PositionsVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_ChanePosition_ROVOIterator"
+              Binds="StatusCount_ChanePosition_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ChangePositionView1Iterator" id="ChangePositionView1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ChangePositionView"
+                      Name="ChangePositionView10">
+        <AttrNames>
+          <Item Value="ChangePositionId"/>
+          <Item Value="PersonNumber"/>
+          <Item Value="PersonName"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="StepId"/>
+          <Item Value="CreationDate"/>
+          <Item Value="RequestStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ChangePositionView1Iterator" id="Execute"
+            InstanceName="SBMModuleDataControl.ChangePositionView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="deletePositionsTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deletePositionsTableRows"
+                  IsViewObjectMethod="false"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.ChangePositionTitleTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="ChangePositionId">
+      <AttrNames>
+        <Item Value="ChangePositionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="StatusCount_ChanePosition_ROVOIterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ChanePosition_ROVOIterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ChanePosition_ROVOIterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

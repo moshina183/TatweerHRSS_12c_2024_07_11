@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Request Show/Hide" id="pb1" showDisclosure="false"
+               inlineStyle="height:12.0cm;background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t3">
+        <af:commandButton text="Save" id="cb1"
+                          actionListener="#{backingBeanScope.ReqVisibleSetupBB.onClickSave}"/>
+        <af:commandButton text="Cancel" id="cb2"
+                          actionListener="#{backingBeanScope.ReqVisibleSetupBB.onClickRevert}"/>
+        <af:spacer width="50" height="10" id="s1"/>
+      </af:toolbar>
+    </f:facet>
+    <af:panelGroupLayout layout="vertical" id="pgl1">
+          <af:query id="qryId1" headerText="Search" disclosed="true"
+                    value="#{bindings.SearchRequestQuery.queryDescriptor}"
+                    model="#{bindings.SearchRequestQuery.queryModel}"
+                    modeChangeVisible="false" saveQueryMode="hidden"
+                    queryListener="#{bindings.SearchRequestQuery.processQuery}"
+                    queryOperationListener="#{bindings.SearchRequestQuery.processQueryOperation}"
+                    displayMode="default"/>
+    </af:panelGroupLayout>
+    <af:spacer width="10" height="10" id="s5"/>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                        inlineStyle="background-color:#ffffff;height:12.0cm;">
+      <af:table value="#{bindings.RequestVisible_VO.collectionModel}" var="row"
+                rows="#{bindings.RequestVisible_VO.rangeSize}"
+                emptyText="#{bindings.RequestVisible_VO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="8" scrollPolicy="page" 
+                rowBandingInterval="0" autoHeightRows="0"
+                filterModel="#{bindings.RequestVisible_VOQuery.queryDescriptor}"
+                queryListener="#{bindings.RequestVisible_VOQuery.processQuery}"
+                filterVisible="false" varStatus="vs"
+                selectedRowKeys="#{bindings.RequestVisible_VO.collectionModel.selectedRow}"
+                selectionListener="#{bindings.RequestVisible_VO.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" partialTriggers=":::qryId1">
+         <af:column id="c1" headerText="S.No" align="center" width="100">
+          <af:outputText value="#{vs.index + 1}" id="ot1"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestVisible_VO.hints.RequestName.name}"
+                   filterable="true" sortable="true" width="400" align="center"
+                   headerText="Request Name"
+                   id="c2">
+          <af:outputText value="#{row.RequestName eq 'Manpower-FullTime/Tamheer' ? 'Manpower' : row.RequestName}" id="ot3"/>
+        </af:column>
+        <af:column  headerText="Hide / Show" align="center" width="100"
+                   id="c3">
+          <af:selectBooleanCheckbox value="#{row.bindings.ReqVisibleFlag.inputValue}"
+                                    label="#{row.bindings.ReqVisibleFlag.label}"
+                                    shortDesc="#{bindings.RequestVisible_VO.hints.ReqVisibleFlag.tooltip}"
+                                    id="sbc1" autoSubmit="true"/>
+        </af:column>
+      </af:table>
+      <f:facet name="toolbar">
+        <af:toolbar id="t2"/>
+      </f:facet>
+      </af:panelCollection>
+    <af:popup id="p1" contentDelivery="lazyUncached">
+                <af:dialog closeIconVisible="true" type="ok" id="d2" title="Information" >
+                <af:spacer height="5" id="s3"/>
+                <af:outputText value="#{pageFlowScope.message}"
+                               id="ot2" inlineStyle="border-width:thin;"/>
+                <af:spacer height="5" id="s4" width="200"/>
+                </af:dialog>
+     </af:popup>
+  </af:panelBox>
+</jsp:root>

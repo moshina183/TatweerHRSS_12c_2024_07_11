@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="SpecialNeedDetailsPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="SpecialNeedSupportView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="SpecialNeedSupportView1Iterator"/>
+    <iterator Binds="SpecialNeedAttachmentsView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="SpecialNeedAttachmentsView1Iterator"/>
+    <iterator Binds="ApprovalHistorySpecialNeed" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistorySpecialNeedIterator"/>
+    <invokeAction Binds="ExecuteWithParams" id="executeWithType" Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="SpecialNeedSupportId">
+      <AttrNames>
+        <Item Value="SpecialNeedSupportId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="CreationDate">
+      <AttrNames>
+        <Item Value="CreationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonName">
+      <AttrNames>
+        <Item Value="PersonName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="RejectionReason">
+      <AttrNames>
+        <Item Value="RejectionReason"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator" id="Amount">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="Comments">
+      <AttrNames>
+        <Item Value="Comments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="HrRecomendations">
+      <AttrNames>
+        <Item Value="HrRecomendations"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="SpecialNeedAttachmentsView1Iterator"
+          id="SpecialNeedAttachmentsView1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.SpecialNeedAttachmentsView"
+                      Name="SpecialNeedAttachmentsView10">
+        <AttrNames>
+          <Item Value="UploadedBy"/>
+          <Item Value="FileName"/>
+          <Item Value="FileType"/>
+          <Item Value="AttachId"/>
+          <Item Value="AttachmentFile"/>
+          <Item Value="SpecialNeedId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="SpecialNeedAttachmentsView1Iterator"
+                     id="FileType">
+      <AttrNames>
+        <Item Value="FileType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedAttachmentsView1Iterator"
+                     id="FileName">
+      <AttrNames>
+        <Item Value="FileName"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="SpecialNeedAttachmentsView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="SpecialNeedAttachmentsView1Iterator"
+                     id="AttachmentFile">
+      <AttrNames>
+        <Item Value="AttachmentFile"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="SpecialNeedAttachmentsView1Iterator" id="CreateInsert"
+            InstanceName="SBMModuleDataControl.SpecialNeedAttachmentsView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="SpecialNeedSupportView1Iterator" id="Execute"
+            InstanceName="SBMModuleDataControl.SpecialNeedSupportView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.SpecialNeedSupportTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="SpecialNeedAttachmentsView1Iterator"
+                     id="UploadedBy">
+      <AttrNames>
+        <Item Value="UploadedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getTotalAmountSpecialNeed"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getTotalAmountSpecialNeed"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getTotalAmountSpecialNeed_SBMModuleDataControl_dataProvider_getTotalAmountSpecialNeed_result">
+      <NamedData NDName="PersonNumber" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="TakenAmount">
+      <AttrNames>
+        <Item Value="TakenAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="HrRecomendationsNo">
+      <AttrNames>
+        <Item Value="HrRecomendationsNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ApprovalHistorySpecialNeedIterator"
+          id="ApprovalHistorySpecialNeed">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistorySpecialNeed0">
+        <AttrNames>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalHistorySpecialNeedIterator"
+            id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistorySpecialNeed"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="SpecialNeed"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="PaymentStatus">
+      <AttrNames>
+        <Item Value="PaymentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SpecialNeedSupportView1Iterator"
+                     id="InvoiceNumber">
+      <AttrNames>
+        <Item Value="InvoiceNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendInvoiceEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="callSendInvoiceEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="p_request_type" NDType="java.lang.String"/>
+      <NamedData NDName="p_request_number" NDType="java.lang.String"/>
+      <NamedData NDName="p_attachment" NDType="oracle.jbo.domain.BlobDomain"/>
+    </methodAction>
+    <methodAction id="callTatHdrUpdateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callTatHdrUpdateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callTatHdrUpdateProcess_SBMModuleDataControl_dataProvider_callTatHdrUpdateProcess_result">
+      <NamedData NDName="request_id" NDType="java.lang.String"/>
+      <NamedData NDName="person_no" NDType="java.lang.String"/>
+      <NamedData NDName="request_status" NDType="java.lang.String"/>
+      <NamedData NDName="doc_title" NDType="java.lang.String"/>
+      <NamedData NDName="doc_author" NDType="java.lang.String"/>
+      <NamedData NDName="security_group" NDType="java.lang.String"/>
+      <NamedData NDName="element_name" NDType="java.lang.String"/>
+      <NamedData NDName="doc_account" NDType="java.lang.String"/>
+      <NamedData NDName="doc_type" NDType="java.lang.String"/>
+      <NamedData NDName="base_sixtyfour_file" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getElementAccount"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getElementAccount"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getElementAccount_SBMModuleDataControl_dataProvider_getElementAccount_result">
+      <NamedData NDName="elementName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

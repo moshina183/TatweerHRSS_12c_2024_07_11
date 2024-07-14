@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="Overtime_TF_Overtime_TF_ExecuteWithParamsPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="OvertimeRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="OvertimeRequestViewIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="OvertimeRequestViewIterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams"
+            InstanceName="SBMModuleDataControl.OvertimeRequestView"
+            DataControl="SBMModuleDataControl">
+      <NamedData NDName="PerIdBind" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PerAssinBind" NDValue="#{PersonInfo.assignee}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bindAssignee2" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

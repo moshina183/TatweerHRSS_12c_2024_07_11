@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Email Notification Setup" id="pb1"
+               inlineStyle="height:12.0cm;background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t3">
+        <af:commandButton text="Save" id="cb1"
+                          actionListener="#{backingBeanScope.EmailNotificationSetupBB.onClickSave}"/>
+        <af:commandButton text="Cancel" id="cb2"
+                          actionListener="#{backingBeanScope.EmailNotificationSetupBB.onClickRevert}"/>
+        <af:spacer width="50" height="10" id="s1"/>
+      </af:toolbar>
+    </f:facet>
+    <af:panelGroupLayout layout="vertical" id="pgl1">
+        <af:query id="qryId1" headerText="Search" disclosed="true"
+                  value="#{bindings.SearchRequestQuery.queryDescriptor}"
+                  model="#{bindings.SearchRequestQuery.queryModel}" saveQueryMode="hidden"  
+                  queryListener="#{bindings.SearchRequestQuery.processQuery}" modeChangeVisible="false"
+                  queryOperationListener="#{bindings.SearchRequestQuery.processQueryOperation}"
+                  resultComponentId="::pc1:t1"/>
+    </af:panelGroupLayout>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                        inlineStyle="background-color:#ffffff;height:12.0cm;">
+      <f:facet name="menus"/>
+      <f:facet name="toolbar">
+        <af:toolbar id="t2"/>
+      </f:facet>
+      <f:facet name="statusbar"/>
+      <af:table value="#{bindings.RequestTypesEmailNotifyVO.collectionModel}"
+                var="row" rows="#{bindings.RequestTypesEmailNotifyVO.rangeSize}"
+                emptyText="#{bindings.RequestTypesEmailNotifyVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="10" editingMode="clickToEdit"
+                rowBandingInterval="0" scrollPolicy="page"
+                filterModel="#{bindings.RequestTypesEmailNotifyVOQuery.queryDescriptor}"
+                queryListener="#{bindings.RequestTypesEmailNotifyVOQuery.processQuery}"
+                filterVisible="false" varStatus="vs"
+                selectedRowKeys="#{bindings.RequestTypesEmailNotifyVO.collectionModel.selectedRow}"
+                selectionListener="#{bindings.RequestTypesEmailNotifyVO.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" autoHeightRows="0"
+                columnStretching="column:c4">
+        <af:column id="c3" headerText="S.No" align="center" width="100">
+          <af:outputText value="#{vs.index + 1}" id="ot1"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.RequestTypesEmailNotifyVO.hints.RequestName.name}"
+                   filterable="true" sortable="true" width="400"
+                   headerText="Request Name"
+                   id="c1">
+          <af:inputText value="#{row.bindings.RequestName.attributeValue}"
+                        label="#{bindings.RequestTypesEmailNotifyVO.hints.RequestName.label}"
+                        required="#{bindings.RequestTypesEmailNotifyVO.hints.RequestName.mandatory}"
+                        columns="#{bindings.RequestTypesEmailNotifyVO.hints.RequestName.displayWidth}"
+                        maximumLength="#{bindings.RequestTypesEmailNotifyVO.hints.RequestName.precision}"
+                        shortDesc="#{bindings.RequestTypesEmailNotifyVO.hints.RequestName.tooltip}"
+                        id="it2" readOnly="true">
+            <f:validator binding="#{row.bindings.RequestName.validator}"/>
+          </af:inputText>
+        </af:column>
+        <af:column headerText="Email Notification ?" align="center" width="200"
+                   id="c2">
+          <af:selectBooleanCheckbox value="#{row.bindings.EmailNotificationTrans.inputValue}"
+                                    label="#{row.bindings.EmailNotificationTrans.label}"
+                                    autoSubmit="true"
+                                    shortDesc="#{bindings.RequestTypesEmailNotifyVO.hints.EmailNotificationTrans.tooltip}"
+                                    id="sbc1"/>
+        </af:column>
+        <af:column headerText="FYI Mail Address"
+                   id="c4">
+          <af:inputText value="#{row.bindings.FyiEmail.inputValue}"
+                        autoSubmit="true" 
+                        required="#{bindings.RequestTypesEmailNotifyVO.hints.FyiEmail.mandatory}"
+                        columns="#{bindings.RequestTypesEmailNotifyVO.hints.FyiEmail.displayWidth}"
+                        maximumLength="#{bindings.RequestTypesEmailNotifyVO.hints.FyiEmail.precision}"
+                        shortDesc="#{bindings.RequestTypesEmailNotifyVO.hints.FyiEmail.tooltip}"
+                        id="it1">
+            <f:validator binding="#{row.bindings.FyiEmail.validator}"/>
+          </af:inputText>
+        </af:column>
+        <af:column headerText="Update" align="center"
+                   id="c5">
+          <af:selectBooleanCheckbox value="#{row.bindings.UpdateTrans.inputValue}"
+                                    label="#{row.bindings.UpdateTrans.label}"
+                                    visible="#{row.bindings.RequestName.attributeValue ne 'Loan-Settlement' and row.bindings.RequestName.attributeValue ne 'Manpower-CoopTraining' and row.bindings.RequestName.attributeValue ne 'Manpower-Others'}"
+                                    shortDesc="#{bindings.RequestTypesEmailNotifyVO.hints.UpdateTrans.tooltip}"
+                                    id="sbc2" autoSubmit="true"/>
+        </af:column>
+        <af:column headerText="Withdraw" align="center"
+                   id="c6">
+          <af:selectBooleanCheckbox value="#{row.bindings.WithdrawTrans.inputValue}"
+                                    label="#{row.bindings.WithdrawTrans.label}"
+                                    visible="#{row.bindings.RequestName.attributeValue ne 'Manpower-CoopTraining' and row.bindings.RequestName.attributeValue ne 'Manpower-Others'}"
+                                    shortDesc="#{bindings.RequestTypesEmailNotifyVO.hints.WithdrawTrans.tooltip}"
+                                    id="sbc3" autoSubmit="true"/>
+        </af:column>
+      </af:table>
+    </af:panelCollection>
+    <af:popup id="p1" contentDelivery="lazyUncached">
+                <af:dialog closeIconVisible="true" type="ok" id="d2" title="Information" >
+                <af:spacer height="5" id="s3"/>
+                <af:outputText value="#{pageFlowScope.message}"
+                               id="ot2" inlineStyle="border-width:thin;"/>
+                <af:spacer height="5" id="s4" width="200"/>
+                </af:dialog>
+     </af:popup>
+  </af:panelBox>
+</jsp:root>

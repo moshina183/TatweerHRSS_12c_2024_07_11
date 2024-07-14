@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="PendingForApprovalROVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.ro.PendingForApprovalROVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="assignee_number"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="assignee_position"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_assignee_name"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[select 
+(select count(1) from business_trip_request btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and btr.trip_type='Local'
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Local_Trip,
+(select count(1) from business_trip_request btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and btr.trip_type='Inter'
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as International_Trip,
+(select count(1) from business_trip_request btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and btr.trip_type='Event'
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Event,
+(select count(1) from business_trip_request btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and btr.trip_type='Training'
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Training,
+(select count(1) from business_trip_request btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and btr.trip_type='Expense'
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Expense,
+(select count(1) from MOBILE_ALLOWANCE_REQUEST btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Mobile_Allowance,
+(select count(1) from LOAN_REQUEST btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as LOAN,
+(select count(1) from MAN_POWER_REQUISITION btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Manpower_Requisition,
+(select count(1) from OVERTIME_REQUEST btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Overtime,
+(select count(1) from EDUCATION_ALLOWANCE btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Education_Allowance,
+(select count(1) from EXIT_RE_ENTRY_REQUEST btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Exit_Re_Entry,
+(select count(1) from EXCEPTIONAL_REWARD btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Exceptional_Reward,
+(select count(1) from CHANGE_POSITION btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Change_Position,
+(select count(1) from REPAYMENT_TICKETS btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Repayment_Ticket,
+(select count(1) from SPECIAL_NEED_SUPPORT btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Special_Need,
+(select count(1) from LOAN_PRECLOSURE btr
+where btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as Loan_Settlement,
+(select count(1) from EXIT_CLEARANCE_FORM btr
+where  btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as ExitClearnace,
+(select count(1) from TRAINEES_EXIT_FORM btr
+where  btr.request_status IN ('PENDING','Waiting Withdraw Approval')
+and (btr.assignee=:assignee_number or btr.assignee=:assignee_position or assignee_name = :p_assignee_name)) as TraineeExitForm
+from dual]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="LocalTrip"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="LOCAL_TRIP"
+    Expression="LOCAL_TRIP"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="InternationalTrip"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="INTERNATIONAL_TRIP"
+    Expression="INTERNATIONAL_TRIP"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Event"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="EVENT"
+    Expression="EVENT"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Training"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TRAINING"
+    Expression="TRAINING"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Expense"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="EXPENSE"
+    Expression="EXPENSE"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MobileAllowance"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="MOBILE_ALLOWANCE"
+    Expression="MOBILE_ALLOWANCE"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Loan"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="LOAN"
+    Expression="LOAN"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ManpowerRequisition"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="MANPOWER_REQUISITION"
+    Expression="MANPOWER_REQUISITION"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Overtime"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="OVERTIME"
+    Expression="OVERTIME"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EducationAllowance"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="EDUCATION_ALLOWANCE"
+    Expression="EDUCATION_ALLOWANCE"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExitReEntry"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="EXIT_RE_ENTRY"
+    Expression="EXIT_RE_ENTRY"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExceptionalReward"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="EXCEPTIONAL_REWARD"
+    Expression="EXCEPTIONAL_REWARD"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ChangePosition"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="CHANGE_POSITION"
+    Expression="CHANGE_POSITION"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RepaymentTicket"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="REPAYMENT_TICKET"
+    Expression="REPAYMENT_TICKET"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="SpecialNeed"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="SPECIAL_NEED"
+    Expression="SPECIAL_NEED"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="LoanSettlement"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="LOAN_SETTLEMENT"
+    Expression="LOAN_SETTLEMENT"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Exitclearnace"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="EXITCLEARNACE"
+    Expression="EXITCLEARNACE"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Traineeexitform"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TRAINEEEXITFORM"
+    Expression="TRAINEEEXITFORM"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

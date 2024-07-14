@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="OvertimeAttachments"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  DBObjectType="table"
+  DBObjectName="OVERTIME_ATTACHMENTS"
+  AliasName="OvertimeAttachments"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="AttachId"
+    IsNotNull="true"
+    ColumnName="ATTACH_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="OVERTIME_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileName"
+    Precision="50"
+    ColumnName="FILE_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OVERTIME_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="50"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FileType"
+    Precision="20"
+    ColumnName="FILE_TYPE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OVERTIME_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="AttachmentFile"
+    IsQueriable="false"
+    ColumnName="ATTACHMENT_FILE"
+    SQLType="BLOB"
+    Type="oracle.jbo.domain.BlobDomain"
+    ColumnType="BLOB"
+    TableName="OVERTIME_ATTACHMENTS"/>
+  <Attribute
+    Name="OvertimeReqId"
+    ColumnName="OVERTIME_REQ_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="OVERTIME_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="UploadedBy"
+    Precision="20"
+    ColumnName="UPLOADED_BY"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="OVERTIME_ATTACHMENTS">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="RowID"
+    IsUpdateable="false"
+    ColumnName="ROWID"
+    SQLType="ROWID"
+    Type="oracle.jbo.domain.RowID"
+    ColumnType="ROWID"
+    TableName="OVERTIME_ATTACHMENTS"
+    PrimaryKey="true"/>
+  <AccessorAttribute
+    Name="OvertimeRequest"
+    Association="com.sbm.selfServices.model.entities.assoc.OvertimeAttachements"
+    AssociationEnd="com.sbm.selfServices.model.entities.assoc.OvertimeAttachements.OvertimeRequest"
+    AssociationOtherEnd="com.sbm.selfServices.model.entities.assoc.OvertimeAttachements.OvertimeAttachments"
+    Type="oracle.jbo.server.EntityImpl"
+    IsUpdateable="true"/>
+  <Key
+    Name="fk_OvertimeAttachments">
+    <DesignTime>
+      <Attr Name="_referencedKey" Value="UK_OVERTIME_REQUEST"/>
+      <Attr Name="_isForeign" Value="true"/>
+      <Attr Name="_DBObjectName" Value="FK_OVERTIME_ATTACHMENTS"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.OvertimeAttachments.OvertimeReqId"/>
+    </AttrArray>
+  </Key>
+</Entity>

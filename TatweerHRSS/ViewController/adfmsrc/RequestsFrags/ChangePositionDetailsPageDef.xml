@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="ChangePositionDetailsPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ChangePositionView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ChangePositionView1Iterator"/>
+    <iterator Binds="ApprovalHistoryChangePosition" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistoryChangePositionIterator" Refresh="always"/>
+    <invokeAction Binds="ExecuteWithParams" id="executeWithType" Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="ChangePositionId">
+      <AttrNames>
+        <Item Value="ChangePositionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="CreationDate">
+      <AttrNames>
+        <Item Value="CreationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="PersonName">
+      <AttrNames>
+        <Item Value="PersonName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="RejectionReason">
+      <AttrNames>
+        <Item Value="RejectionReason"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="CurrentPosition">
+      <AttrNames>
+        <Item Value="CurrentPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="ProposedPositionEmp">
+      <AttrNames>
+        <Item Value="ProposedPositionEmp"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ChangePositionView1Iterator" StaticList="false"
+          Uses="LOV_ProposedPositionHr" id="ProposedPositionHr"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="Other">
+      <AttrNames>
+        <Item Value="Other"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="ChangePositionView1Iterator" id="Execute"
+            InstanceName="SBMModuleDataControl.ChangePositionView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.ChangePositionTitleTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ChangePositionView1Iterator" id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="ChangePositionView1Iterator" StaticList="false"
+          Uses="LOV_RequestDetails" id="RequestDetails" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <button IterBinding="ChangePositionView1Iterator" id="HrFlag1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HrFlag1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ChangePositionView1Iterator" id="HrFlag2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HrFlag2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ChangePositionView1Iterator" id="HrFlag3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HrFlag3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <button IterBinding="ChangePositionView1Iterator" id="HrFlag4"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HrFlag4"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <tree IterBinding="ApprovalHistoryChangePositionIterator"
+          id="ApprovalHistoryChangePosition">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistoryChangePosition0">
+        <AttrNames>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalHistoryChangePositionIterator"
+            id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistoryChangePosition"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="ChangePosition"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="ChangePositionView1Iterator"
+                     id="EffectiveStartDate">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callTatHdrUpdateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callTatHdrUpdateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callTatHdrUpdateProcess_SBMModuleDataControl_dataProvider_callTatHdrUpdateProcess_result">
+      <NamedData NDName="request_id" NDType="java.lang.String"/>
+      <NamedData NDName="person_no" NDType="java.lang.String"/>
+      <NamedData NDName="request_status" NDType="java.lang.String"/>
+      <NamedData NDName="doc_title" NDType="java.lang.String"/>
+      <NamedData NDName="doc_author" NDType="java.lang.String"/>
+      <NamedData NDName="security_group" NDType="java.lang.String"/>
+      <NamedData NDName="element_name" NDType="java.lang.String"/>
+      <NamedData NDName="doc_account" NDType="java.lang.String"/>
+      <NamedData NDName="doc_type" NDType="java.lang.String"/>
+      <NamedData NDName="base_sixtyfour_file" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getElementAccount"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getElementAccount"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getElementAccount_SBMModuleDataControl_dataProvider_getElementAccount_result">
+      <NamedData NDName="elementName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

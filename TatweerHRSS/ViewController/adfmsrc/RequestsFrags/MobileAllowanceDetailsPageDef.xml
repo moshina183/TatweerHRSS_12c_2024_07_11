@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="MobileAllowanceDetailsPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="MobileAllowanceRequestUPView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="MobileAllowanceRequestUPViewIterator"/>
+    <iterator Binds="ApprovalHistoryMobile" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistoryMobileIterator"/>
+    <invokeAction Binds="ExecuteWithParams" id="excuteWithParams"
+                  Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersoneNumber">
+      <AttrNames>
+        <Item Value="PersoneNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersoneName">
+      <AttrNames>
+        <Item Value="PersoneName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="RequestReason">
+      <AttrNames>
+        <Item Value="RequestReason"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName" NDValue="#{pageFlowScope.MobileTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="RejectComments">
+      <AttrNames>
+        <Item Value="RejectComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <action IterBinding="MobileAllowanceRequestUPViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.MobileAllowanceRequestUPView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="CreationDate">
+      <AttrNames>
+        <Item Value="CreationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getMobileRequestsThisMonth"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getMobileRequestsThisMonth"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getMobileRequestsThisMonth_SBMModuleDataControl_dataProvider_getMobileRequestsThisMonth_result">
+      <NamedData NDName="PersonNumber" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="MobileAllowanceRequestUPViewIterator" StaticList="false"
+          Uses="LOV_NumberOfMonths" id="NumberOfMonths" DTSupportsMRU="true"
+          SelectItemValueMode="ListObject"/>
+    <tree IterBinding="ApprovalHistoryMobileIterator"
+          id="ApprovalHistoryMobile">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistoryMobile0">
+        <AttrNames>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+          <Item Value="ApprovalType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator"
+                     id="RequestId">
+      <AttrNames>
+        <Item Value="RequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ApprovalHistoryMobileIterator" id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistoryMobile"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="MobileAllowance"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction id="callTatHdrUpdateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callTatHdrUpdateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callTatHdrUpdateProcess_SBMModuleDataControl_dataProvider_callTatHdrUpdateProcess_result">
+      <NamedData NDName="request_id" NDType="java.lang.String"/>
+      <NamedData NDName="person_no" NDType="java.lang.String"/>
+      <NamedData NDName="request_status" NDType="java.lang.String"/>
+      <NamedData NDName="doc_title" NDType="java.lang.String"/>
+      <NamedData NDName="doc_author" NDType="java.lang.String"/>
+      <NamedData NDName="security_group" NDType="java.lang.String"/>
+      <NamedData NDName="element_name" NDType="java.lang.String"/>
+      <NamedData NDName="doc_account" NDType="java.lang.String"/>
+      <NamedData NDName="doc_type" NDType="java.lang.String"/>
+      <NamedData NDName="base_sixtyfour_file" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getElementAccount"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getElementAccount"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getElementAccount_SBMModuleDataControl_dataProvider_getElementAccount_result">
+      <NamedData NDName="elementName" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="Amount">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="CostCenterName">
+      <AttrNames>
+        <Item Value="CostCenterName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="CostCenterNumber">
+      <AttrNames>
+        <Item Value="CostCenterNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="Division">
+      <AttrNames>
+        <Item Value="Division"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="EffectiveEndDate">
+      <AttrNames>
+        <Item Value="EffectiveEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="EffectiveStartDate">
+      <AttrNames>
+        <Item Value="EffectiveStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callGetDepartment" RequiresUpdateModel="true" Action="invokeMethod" MethodName="callGetDepartment"
+                  IsViewObjectMethod="false" DataControl="SBMModuleDataControl"
+                  InstanceName="bindings.callGetDepartment.dataControl.dataProvider"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callGetDepartment_callGetDepartment_dataControl_dataProvider_callGetDepartment_result">
+      <NamedData NDName="cost_center_number" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="HireType">
+      <AttrNames>
+        <Item Value="HireType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="MobileAllowanceRequestUPViewIterator" id="DepartmentNumber">
+      <AttrNames>
+        <Item Value="DepartmentNumber"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

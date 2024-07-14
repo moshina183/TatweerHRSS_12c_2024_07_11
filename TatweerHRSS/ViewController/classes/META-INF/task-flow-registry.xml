@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<task-flow-registry xmlns="http://xmlns.oracle.com/adf/controller/rc">
+   <task-flow-descriptor path="META-INF/adfc-config.xml" id="" type="" uses-page-fragments="false" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Reports/Reports-Task.xml" id="Reports-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml" id="Business-Trip-Task-Flow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="reqPersonName"/>
+      <input-parameter name="reqPersonNumber"/>
+      <input-parameter name="moreCitiesCheckBox"/>
+      <input-parameter name="jwt"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/ChangePositionTF.xml" id="ChangePositionTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="cPPersonName"/>
+      <input-parameter name="cPPersonNummber"/>
+      <input-parameter name="currentPosition"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/EducationAllowanceTF.xml" id="EducationAllowanceTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="inv1"/>
+      <input-parameter name="eAPersonNummber"/>
+      <input-parameter name="eAPersonName"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/ExceptionalRewardTF.xml" id="ExceptionalRewardTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="eRPersonNummber"/>
+      <input-parameter name="eRPersonName"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/ExitClearanceForm_BTF.xml" id="ExitClearanceForm_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/ExitRe-entry_TF.xml" id="ExitRe-entry_TF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="ExitReEntryPersonNumber"/>
+      <input-parameter name="ExitReEntryPersonName"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/Loan-Settlement-BTF.xml" id="Loan-Settlement-BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/Loan-TF.xml" id="Loan-TF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="loanPersonName"/>
+      <input-parameter name="loanPersonId"/>
+      <input-parameter name="empSalary"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/ManPowerTF.xml" id="ManPowerTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="location"/>
+      <input-parameter name="department"/>
+      <input-parameter name="mPPersonNummber"/>
+      <input-parameter name="mPPersonName"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/Mobile-Allowance-TF.xml" id="Mobile-Allowance-TF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/Overtime_TF.xml" id="Overtime_TF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/RepaymentTicketsTF.xml" id="RepaymentTicketsTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="rTPersonName"/>
+      <input-parameter name="rTPersonNummber"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/SpecialNeedTF.xml" id="SpecialNeedTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp">
+      <input-parameter name="sNPersonName"/>
+      <input-parameter name="sNPersonNummber"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/RequestsFlows/TraineesExitForm_BTF.xml" id="TraineesExitForm_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/ApprovalFlowSetupCEO_BTF.xml" id="ApprovalFlowSetupCEO_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="facelets"/>
+   <task-flow-descriptor path="WEB-INF/Setup/ApprovalFlowSetup_BTF.xml" id="ApprovalFlowSetup_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/BudgetValidationSetup.xml" id="BudgetValidationSetup" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/DelegateTask_BTF.xml" id="DelegateTask_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/EmailNotificationSetup_BTF.xml" id="EmailNotificationSetup_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/RequestVisibleSetup_BTF.xml" id="RequestVisibleSetup_BTF" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/SecretaryTaskFlow.xml" id="SecretaryTaskFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+   <task-flow-descriptor path="WEB-INF/Setup/Setup-Task.xml" id="Setup-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false" critical="false" page-type="jsp"/>
+</task-flow-registry>

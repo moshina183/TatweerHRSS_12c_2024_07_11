@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="ExitClearanceRequestPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ExitClearanceForm_VO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExitClearanceForm_VOIterator"/>
+    <searchRegion Binds="ExitClearanceForm_VOIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ExitClearanceForm_VOQuery"/>
+    <iterator id="StatusCount_ExitClearance_ROVO1Iterator"
+              Binds="StatusCount_ExitClearance_ROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="ExitClearanceForm_VORefIterator"
+              Binds="ExitClearanceForm_VORef" DataControl="SBMModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="CreateExitForm_ROVO1Iterator" Binds="CreateExitForm_ROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="AllPersonsInHR_ROVOIterator" Binds="AllPersonsInHR_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ExitClearanceForm_VOIterator" id="ExitClearanceForm_VO">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ExitClearanceForm_VO"
+                      Name="ExitClearanceForm_VO0">
+        <AttrNames>
+          <Item Value="RequestId"/>
+          <Item Value="PersonNumber"/>
+          <Item Value="PersonName"/>
+          <Item Value="HireDate"/>
+          <Item Value="LastWorkingDate"/>
+          <Item Value="LengthOfService"/>
+          <Item Value="StepId"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="Assignee"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="ManagerName"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedOn"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="StatusCount_ExitClearance_ROVO1Iterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ExitClearance_ROVO1Iterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ExitClearance_ROVO1Iterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CreateExitForm_ROVO1Iterator" StaticList="false"
+          Uses="LOV_RequestForTrans" id="RequestForTrans"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <listOfValues StaticList="false" IterBinding="CreateExitForm_ROVO1Iterator"
+                  Uses="LOV_PersonNameTrans" id="PersonNameTrans"/>
+    <attributeValues IterBinding="CreateExitForm_ROVO1Iterator"
+                     id="PersonNumberTrans">
+      <AttrNames>
+        <Item Value="PersonNumberTrans"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

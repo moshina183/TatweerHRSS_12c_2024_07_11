@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="RepaymentTicketsTF_RepaymentTicketsTF_CreateInsertPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="RepaymentTicketsView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="RepaymentTicketsView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="RepaymentTicketsView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createWithParams"
+            InstanceName="SBMModuleDataControl.RepaymentTicketsView1"
+            DataControl="SBMModuleDataControl">
+            <NamedData NDName="PersonNumber" NDValue="#{pageFlowScope.rTPersonNummber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PersonName"
+                 NDValue="#{pageFlowScope.rTPersonName}" NDType="java.lang.String"/>
+            
+            </action>
+  </bindings>
+</pageDefinition>

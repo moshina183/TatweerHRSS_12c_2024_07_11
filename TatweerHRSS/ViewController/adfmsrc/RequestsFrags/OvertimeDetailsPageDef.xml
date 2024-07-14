@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="OvertimeDetailsPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="OvertimeRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="OvertimeRequestViewIterator"/>
+    <iterator Binds="OverTimeLineVo" RangeSize="25"
+              DataControl="SBMModuleDataControl" id="OverTimeLineVOIterator"
+              Refresh="always"/>
+    <searchRegion Binds="OverTimeLineVOIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="OverTimeLineVO1Query"/>
+    <iterator id="CheckOverLapOverTimeROVOIterator"
+              Binds="CheckOverLapOverTimeROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="CheckOverlapROVOIterator" Binds="CheckOverlapROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="TotalHourPerMonVO1Iterator" Binds="TotalHourPerMonVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator Binds="ApprovalHistoryOverTime" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistoryOverTimeIterator"/>
+    <invokeAction Binds="ExecuteWithParams" id="excuteWithType" Refresh="always"/>
+    <iterator id="OvertimeROVO1Iterator" Binds="OvertimeROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="PersoneId">
+      <AttrNames>
+        <Item Value="PersoneId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="PersoneName">
+      <AttrNames>
+        <Item Value="PersoneName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="NumberOfHours">
+      <AttrNames>
+        <Item Value="NumberOfHours"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="ReqDate">
+      <AttrNames>
+        <Item Value="ReqDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="CancelReason">
+      <AttrNames>
+        <Item Value="CancelReason"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="RejectComments">
+      <AttrNames>
+        <Item Value="RejectComments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="SBMModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="SBMModuleDataControl"/>
+    <methodAction id="getNextStep" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false" DataControl="SBMModuleDataControl"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.OvertimeTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false" DataControl="SBMModuleDataControl"
+                  InstanceName="SBMModuleDataControl.dataProvider">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="OvertimeRequestId">
+      <AttrNames>
+        <Item Value="OvertimeRequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="OvertimeRequestViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.OvertimeRequestView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="getTotalhoursPerMonth"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getTotalhoursPerMonth"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getTotalhoursPerMonth_SBMModuleDataControl_dataProvider_getTotalhoursPerMonth_result">
+      <NamedData NDName="PersonId" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="OvertimeRequestViewIterator" id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="OverTimeLineVOIterator" id="OverTimeLineVO">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.OverTimeLineVO"
+                      Name="OverTimeLineVO0">
+        <AttrNames>
+          <Item Value="OverTimeDate"/>
+          <Item Value="Hours"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="OverTimeLineVOIterator" id="OverTimeDate">
+      <AttrNames>
+        <Item Value="OverTimeDate"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="OverTimeLineVOIterator" id="CreateInsert"
+            InstanceName="SBMModuleDataControl.OverTimeLineVo"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="OverTimeLineVOIterator" id="Delete"
+            InstanceName="SBMModuleDataControl.OverTimeLineVo"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <tree IterBinding="OverTimeLineVOIterator" id="OverTimeLineVo">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.OverTimeLineVo"
+                      Name="OverTimeLineVo0">
+        <AttrNames>
+          <Item Value="OverTimeDate"/>
+          <Item Value="Hours"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ApprovalHistoryOverTimeIterator"
+          id="ApprovalHistoryOverTime">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistoryOverTime0">
+        <AttrNames>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+          <Item Value="ApprovalType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalHistoryOverTimeIterator" id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistoryOverTime"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="OverTime"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callTatHdrUpdateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callTatHdrUpdateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callTatHdrUpdateProcess_SBMModuleDataControl_dataProvider_callTatHdrUpdateProcess_result">
+      <NamedData NDName="request_id" NDType="java.lang.String"/>
+      <NamedData NDName="person_no" NDType="java.lang.String"/>
+      <NamedData NDName="request_status" NDType="java.lang.String"/>
+      <NamedData NDName="doc_title" NDType="java.lang.String"/>
+      <NamedData NDName="doc_author" NDType="java.lang.String"/>
+      <NamedData NDName="security_group" NDType="java.lang.String"/>
+      <NamedData NDName="element_name" NDType="java.lang.String"/>
+      <NamedData NDName="doc_account" NDType="java.lang.String"/>
+      <NamedData NDName="doc_type" NDType="java.lang.String"/>
+      <NamedData NDName="base_sixtyfour_file" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getElementAccount"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getElementAccount"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getElementAccount_SBMModuleDataControl_dataProvider_getElementAccount_result">
+      <NamedData NDName="elementName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

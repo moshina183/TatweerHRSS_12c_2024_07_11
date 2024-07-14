@@ -1,0 +1,4 @@
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="https://egwo-dev1.fa.em2.oraclecloud.com/xmlpserver/services/v2/ReportService?wsdl"
+          uri="https://egwo-dev1.fa.em2.oraclecloud.com/xmlpserver/services/v2/ReportService?wsdl"/>
+</catalog>

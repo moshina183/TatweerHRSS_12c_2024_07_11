@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="Business-Trip-Task-Flow">
+    <default-activity id="__1">checkSession</default-activity>
+    <input-parameter-definition id="__37">
+      <name id="__38">jwt</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__46">
+      <name id="__45">reqPersonName</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__47">
+      <name id="__48">reqPersonNumber</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__20">
+      <name id="__19">moreCitiesCheckBox</name>
+      <class>java.lang.Boolean</class>
+    </input-parameter-definition>
+    <managed-bean id="__30">
+      <managed-bean-name id="__32">BusinessTripBean</managed-bean-name>
+      <managed-bean-class id="__31">com.sbm.selfServices.view.mb.BusinessTrip</managed-bean-class>
+      <managed-bean-scope id="__29">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__1234">
+      <managed-bean-name>FlimStripUI</managed-bean-name>
+      <managed-bean-class>com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope>backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="BusinessTripFrag">
+      <page>/RequestsFrags/BusinessTripFrag.jsff</page>
+    </view>
+    <view id="BusinessTripDetails">
+      <page>/RequestsFrags/BusinessTripDetails.jsff</page>
+    </view>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="setActionReason">
+      <method>#{pageFlowScope.BusinessTripBean.populateActionReason}</method>
+      <outcome id="__44">
+        <fixed-outcome>insert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__49">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case>
+        <expression>#{PersonInfo.perosnNumber ne null or PersonInfo.assignee ne
+                    null}</expression>
+        <outcome id="__21">success</outcome>
+      </case>
+      <case>
+        <expression>#{PersonInfo.perosnNumber eq null or PersonInfo.assignee eq
+                    null}</expression>
+        <outcome id="__22">expired</outcome>
+      </case>
+      <default-outcome>expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page>/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="checkSession">
+      <method id="__63">#{pageFlowScope.BusinessTripBean.checkSession}</method>
+      <outcome id="__61">
+        <fixed-outcome id="__62">success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="showFilmStrip">
+      <method>#{backingBeanScope.FlimStripUI._showFilmStrip}</method>
+      <outcome id="__13">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="hideFilmStrip">
+      <method>#{backingBeanScope.FlimStripUI._hideFilmStrip}</method>
+      <outcome id="__69">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="hideFilmStripCreate">
+      <method id="__77">#{backingBeanScope.FlimStripUI._hideFilmStrip}</method>
+      <outcome id="__75">
+        <fixed-outcome id="__76">next</fixed-outcome>
+      </outcome>
+    </method-call>
+	<method-call id="setAttribute">
+      <method>#{pageFlowScope.BusinessTripBean.subType}</method>
+      <outcome id="__108">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__8">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ResetFilter">
+      <method>#{pageFlowScope.BusinessTripBean.resetFilter}</method>
+      <outcome id="__89">
+        <fixed-outcome>EWP</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">BusinessTripFrag</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__7">addNew</from-outcome>
+        <to-activity-id id="__6">hideFilmStrip</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__33">
+        <from-outcome id="__35">edit</from-outcome>
+        <to-activity-id id="__34">hideFilmStripCreate</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__24">
+      <from-activity-id id="__25">BusinessTripDetails</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__28">back</from-outcome>
+        <to-activity-id id="__26">showFilmStrip</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__39">
+      <from-activity-id id="__40">setActionReason</from-activity-id>
+      <control-flow-case id="__42">
+        <from-outcome id="__43">insert</from-outcome>
+        <to-activity-id id="__41">CreateInsert</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__50">
+      <from-activity-id id="__51">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__52">
+        <from-outcome id="__53">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__54">BusinessTripFrag</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__23">
+      <from-activity-id id="__36">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__56">
+        <from-outcome id="__57">success</from-outcome>
+        <to-activity-id id="__55">Execute</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__59">
+        <from-outcome id="__60">expired</from-outcome>
+        <to-activity-id id="__58">SessionExpired</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__64">
+      <from-activity-id id="__65">checkSession</from-activity-id>
+      <control-flow-case id="__67">
+        <from-outcome id="__66">success</from-outcome>
+        <to-activity-id id="__68">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__70">
+      <from-activity-id id="__71">hideFilmStrip</from-activity-id>
+      <control-flow-case id="__74">
+        <from-outcome id="__72">next</from-outcome>
+        <to-activity-id id="__73">setActionReason</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__78">
+      <from-activity-id id="__79">hideFilmStripCreate</from-activity-id>
+      <control-flow-case id="__80">
+        <from-outcome id="__82">next</from-outcome>
+        <to-activity-id id="__81">BusinessTripDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__83">
+      <from-activity-id id="__84">showFilmStrip</from-activity-id>
+      <control-flow-case id="__86">
+        <from-outcome id="__85">next</from-outcome>
+        <to-activity-id id="__87">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+	<control-flow-rule id="__96">
+      <from-activity-id id="__97">CreateInsert</from-activity-id>
+      <control-flow-case id="__100">
+        <from-outcome id="__99">CreateInsert</from-outcome>
+        <to-activity-id id="__98">setAttribute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__109">
+      <from-activity-id id="__110">setAttribute</from-activity-id>
+      <control-flow-case id="__112">
+        <from-outcome id="__111">next</from-outcome>
+        <to-activity-id id="__113">BusinessTripDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__9">
+      <from-activity-id id="__10">Execute</from-activity-id>
+      <control-flow-case id="__14">
+        <from-outcome id="__12">Execute</from-outcome>
+        <to-activity-id id="__11">ResetFilter</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__16">ResetFilter</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome id="__88">EWP</from-outcome>
+        <to-activity-id id="__18">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

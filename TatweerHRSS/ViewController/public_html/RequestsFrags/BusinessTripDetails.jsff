@@ -1,0 +1,1112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" >
+	<af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1" >
+    <f:facet name="pageContents" >
+  <af:panelBox id="pgl4" >
+    <af:spacer height="5" id="s10"/>
+    <af:panelBox text="#{sessionScope.tripType eq 'Local' ? 'Local Business Trip Details' : sessionScope.tripType eq 'Inter' ? 'International Business Trip Details' : sessionScope.tripType eq 'Training' ? 'Training Details' : sessionScope.tripType eq 'Event' ? 'Event Details' : sessionScope.tripType eq 'Expense' ? 'Expense Details' : 'Business Trip Details'}" id="ph1" inlineStyle="background-color:#ffffff;">
+       
+      <f:facet name="toolbar">
+        <af:toolbar id="t1">
+          <af:commandToolbarButton text="Save" id="ctb5"
+                                   action="#{pageFlowScope.BusinessTripBean.save_action}"
+                                   rendered="#{bindings.StepId.inputValue eq 1 and !(bindings.RequestStatus.inputValue eq 'Withdrawn Rejected' || bindings.RequestStatus.inputValue eq 'Withdrawn' || bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval' || bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED')}"/>
+          <af:commandToolbarButton text="Submit" id="ctb1"
+                                   action="#{pageFlowScope.BusinessTripBean.submit_action}"
+                                   rendered="#{bindings.StepId.inputValue eq 1 and !(bindings.RequestStatus.inputValue eq 'Withdrawn Rejected' || bindings.RequestStatus.inputValue eq 'Withdrawn' || bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval' || bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED')}"/>
+          <af:commandToolbarButton text="Approve" id="ctb3"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"
+                                   action="#{pageFlowScope.BusinessTripBean.approve_action}"/>
+          <af:commandToolbarButton text="Approve Withdraw" id="ctb10"
+                                   action="#{pageFlowScope.BusinessTripBean.approveWithdraw}"
+                                    rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"/>
+          <af:commandToolbarButton text="Reject" id="ctb4"
+                                    rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}">
+            <af:showPopupBehavior popupId="p1" triggerType="action"
+                                  align="afterEnd"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton text="Reject Withdraw" id="ctb11"
+                                   action="#{pageFlowScope.BusinessTripBean.rejectWithdraw}"
+                                    rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"/>
+          <af:commandToolbarButton text="Cancel" id="ctb2"
+                                   actionListener="#{bindings.Rollback.execute}"
+                                   immediate="true" action="back">
+            <af:resetActionListener/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton text="OK" id="ctb6" action="back"
+                                   rendered="#{bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED'}"/>
+          <af:commandToolbarButton text="Calculate Amount Due" id="ctb12"
+                                   action="#{pageFlowScope.BusinessTripBean.calcAmountDue}"
+                                   visible="#{(bindings.RequestStatus.inputValue eq 'PENDING')  &amp;&amp; (pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue) &amp;&amp; bindings.BenefitType.inputValue eq 'A'}"/>
+        </af:toolbar>
+      </f:facet>
+    
+      <af:panelGroupLayout id="pgl2" layout="vertical"
+                           rendered="#{bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED'}">
+        <af:panelGroupLayout id="pgl1" halign="center" layout="horizontal">
+          <af:outputText value="This Request Has been : #{bindings.RequestStatus.inputValue}"
+                         id="ot1" inlineStyle="color:Red; font-size:medium;"/>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <af:panelFormLayout id="pfl9" rows="2" maxColumns="2"
+                          partialTriggers="expenseBusinessTripIdId">
+        <af:selectOneChoice value="#{bindings.TripType.inputValue}"
+                            label="#{bindings.TripType.label}"
+                            required="#{bindings.TripType.hints.mandatory}"
+                            shortDesc="#{bindings.TripType.hints.tooltip}"
+                            id="soc4" autoSubmit="true"
+                            disabled="true"
+                            valueChangeListener="#{pageFlowScope.BusinessTripBean.showHideSubType}">
+          <f:selectItems value="#{bindings.TripType.items}" id="si6"/>
+        </af:selectOneChoice>
+        <af:selectOneChoice value="#{bindings.SubType.inputValue}"
+                            label="#{bindings.SubType.label}"
+                            required="#{bindings.SubType.hints.mandatory}"
+                            shortDesc="#{bindings.SubType.hints.tooltip}"
+                            id="soc8"
+                            binding="#{pageFlowScope.BusinessTripBean.subType}"
+                            autoSubmit="true"
+                            partialTriggers="soc4 expenseBusinessTripIdId"
+		            rendered="#{bindings.TripType.inputValue ne 'Local' and bindings.TripType.inputValue ne 'Inter'}"
+                            disabled="#{bindings.TripType.inputValue eq 'Local' or bindings.TripType.inputValue eq 'Inter' or bindings.TripType.inputValue eq 'Expense' or bindings.StepId.inputValue ne 1}"
+                            valueChangeListener="#{pageFlowScope.BusinessTripBean.subTypeVCL}">
+          <f:selectItems value="#{bindings.SubType.items}" id="si11"/>
+        </af:selectOneChoice>
+        <af:inputListOfValues id="expenseBusinessTripIdId"
+                              popupTitle="Search and Select: #{bindings.ExpenseBusinessTripId.hints.label}"
+                              value="#{bindings.ExpenseBusinessTripId.inputValue}"
+                              label="#{bindings.ExpenseBusinessTripId.hints.label}"
+                              model="#{bindings.ExpenseBusinessTripId.listOfValuesModel}"
+                              required="#{bindings.ExpenseBusinessTripId.hints.mandatory}"
+                              columns="#{bindings.ExpenseBusinessTripId.hints.displayWidth}"
+                              shortDesc="#{bindings.ExpenseBusinessTripId.hints.tooltip}"
+                              autoSubmit="true"
+                              visible="#{bindings.TripType.inputValue eq 'Expense'}"
+                              partialTriggers="soc4"
+                              disabled="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.ExpenseBusinessTripId.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.ExpenseBusinessTripId.format}"/>
+        </af:inputListOfValues>
+        <af:inputText value="#{bindings.ExpenseType.inputValue}"
+                      label="#{bindings.ExpenseType.hints.label}"
+                      required="#{bindings.ExpenseType.hints.mandatory}"
+                      columns="#{bindings.ExpenseType.hints.displayWidth}"
+                      maximumLength="#{bindings.ExpenseType.hints.precision}"
+                      shortDesc="#{bindings.ExpenseType.hints.tooltip}"
+                      id="it15" disabled="true" partialTriggers="soc4"
+                      visible="#{bindings.TripType.inputValue eq 'Expense'}">
+          <f:validator binding="#{bindings.ExpenseType.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.Assignee.inputValue}"
+                      label="#{bindings.Assignee.hints.label}" 
+                      required="#{bindings.Assignee.hints.mandatory}"
+                      columns="#{bindings.Assignee.hints.displayWidth}"
+                      maximumLength="#{bindings.Assignee.hints.precision}"
+                      shortDesc="#{bindings.Assignee.hints.tooltip}" id="it24"
+                      disabled="true" visible="false">
+          <f:validator binding="#{bindings.Assignee.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice value="#{bindings.EventType.inputValue}"
+                            label="#{bindings.EventType.label}"
+                            required="#{bindings.EventType.hints.mandatory}"
+                            shortDesc="#{bindings.EventType.hints.tooltip}"
+                            id="soc7"
+                            visible="#{bindings.TripType.inputValue eq 'Event' || bindings.ExpenseType.inputValue eq 'Event'}"
+                      partialTriggers="soc4"
+                      disabled="#{bindings.StepId.inputValue ne 1 || bindings.TripType.inputValue eq 'Expense'}">
+          <f:selectItems value="#{bindings.EventType.items}" id="si10"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.EventSubject.inputValue}"
+                      label="#{bindings.EventSubject.hints.label}"
+                      required="#{bindings.EventSubject.hints.mandatory}"
+                      columns="#{bindings.EventSubject.hints.displayWidth}"
+                      maximumLength="#{bindings.EventSubject.hints.precision}"
+                      shortDesc="#{bindings.EventSubject.hints.tooltip}"
+                      id="it10"
+                      visible="#{bindings.TripType.inputValue eq 'Event' || bindings.ExpenseType.inputValue eq 'Event'}"
+                      partialTriggers="soc4"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}">
+          <f:validator binding="#{bindings.EventSubject.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.TargetedCompetencies.inputValue}"
+                      label="#{bindings.TargetedCompetencies.hints.label}"
+                      required="#{bindings.TargetedCompetencies.hints.mandatory}"
+                      columns="#{bindings.TargetedCompetencies.hints.displayWidth}"
+                      maximumLength="#{bindings.TargetedCompetencies.hints.precision}"
+                      shortDesc="#{bindings.TargetedCompetencies.hints.tooltip}"
+                      id="it16"
+                      visible="#{bindings.TripType.inputValue eq 'Training' || bindings.ExpenseType.inputValue eq 'Training'}"
+                      partialTriggers="soc4"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}">
+          <f:validator binding="#{bindings.TargetedCompetencies.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.CourseName.inputValue}"
+                      label="#{bindings.CourseName.hints.label}"
+                      required="#{bindings.CourseName.hints.mandatory}"
+                      columns="#{bindings.CourseName.hints.displayWidth}"
+                      maximumLength="#{bindings.CourseName.hints.precision}"
+                      shortDesc="#{bindings.CourseName.hints.tooltip}"
+                      id="it17"
+                      visible="#{bindings.TripType.inputValue eq 'Training' || bindings.ExpenseType.inputValue eq 'Training'}"
+                      partialTriggers="soc4"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}">
+          <f:validator binding="#{bindings.CourseName.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice value="#{bindings.MeansTravel.inputValue}"
+                      label="#{bindings.MeansTravel.hints.label}"
+                      required="#{bindings.MeansTravel.hints.mandatory}"
+                      shortDesc="#{bindings.MeansTravel.hints.tooltip}"
+                      id="soc10"
+                            disabled="#{((bindings.StepId.inputValue ne 1 ) ||  ( bindings.TripType.inputValue eq 'Expense' )  || (bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval'))  &amp;&amp; !( pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue)}"
+                            valueChangeListener="#{pageFlowScope.BusinessTripBean.noTransAllowance}"
+                            autoSubmit="true" partialTriggers="soc8">
+                    <af:selectItem rendered="true"  label="Car (Employee)" value="Car (Employee)" id="si7"
+                                   binding="#{pageFlowScope.BusinessTripBean.carValueInWayOfTravel}"/>
+          <af:selectItem rendered="true" label="Car (Company)" value="Car (Company)" id="si15"/>
+          <af:selectItem label="Train (Employee)" value="Train (Employee)" id="si8"/>
+          <af:selectItem label="Train (Company)" value="Train (Company)" id="si16"/>
+          <af:selectItem label="Plane (Employee)" value="Plane (Employee)" id="si9"/>
+          <af:selectItem label="Plane (Company)" value="Plane (Company)" id="si17"/>
+          <af:selectItem label="Other" id="si14" value="Other" rendered="false"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.OtherMeansTravel.inputValue}"
+                      label="#{bindings.OtherMeansTravel.hints.label}"
+                      required="#{bindings.OtherMeansTravel.hints.mandatory}"
+                      columns="#{bindings.OtherMeansTravel.hints.displayWidth}"
+                      maximumLength="#{bindings.OtherMeansTravel.hints.precision}"
+                      shortDesc="#{bindings.OtherMeansTravel.hints.tooltip}"
+                      id="it21"
+                      partialTriggers="soc10 si14"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                      visible="#{bindings.MeansTravel.inputValue eq 'Other' }">
+          <f:validator binding="#{bindings.OtherMeansTravel.validator}"/>
+        </af:inputText>
+        <!--<af:selectOneChoice label="Label 1" id="soc7">
+          <af:selectItem label="Car" value="Car" id="si7"/>
+          <af:selectItem label="Train" value="Train" id="si8"/>
+          <af:selectItem label="Plane" value="Plane" id="si9"/>
+        </af:selectOneChoice>-->
+        <af:selectBooleanCheckbox value="#{bindings.RequiredVisa.inputValue}"
+                                  label="#{bindings.RequiredVisa.label}"
+                                  shortDesc="#{bindings.RequiredVisa.hints.tooltip}"
+                                  id="sbc2" partialTriggers="soc4 soc8"
+                                  visible="#{bindings.SubType.inputValue eq 'International'}"
+                                  disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                                  binding="#{pageFlowScope.BusinessTripBean.requiredVisa}"
+                                  valueChangeListener="#{pageFlowScope.BusinessTripBean.requiredVisaChecked}"
+                                  autoSubmit="true"/>
+        <af:inputText value="#{bindings.TripComment.inputValue}"
+                      label="#{bindings.TripComment.hints.label}"
+                      required="#{bindings.TripComment.hints.mandatory}"
+                      columns="#{bindings.TripComment.hints.displayWidth}"
+                      maximumLength="#{bindings.TripComment.hints.precision}"
+                      shortDesc="#{bindings.TripComment.hints.tooltip}"
+                      id="it26"
+                      binding="#{pageFlowScope.BusinessTripBean.tripComment}"
+                      partialTriggers="it25" visible="false">
+          <f:validator binding="#{bindings.TripComment.validator}"/>
+        </af:inputText>
+        
+      </af:panelFormLayout>
+      <af:popup id="p1">
+        <af:dialog id="d1" title="Please Enter the Reject comment"
+                   type="cancel">
+          <af:inputText value="#{bindings.RejectComments.inputValue}"
+                        simple="true" columns="50"
+                        maximumLength="#{bindings.RejectComments.hints.precision}"
+                        shortDesc="#{bindings.RejectComments.hints.tooltip}"
+                        id="it11" rows="5" required="true">
+            <f:validator binding="#{bindings.RejectComments.validator}"/>
+          </af:inputText>
+          <f:facet name="buttonBar">
+            <af:commandButton text="Reject" id="cb1"
+                              action="#{pageFlowScope.BusinessTripBean.reject_action}"/>
+          </f:facet>
+        </af:dialog>
+      </af:popup>
+    </af:panelBox>
+    <af:spacer  height="5" id="s9"/>
+    <af:panelBox text="Person Details" id="pb6" inlineStyle="background-color:#ffffff;"
+                  partialTriggers="ctb1 ctb5 ctb3 ctb10 ctb4 ctb11 ctb2 ctb6 ctb12"
+                  rendered="#{(bindings.PersoneName.inputValue ne null or bindings.PersoneId.inputValue ne null or bindings.PersonPosition.inputValue ne null or bindings.PersonJob.inputValue ne null or bindings.PersonDepartment.inputValue ne null or bindings.PersonLocation.inputValue ne null) and (bindings.StepId.inputValue gt 1 )}">
+        <f:facet name="toolbar"/>
+        <af:panelFormLayout id="pfl8" rows="2" maxColumns="2">
+        <af:inputText value="#{bindings.PersoneName.inputValue}"
+                      label="Name" rendered="#{bindings.PersoneName.inputValue ne null}"
+                      required="#{bindings.PersoneName.hints.mandatory}"
+                      columns="#{bindings.PersoneName.hints.displayWidth}"
+                      maximumLength="#{bindings.PersoneName.hints.precision}"
+                      shortDesc="#{bindings.PersoneName.hints.tooltip}" id="it1"
+                      disabled="true"
+                      visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersoneName.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersoneId.inputValue}"
+                      label="Id"  rendered="#{bindings.PersoneId.inputValue ne null}"
+                      required="#{bindings.PersoneId.hints.mandatory}"
+                      columns="#{bindings.PersoneId.hints.displayWidth}"
+                      maximumLength="#{bindings.PersoneId.hints.precision}"
+                      shortDesc="#{bindings.PersoneId.hints.tooltip}" id="it4"
+                      disabled="true"
+                      visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersoneId.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.PersoneId.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonPosition.inputValue}"  rendered="#{bindings.PersonPosition.inputValue ne null}"
+                      label="Position"
+                      required="#{bindings.PersonPosition.hints.mandatory}" disabled="true"
+                      columns="50"
+                      maximumLength="#{bindings.PersonPosition.hints.precision}"
+                      shortDesc="#{bindings.PersonPosition.hints.tooltip}"
+                      id="it27"  visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonPosition.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonJob.inputValue}" rendered="#{bindings.PersonJob.inputValue ne null}"
+                      label="Job"
+                      required="#{bindings.PersonJob.hints.mandatory}" disabled="true"
+                      columns="50"
+                      maximumLength="#{bindings.PersonJob.hints.precision}"
+                      shortDesc="#{bindings.PersonJob.hints.tooltip}" id="it28"
+                       visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonJob.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonDepartment.inputValue}" disabled="true"
+                      label="Department" rendered="#{bindings.PersonDepartment.inputValue ne null}"
+                      required="#{bindings.PersonDepartment.hints.mandatory}"
+                      columns="50"
+                      maximumLength="#{bindings.PersonDepartment.hints.precision}"
+                      shortDesc="#{bindings.PersonDepartment.hints.tooltip}"
+                      id="it29"  visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonDepartment.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonLocation.inputValue}" rendered="#{bindings.PersonLocation.inputValue ne null}"
+                      label="Location" disabled="true"
+                      required="#{bindings.PersonLocation.hints.mandatory}"
+                       columns="50"
+                      maximumLength="#{bindings.PersonLocation.hints.precision}"
+                      shortDesc="#{bindings.PersonLocation.hints.tooltip}"
+                      id="it30"  visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonLocation.validator}"/>
+        </af:inputText>
+        </af:panelFormLayout>
+      </af:panelBox>
+      <af:spacer  height="5" id="s91"/>
+    <af:panelBox text="Location" id="pb1" inlineStyle="background-color:#ffffff;">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl2" rows="2" maxColumns="2"
+                          partialTriggers="expenseBusinessTripIdId">
+        <f:facet name="footer"/>
+        <af:panelGroupLayout id="pgl5" layout="horizontal">
+              <af:selectBooleanCheckbox value="#{bindings.OneWay_TRANS.inputValue}" partialTriggers="soc8"
+                                        label="One Way Trip" autoSubmit="true" visible="#{bindings.SubType.inputValue ne 'International'}"
+                                        shortDesc="#{bindings.OneWay_TRANS.hints.tooltip}"  disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                                        valueChangeListener="#{pageFlowScope.BusinessTripBean.onChangeOneWay}"
+                                        id="sbc4"/>
+              <af:spacer  width="5" id="s11"/>
+              <af:selectOneChoice value="#{bindings.DestinationType.inputValue}"
+                              label="#{bindings.DestinationType.label}"
+                              shortDesc="#{bindings.DestinationType.hints.tooltip}"
+                              id="soc9"
+                              disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }"
+                              partialTriggers="soc8"
+                              binding="#{pageFlowScope.BusinessTripBean.desType}"
+                              autoSubmit="true"
+                              visible="#{(bindings.SubType.inputValue ne 'Local') || (bindings.TripType.inputValue eq 'Expense' &amp;&amp; bindings.SubType.inputValue ne 'Local')}"
+                              valueChangeListener="#{pageFlowScope.BusinessTripBean.setAllowByCompany}"
+                              showRequired="true"
+                              required="#{bindings.DestinationType.hints.mandatory}">
+            <f:selectItems value="#{bindings.DestinationType.items}" id="si12"/>
+          </af:selectOneChoice>
+          <af:spacer width="20" id="s7"/>
+          <af:selectOneChoice value="#{bindings.CountryId.inputValue}"
+                              label="#{bindings.CountryId.label}"
+                             
+                              required="#{bindings.CountryId.hints.mandatory}"
+                              shortDesc="#{bindings.CountryId.hints.tooltip}"
+                              id="soc5"
+                              visible="#{ (bindings.SubType.inputValue ne 'Local') || (bindings.TripType.inputValue eq 'Expense' &amp;&amp; bindings.SubType.inputValue ne 'Local')}"
+                              partialTriggers="soc4 soc8"
+                              disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }">
+            <f:selectItems value="#{bindings.CountryId.items}"  id="si1"/>
+          </af:selectOneChoice>
+        </af:panelGroupLayout>
+        <af:panelGroupLayout id="pgl6" layout="horizontal">
+          <af:inputText value="#{bindings.NewCity.inputValue}"
+                        label="#{bindings.NewCity.hints.label}" 
+                        required="#{bindings.NewCity.hints.mandatory}"
+                        partialTriggers="soc12 soc8 soc4"
+                        columns="#{bindings.NewCity.hints.displayWidth}" visible="#{(bindings.TripType.inputValue eq 'Inter' || bindings.SubType.inputValue eq 'International' ||(bindings.TripType.inputValue eq 'Expense' and  bindings.SubType.inputValue eq 'International'))}"
+                        maximumLength="#{bindings.NewCity.hints.precision}"
+                        shortDesc="#{bindings.NewCity.hints.tooltip}" id="it18"
+                        disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                        showRequired="true">
+            <f:validator binding="#{bindings.NewCity.validator}"/>
+          </af:inputText>
+              <af:selectOneChoice value="#{bindings.NewCity1.inputValue}" partialTriggers="soc4 soc8  sbc4 soc13"
+                                  label="#{bindings.NewCity1.label}" visible="#{(((bindings.TripType.inputValue eq 'Local' || bindings.TripType.inputValue eq 'Training' || bindings.TripType.inputValue eq 'Event') &amp;&amp; bindings.SubType.inputValue eq 'Local') ||  bindings.TripType.inputValue eq 'Expense' and  bindings.SubType.inputValue eq 'Local')}"
+                                  required="#{bindings.NewCity1.hints.mandatory}"  autoSubmit="true"
+                                  shortDesc="#{bindings.NewCity1.hints.tooltip}"  disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                                valueChangeListener="#{pageFlowScope.BusinessTripBean.onChangeFromCityLOV}"
+                                  id="soc12" showRequired="true">
+                <f:selectItems value="#{bindings.NewCity1.items}" id="si18"/>
+              </af:selectOneChoice>
+              <af:selectOneChoice value="#{bindings.ToCity1.inputValue}" partialTriggers="soc4 soc8 sbc4  it15" autoSubmit="true"
+                                  label="#{bindings.ToCity1.label}" visible="#{(((bindings.TripType.inputValue eq 'Local' || bindings.TripType.inputValue eq 'Training' || bindings.TripType.inputValue eq 'Event') &amp;&amp; bindings.SubType.inputValue eq 'Local') ||  bindings.TripType.inputValue eq 'Expense' and  bindings.SubType.inputValue eq 'Local')}"
+                                  required="#{bindings.ToCity1.hints.mandatory}"  disabled="#{bindings.OneWay_TRANS.inputValue || bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                                  shortDesc="#{bindings.ToCity1.hints.tooltip}"
+                                  valueChangeListener="#{pageFlowScope.BusinessTripBean.onChangeToCityLov}"
+                                  id="soc13" showRequired="true">
+                <f:selectItems value="#{bindings.ToCity1.items}" id="si19"/>
+              </af:selectOneChoice>
+              <af:inputText value="#{bindings.ToCity.inputValue}"
+                        label="#{bindings.ToCity.hints.label}" visible="#{(bindings.TripType.inputValue eq 'Inter' || bindings.SubType.inputValue eq 'International' || bindings.TripType.inputValue eq 'Expense' and  bindings.SubType.inputValue eq 'International')}"
+                        required="#{bindings.ToCity.hints.mandatory}"
+                        columns="#{bindings.ToCity.hints.displayWidth}" partialTriggers="soc4 soc8 soc13"
+                        maximumLength="#{bindings.ToCity.hints.precision}"
+                        shortDesc="#{bindings.ToCity.hints.tooltip}" id="it32"
+                        disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }"
+                            showRequired="true">
+            <f:validator binding="#{bindings.ToCity.validator}"/>
+          </af:inputText>
+          <af:spacer width="20" id="s5"/>
+              <af:selectBooleanCheckbox value="#{bindings.More_Cities_Check_Trans.inputValue}" label="More Cities" 
+                                        valueChangeListener="#{pageFlowScope.BusinessTripBean.onChangeMoreCities}" 
+                                        disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }"  visible="#{bindings.TripType.inputValue ne 'Expense' || bindings.TripType.inputValue eq 'Expense'}"
+                                        shortDesc="#{bindings.More_Cities_Check_Trans.hints.tooltip}" autoSubmit="true"     binding="#{pageFlowScope.BusinessTripBean.moreCitesCheckBox}"
+                                        id="sbc5"   partialTriggers="soc4 soc8 soc14">
+                                        <!--<f:converter converterId="BooleanConverter"/>-->
+                                        </af:selectBooleanCheckbox>
+              
+              <!--<af:selectBooleanCheckbox id="sbc3" autoSubmit="true"
+                                    label="More Cities"
+                                    disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }"
+                                    visible="#{bindings.TripType.inputValue ne 'Expense'}"
+                                    valueChangeListener="#{pageFlowScope.BusinessTripBean.showOrHideOtherCities}"
+                                    partialTriggers="soc4"
+                                    binding="#{pageFlowScope.BusinessTripBean.moreCitesCheckBox}"/>-->
+          <af:spacer width="20" id="s4"/>
+     <af:panelLabelAndMessage label="Other Cities" partialTriggers="sbc5" id="plm1" visible="#{bindings.More_Cities_Check_Trans.inputValue}">
+                <af:selectManyChoice autoSubmit="true" value="#{pageFlowScope.BusinessTripBean.selCities}" 
+                                    required="#{bindings.OtherCitiesTrans.hints.mandatory}" partialTriggers="sbc5 soc8 soc4"
+                                     binding="#{pageFlowScope.BusinessTripBean.otherCitiesibinding}"
+                                     visible="#{bindings.SubType.inputValue eq 'Local'  and bindings.More_Cities_Check_Trans.inputValue ||  (bindings.TripType.inputValue eq 'Expense' and bindings.SubType.inputValue eq 'Local')}"
+                                    shortDesc="#{bindings.OtherCitiesTrans.hints.tooltip}" 
+                                    disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                                    id="soc14">
+                  <f:selectItems value="#{bindings.OtherCitiesTrans.items}"
+                                 id="si20"/>
+                </af:selectManyChoice>
+                <af:inputText value="#{bindings.OtherCities.inputValue}" partialTriggers="soc8 sbc5 soc4" label="Other Cities" autoSubmit="true"
+                              simple="true" visible="#{bindings.SubType.inputValue eq 'International'  and bindings.More_Cities_Check_Trans.inputValue ||  bindings.TripType.inputValue eq 'Expense' and bindings.SubType.inputValue eq 'International'}"
+                              required="#{bindings.OtherCities.hints.mandatory}"
+                              columns="50" rows="3" disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                              binding="#{pageFlowScope.BusinessTripBean.otherCitiesDb}"
+                              maximumLength="#{bindings.OtherCities.hints.precision}"
+                              shortDesc="#{bindings.OtherCities.hints.tooltip}"
+                              id="it31">
+                  <f:validator binding="#{bindings.OtherCities.validator}"/>
+                </af:inputText>
+        </af:panelLabelAndMessage>
+        </af:panelGroupLayout>
+        <af:selectOneChoice value="#{bindings.CityId.inputValue}"
+                            label="#{bindings.CityId.label}"
+                            required="#{bindings.CityId.hints.mandatory}"
+                            shortDesc="#{bindings.CityId.hints.tooltip}"
+                            id="soc6" rendered="false"
+                            disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                            partialTriggers="soc4 soc8">
+          <f:selectItems value="#{bindings.CityId.items}" id="si3"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.DestinationId.inputValue}"
+                      label="#{bindings.DestinationId.hints.label}"
+                      required="#{bindings.DestinationId.hints.mandatory}"
+                      columns="#{bindings.DestinationId.hints.displayWidth}"
+                      maximumLength="#{bindings.DestinationId.hints.precision}"
+                      shortDesc="#{bindings.DestinationId.hints.tooltip}"
+                      id="it9"
+                      visible="#{bindings.TripType.inputValue eq 'Inter' || bindings.TripType.inputValue eq 'Training' || bindings.ExpenseType.inputValue eq 'Inter' || bindings.ExpenseType.inputValue eq 'Training'}"
+                      partialTriggers="soc4"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                      rendered="false">
+          <f:validator binding="#{bindings.DestinationId.validator}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer  height="5" id="s912"/>
+    <af:panelBox text="Duration" id="pb2" inlineStyle="background-color:#ffffff;" partialTriggers="soc8">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl3" rows="1"
+                          partialTriggers="expenseBusinessTripIdId">
+        <f:facet name="footer"/>
+        <af:inputDate value="#{bindings.StartDate.inputValue}" 
+                      label="#{bindings.StartDate.hints.label}" partialTriggers="soc8 soc12"
+                      binding="#{pageFlowScope.BusinessTripBean.startdatebinding}"
+                      shortDesc="#{bindings.StartDate.hints.tooltip}" id="id1"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' || bindings.TripType.inputValue eq 'Inter' or bindings.SubType.inputValue eq 'International'}"
+                      autoSubmit="true" showRequired="true"
+                      valueChangeListener="#{pageFlowScope.BusinessTripBean.calcDaysByStartDate}">
+          <f:validator binding="#{bindings.StartDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.StartDate.format}"/>
+        </af:inputDate>
+        <af:inputDate value="#{bindings.EndDate.inputValue}"        
+                      label="#{bindings.EndDate.hints.label}"  partialTriggers="soc8 soc12"
+                      shortDesc="#{bindings.EndDate.hints.tooltip}" id="id2"
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' || bindings.TripType.inputValue eq 'Inter' or bindings.SubType.inputValue eq 'International'}"
+                      autoSubmit="true" showRequired="true"
+                      valueChangeListener="#{pageFlowScope.BusinessTripBean.calcDaysByEndDate}"
+                      binding="#{pageFlowScope.BusinessTripBean.enddatebinding}">
+          <f:validator binding="#{bindings.EndDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.EndDate.format}"/>
+        </af:inputDate>
+            <af:inputDate value="#{bindings.ActualStartDate.inputValue}" partialTriggers="soc8" showRequired="true" autoSubmit="true"   
+                      disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.onChangeActualStartDate}"
+                          label="Actual Start Date"  rendered="#{bindings.SubType.inputValue eq 'International'}"
+                          shortDesc="#{bindings.ActualStartDate.hints.tooltip}"
+                          id="id3">
+              <f:validator binding="#{bindings.ActualStartDate.validator}"/>
+              <af:convertDateTime pattern="#{bindings.ActualStartDate.format}"/>
+            </af:inputDate>
+            <af:inputDate value="#{bindings.ActualEndDate.inputValue}"  partialTriggers="soc8"  showRequired="true" autoSubmit="true"
+                          disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense' }" valueChangeListener="#{pageFlowScope.BusinessTripBean.onChangeActualEndDate}"
+                          label="Actual End Date"  rendered="#{bindings.SubType.inputValue eq 'International'}"
+                          shortDesc="#{bindings.ActualEndDate.hints.tooltip}"
+                          id="id4">
+              <f:validator binding="#{bindings.ActualEndDate.validator}"/>
+              <af:convertDateTime pattern="#{bindings.ActualEndDate.format}"/>
+            </af:inputDate>
+            <af:inputText value="#{bindings.Days.inputValue}"
+                      label="#{bindings.Days.hints.label}"
+                      required="#{bindings.Days.hints.mandatory}"
+                      columns="#{bindings.Days.hints.displayWidth}"
+                      maximumLength="#{bindings.Days.hints.precision}"
+                      shortDesc="#{bindings.Days.hints.tooltip}" id="it7"
+                      autoSubmit="true" partialTriggers="id1 id2 soc9 soc4 soc8 id3 id4"
+                      disabled="true">
+          <f:validator binding="#{bindings.Days.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.Days.format}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer  height="5" id="s124"/>
+    <af:panelBox text="Allowances" id="pb3" inlineStyle="background-color:#ffffff;">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl4" maxColumns="3"
+                          partialTriggers="expenseBusinessTripIdId" rows="6">
+        <f:facet name="footer"/>
+            <af:inputText value="#{bindings.TrainingByEmployee.inputValue}"
+                          label="#{bindings.TrainingByEmployee.hints.label}"
+                          required="#{bindings.TrainingByEmployee.hints.mandatory}"
+                          columns="#{bindings.TrainingByEmployee.hints.displayWidth}"
+                          maximumLength="#{bindings.TrainingByEmployee.hints.precision}"
+                          shortDesc="#{bindings.TrainingByEmployee.hints.tooltip}"
+                          id="it37"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.trainingCostVCL}"
+                          autoSubmit="true"
+                          disabled="#{ !((pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue) ||  ( bindings.StepId.inputValue eq 1 ) || (bindings.StepId.inputValue == null ) )}"
+                          rendered="#{(((bindings.StepId.inputValue eq 1 ||  bindings.StepId.inputValue eq 2 ||  bindings.StepId.inputValue eq 3 || bindings.StepId.inputValue eq 4 ||  bindings.StepId.inputValue eq 5 ||  bindings.StepId.inputValue eq 6 || pageFlowScope.SpecialEdit eq 'Y') &amp;&amp; ( bindings.TripType.inputValue eq 'Training')) ||(( bindings.TripType.inputValue eq 'Expense')&amp;&amp;( bindings.ExpenseType.inputValue eq 'Training')))}"
+                          visible="#{(bindings.TripType.inputValue eq 'Training') || (bindings.ExpenseType.inputValue eq 'Training')}">
+              <f:validator binding="#{bindings.TrainingByEmployee.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.TrainingByEmployee.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.TravelCostByEmployee.inputValue}"
+                          label="#{bindings.TravelCostByEmployee.hints.label}"
+                          required="#{bindings.TravelCostByEmployee.hints.mandatory}"
+                          columns="#{bindings.TravelCostByEmployee.hints.displayWidth}"
+                          maximumLength="#{bindings.TravelCostByEmployee.hints.precision}"
+                          shortDesc="#{bindings.TravelCostByEmployee.hints.tooltip}"
+                          id="it38"
+                          rendered="#{(bindings.StepId.inputValue eq 1 ||  bindings.StepId.inputValue eq 2 ||  bindings.StepId.inputValue eq 3 || bindings.StepId.inputValue eq 4 ||  bindings.StepId.inputValue eq 5 ||  bindings.StepId.inputValue eq 6 || pageFlowScope.SpecialEdit eq 'Y')}"
+                          disabled="#{ !((pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue) ||  ( bindings.StepId.inputValue eq 1 ) || (bindings.StepId.inputValue == null ) )}"
+                          autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.trainingCostVCL}">
+              <f:validator binding="#{bindings.TravelCostByEmployee.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.TravelCostByEmployee.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.OtherByEmployee.inputValue}"
+                          label="#{bindings.OtherByEmployee.hints.label}"
+                          required="#{bindings.OtherByEmployee.hints.mandatory}"
+                          columns="#{bindings.OtherByEmployee.hints.displayWidth}"
+                          maximumLength="#{bindings.OtherByEmployee.hints.precision}"
+                          shortDesc="#{bindings.OtherByEmployee.hints.tooltip}"
+                          id="it35"
+                          rendered="#{(bindings.StepId.inputValue eq 1 ||  bindings.StepId.inputValue eq 2 ||  bindings.StepId.inputValue eq 3 || bindings.StepId.inputValue eq 4 ||  bindings.StepId.inputValue eq 5 ||  bindings.StepId.inputValue eq 6 || pageFlowScope.SpecialEdit eq 'Y')}"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.trainingCostVCL}"
+                          autoSubmit="true"
+                          disabled="#{ !((pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue) ||  ( bindings.StepId.inputValue eq 1 ) || (bindings.StepId.inputValue == null ) )}">
+              <f:validator binding="#{bindings.OtherByEmployee.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.OtherByEmployee.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.PerDiemAmount.inputValue}"
+                      label="#{bindings.PerDiemAmount.hints.label}"
+                      required="#{bindings.PerDiemAmount.hints.mandatory}"
+                      columns="#{bindings.PerDiemAmount.hints.displayWidth}"
+                      maximumLength="#{bindings.PerDiemAmount.hints.precision}"
+                      shortDesc="#{bindings.PerDiemAmount.hints.tooltip}"
+                      id="it612" 
+                      partialTriggers="it7 id1 id2 it20 it8 soc8 it22 it23 soc9 soc4 it24 id3 id4 soc13 soc12 soc8" 
+                      rendered="#{bindings.BenefitType.inputValue eq 'P'}"
+                      disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                      autoSubmit="true">
+          <f:validator binding="#{bindings.PerDiemAmount.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.PerDiemAmount.format}"/>
+        </af:inputText>
+            <af:inputText value="#{bindings.TrainingCost.inputValue}"
+                          label="#{bindings.TrainingCost.hints.label}"
+                          required="#{bindings.TrainingCost.hints.mandatory}"
+                          columns="#{bindings.TrainingCost.hints.displayWidth}"
+                          maximumLength="#{bindings.TrainingCost.hints.precision}"
+                          shortDesc="#{bindings.TrainingCost.hints.tooltip}"
+                          id="it20" partialTriggers="soc8"
+                          disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                          autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.trainingCostVCL}"
+                          visible="#{(bindings.TripType.inputValue eq 'Training') || (bindings.ExpenseType.inputValue eq 'Training')}"
+                          rendered="#{(pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue)}">
+              <f:validator binding="#{bindings.TrainingCost.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.TrainingCost.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.OtherByTatweer.inputValue}"
+                          label="#{bindings.OtherByTatweer.hints.label}"
+                          required="#{bindings.OtherByTatweer.hints.mandatory}"
+                          columns="#{bindings.OtherByTatweer.hints.displayWidth}"
+                          maximumLength="#{bindings.OtherByTatweer.hints.precision}"
+                          shortDesc="#{bindings.OtherByTatweer.hints.tooltip}"
+                          id="it36"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.trainingCostVCL}"
+                          autoSubmit="true"
+                          disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                          visible="#{(pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue)}">
+              <f:validator binding="#{bindings.OtherByTatweer.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.OtherByTatweer.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.TravelCost.inputValue}"
+                          label="#{bindings.TravelCost.hints.label}"
+                          required="#{bindings.TravelCost.hints.mandatory}"
+                          columns="#{bindings.TravelCost.hints.displayWidth}"
+                          maximumLength="#{bindings.TravelCost.hints.precision}"
+                          shortDesc="#{bindings.TravelCost.hints.tooltip}"
+                          id="it22"
+                          disabled="#{pageFlowScope.SpecialEdit ne 'Y'  || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                          autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.travelCostVCL}"
+                          visible="#{((pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue)||(PersonInfo.position eq 'Financial Planning &amp; Analysis Manager' and bindings.Assignee.inputValue eq 'Financial Planning &amp; Analysis Manager')||(PersonInfo.position eq 'Director of IT &amp; C' and bindings.Assignee.inputValue eq 'Director of IT &amp; C') ||(PersonInfo.position eq 'CEO' and bindings.Assignee.inputValue eq 'CEO') || ( bindings.TripType.inputValue eq 'Expense' ) || (bindings.RequestStatus.inputValue eq 'APPROVED'))}">
+              <f:validator binding="#{bindings.TravelCost.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.TravelCost.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.EventCost.inputValue}"
+                          label="#{bindings.EventCost.hints.label}"
+                          required="#{bindings.EventCost.hints.mandatory}"
+                          columns="#{bindings.EventCost.hints.displayWidth}"
+                          maximumLength="#{bindings.EventCost.hints.precision}"
+                          shortDesc="#{bindings.EventCost.hints.tooltip}"
+                          id="it23"
+                          disabled="#{pageFlowScope.SpecialEdit ne 'Y'  || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                          autoSubmit="true"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.eventCostVCL}"
+                          visible="#{((pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue)||(PersonInfo.position eq 'Financial Planning &amp; Analysis Manager' and bindings.Assignee.inputValue eq 'Financial Planning &amp; Analysis Manager')||(PersonInfo.position eq 'Director of IT &amp; C'  and bindings.Assignee.inputValue eq 'Director of IT &amp; C')||(PersonInfo.position eq 'CEO' and bindings.Assignee.inputValue eq 'CEO')) &amp;&amp; ((bindings.TripType.inputValue eq 'Event') ||(bindings.ExpenseType.inputValue eq 'Event'))}">
+              <f:validator binding="#{bindings.EventCost.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.EventCost.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.VisaCost.inputValue}"
+                          label="#{bindings.VisaCost.hints.label}"
+                          required="#{bindings.VisaCost.hints.mandatory}"
+                          columns="#{bindings.VisaCost.hints.displayWidth}"
+                          maximumLength="#{bindings.VisaCost.hints.precision}"
+                          shortDesc="#{bindings.VisaCost.hints.tooltip}"
+                          id="it3"
+                          disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                          visible="#{((pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue)||(PersonInfo.position eq 'Financial Planning &amp; Analysis Manager')||(PersonInfo.position eq 'Director of IT &amp; C')||(PersonInfo.position eq 'CEO'))&amp;&amp; ( bindings.SubType.inputValue eq 'International')}"
+                          autoSubmit="true" partialTriggers="soc8"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.visaCostVCL}">
+              <f:validator binding="#{bindings.VisaCost.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.VisaCost.format}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.LaundryAllowanceAmount.inputValue}"
+                      label="#{bindings.LaundryAllowanceAmount.hints.label}"
+                      required="#{bindings.LaundryAllowanceAmount.hints.mandatory}"
+                      columns="#{bindings.LaundryAllowanceAmount.hints.displayWidth}"
+                      maximumLength="#{bindings.LaundryAllowanceAmount.hints.precision}"
+                      shortDesc="#{bindings.LaundryAllowanceAmount.hints.tooltip}"
+                      id="it6" partialTriggers="it7 id1 id2"
+                      rendered="#{bindings.BenefitType.inputValue eq 'A'}"
+                      disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                      autoSubmit="true">
+          <f:validator binding="#{bindings.LaundryAllowanceAmount.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.LaundryAllowanceAmount.format}"/>
+        </af:inputText>
+            <af:selectOneChoice value="#{bindings.TransportationAllowanceType.inputValue}"
+                            label="#{bindings.TransportationAllowanceType.label}"
+                            required="#{bindings.TransportationAllowanceType.hints.mandatory}"
+                            shortDesc="#{bindings.TransportationAllowanceType.hints.tooltip}"
+                            id="soc3"
+                            autoSubmit="true"
+                            valueChangeListener="#{pageFlowScope.BusinessTripBean.trans_allowances_vcl}"
+                            binding="#{pageFlowScope.BusinessTripBean.transAllowanceType}"
+                            partialTriggers="soc10 id1 id2 soc9"
+                            rendered="#{bindings.BenefitType.inputValue eq 'A'}"
+                            disabled="#{((bindings.StepId.inputValue ne 1 )||  ( bindings.TripType.inputValue eq 'Expense' ) || ( bindings.Days.inputValue eq null ) || (bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval')) &amp;&amp; (pageFlowScope.SpecialEdit ne 'Y'  || PersonInfo.personName ne bindings.AssigneeName.inputValue)}">
+          <f:selectItems value="#{bindings.TransportationAllowanceType.items}"
+                         id="si2"/>
+        </af:selectOneChoice>
+            <af:inputText value="#{bindings.TransAllowanceAmount.inputValue}"
+                      label="#{bindings.TransAllowanceAmount.hints.label}"
+                      required="#{bindings.TransAllowanceAmount.hints.mandatory}"
+                      columns="#{bindings.TransAllowanceAmount.hints.displayWidth}"
+                      maximumLength="#{bindings.TransAllowanceAmount.hints.precision}"
+                      shortDesc="#{bindings.TransAllowanceAmount.hints.tooltip}"
+                      id="it2"
+                      partialTriggers="soc10 soc3 pfl3 it7 soc9"
+                      rendered="#{bindings.BenefitType.inputValue eq 'A'}"
+                      binding="#{pageFlowScope.BusinessTripBean.transAllowanceValue}"
+                      autoSubmit="true"
+                      disabled="#{(!(( pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue) &amp;&amp; (bindings.TransportationAllowanceType.inputValue eq 'Comp')) || (bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval'))&amp;&amp; (!((pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue) &amp;&amp; (bindings.TransportationAllowanceType.inputValue eq 'Comp')&amp;&amp;(bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval')))}">
+          <f:validator binding="#{bindings.TransAllowanceAmount.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.TransAllowanceAmount.format}"/>
+        </af:inputText>
+            <af:selectOneChoice value="#{bindings.HousingAllowanceType.inputValue}"
+                                label="#{bindings.HousingAllowanceType.label}"
+                                required="#{bindings.HousingAllowanceType.hints.mandatory}"
+                                shortDesc="#{bindings.HousingAllowanceType.hints.tooltip}"
+                                id="soc1"
+                                disabled="#{((bindings.StepId.inputValue ne 1 )||  ( bindings.TripType.inputValue eq 'Expense' ) || ( bindings.Days.inputValue eq null ) || (bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval')) &amp;&amp; !( pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue)}"
+                                autoSubmit="true"
+                                valueChangeListener="#{pageFlowScope.BusinessTripBean.hous_allowances_vcl}"
+                                partialTriggers="id1 id2 soc9"
+                                rendered="#{bindings.BenefitType.inputValue eq 'A'}"
+                                binding="#{pageFlowScope.BusinessTripBean.housingAllowanceType}">
+              <f:selectItems value="#{bindings.HousingAllowanceType.items}"
+                             id="si4"/>
+            </af:selectOneChoice>
+            <af:inputText value="#{bindings.HousingAllowanceAmount.inputValue}"
+                      label="#{bindings.HousingAllowanceAmount.hints.label}"
+                      required="#{bindings.HousingAllowanceAmount.hints.mandatory}"
+                      columns="#{bindings.HousingAllowanceAmount.hints.displayWidth}"
+                      maximumLength="#{bindings.HousingAllowanceAmount.hints.precision}"
+                      shortDesc="#{bindings.HousingAllowanceAmount.hints.tooltip}"
+                      id="it5"
+                      rendered="#{bindings.BenefitType.inputValue eq 'A'}"
+                      partialTriggers="soc1 pfl3 it7 soc9" autoSubmit="true"
+                      disabled="#{(!(( pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue) &amp;&amp; (bindings.HousingAllowanceType.inputValue eq 'Comp')) || (bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval'))&amp;&amp; (!(( pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue) &amp;&amp; (bindings.HousingAllowanceType.inputValue eq 'Comp')&amp;&amp;(bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval')))}"
+                      binding="#{pageFlowScope.BusinessTripBean.housingAllowanceValue}">
+          <f:validator binding="#{bindings.HousingAllowanceAmount.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.HousingAllowanceAmount.format}"/>
+        </af:inputText>
+        <af:selectOneChoice value="#{bindings.FoodAllowanceType.inputValue}"
+                            label="#{bindings.FoodAllowanceType.label}"
+                            required="#{bindings.FoodAllowanceType.hints.mandatory}"
+                            shortDesc="#{bindings.FoodAllowanceType.hints.tooltip}"
+                            id="soc2"
+                            disabled="#{((bindings.StepId.inputValue ne 1 )||  ( bindings.TripType.inputValue eq 'Expense' ) || ( bindings.Days.inputValue eq null ) || (bindings.RequestStatus.inputValue eq 'WithdrawNeedApproval')) &amp;&amp; !( pageFlowScope.SpecialEdit eq 'Y'  and PersonInfo.personName eq bindings.AssigneeName.inputValue)}"
+                            autoSubmit="true"
+                            valueChangeListener="#{pageFlowScope.BusinessTripBean.food_allowances_vcl}"
+                            partialTriggers="soc9 id1 id2 it7"
+                            binding="#{pageFlowScope.BusinessTripBean.foodAllowanceType}"
+                            rendered="false">
+          <f:selectItems value="#{bindings.FoodAllowanceType.items}" id="si5"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.FoodAllowanceAmount.inputValue}"
+                      label="#{bindings.FoodAllowanceAmount.hints.label}"
+                      required="#{bindings.FoodAllowanceAmount.hints.mandatory}"
+                      columns="#{bindings.FoodAllowanceAmount.hints.displayWidth}"
+                      maximumLength="#{bindings.FoodAllowanceAmount.hints.precision}"
+                      shortDesc="#{bindings.FoodAllowanceAmount.hints.tooltip}"
+                      id="it13"
+                      rendered="#{bindings.BenefitType.inputValue eq 'A'}"
+                      partialTriggers="soc9 pb2 pfl3 it7 soc2 id1 id2" autoSubmit="true"
+                      binding="#{pageFlowScope.BusinessTripBean.foodAllowanceValue}"
+                      disabled="#{pageFlowScope.SpecialEdit ne 'Y'  || PersonInfo.personName ne bindings.AssigneeName.inputValue}">
+          <f:validator binding="#{bindings.FoodAllowanceAmount.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.FoodAllowanceAmount.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.OtherCost.inputValue}"
+                      label="#{bindings.OtherCost.hints.label}"
+                      required="#{bindings.OtherCost.hints.mandatory}"
+                      columns="#{bindings.OtherCost.hints.displayWidth}"
+                      maximumLength="#{bindings.OtherCost.hints.precision}"
+                      shortDesc="#{bindings.OtherCost.hints.tooltip}" id="it8"
+                      disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.personName ne bindings.AssigneeName.inputValue}"
+                      autoSubmit="true"
+                      valueChangeListener="#{pageFlowScope.BusinessTripBean.otherCostVCL}"
+                      rendered="false" visible="false">
+          <f:validator binding="#{bindings.OtherCost.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.OtherCost.format}"/>
+        </af:inputText>
+            <af:panelLabelAndMessage label="#{bindings.BudgetFlag.label}" id="plam1"
+                                 rendered="#{(bindings.StepId.inputValue ne 1 &amp;&amp;  bindings.StepId.inputValue ne 2 &amp;&amp; bindings.StepId.inputValue ne 3) || bindings.TripType.inputValue eq 'Expense'}"
+                                 visible="false">
+          <af:selectBooleanCheckbox value="#{bindings.BudgetFlag.inputValue}"
+                                    label="#{bindings.BudgetFlag.label}"
+                                    disabled="#{bindings.StepId.inputValue ne 5 ||   bindings.TripType.inputValue eq 'Expense'}"
+                                    shortDesc="#{bindings.BudgetFlag.hints.tooltip}"
+                                    id="sbc1" simple="true"/>
+          <af:spacer width="10" height="25" id="s1"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage
+                                 label="#{bindings.TotalAmount.hints.label}"
+                                 id="plam2" rendered="false">
+          <af:panelGroupLayout id="pgl3" layout="horizontal">
+            <af:outputText value="#{bindings.TotalAmount.inputValue}"
+                           shortDesc="#{bindings.TotalAmount.hints.tooltip}"
+                           id="it12" visible="#{requestScope.show eq 'show'}"
+                           inlineStyle="font-weight:bold; color:Red; font-size:small;"
+                           partialTriggers="cb2">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.TotalAmount.format}"/>
+            </af:outputText>
+            <af:commandLink id="cb2">
+              <af:image source="/Skins/images/calculator-icon.png" id="i1"/>
+              <af:setActionListener from="show" to="#{requestScope.show}"/>
+            </af:commandLink>
+            <f:facet name="separator">
+              <af:spacer width="10" height="10" id="s3"/>
+            </f:facet>
+          </af:panelGroupLayout>
+        </af:panelLabelAndMessage>
+<af:panelLabelAndMessage label="Total BT Cost"
+                                 id="plam3" 
+                                 partialTriggers="it6 it2 it5 it13 it3 it8 it20 it22 it23 soc1 soc2 soc3 id1 id2 soc8 soc9 soc4 id3 id4 soc13 soc12 soc8 it35 it36 it37"
+                       >
+          <af:outputText value="#{bindings.TotalAmount.inputValue}" id="ot2"
+                         inlineStyle="font-weight:bold; color:Red; font-size:small;"
+                         partialTriggers="it35 it36 it37 it38">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.TotalAmount.format}"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Total Amount Due" id="plam5"
+                                 partialTriggers="ctb12 it35 it36 it37 it38">
+          <af:outputText value="#{bindings.TotalForInvoice.inputValue}"
+                         id="ot5"
+                         inlineStyle="font-weight:bold; color:Red; font-size:small;"
+                         partialTriggers="ctb12 it6 it2 it5 it13 it3 it8 it20 it22 it23 soc1 soc2 soc3 id1 id2 soc8 soc9 soc4 id3 id4 soc13 soc12 soc8">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.TotalForInvoice.format}"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer  height="5" id="s145"/>
+    <af:panelBox text="Tickets" id="pb51" inlineStyle="background-color:#ffffff;">
+    <af:panelFormLayout id="pfl61" rows="1" maxColumns="2">
+         <af:inputDate value="#{bindings.PreferredDepartureTime.inputValue}"
+                          label="Preferred Departure Time" autoSubmit="true"
+                       disabled = "#{bindings.StepId.inputValue ne 1 || bindings.MeansTravel.inputValue eq 'Car (Company)' || bindings.MeansTravel.inputValue eq 'Train (Employee)'
+|| bindings.MeansTravel.inputValue eq 'Plane (Employee)' || bindings.MeansTravel.inputValue eq 'Car (Employee)'}"
+                       required="false"   binding="#{pageFlowScope.BusinessTripBean.preStartDate}"
+                          shortDesc="#{bindings.PreferredDepartureTime.hints.tooltip}"
+                          id="id5" minValue="#{bindings.StartDate.inputValue}"
+                          maxValue="#{pageFlowScope.BusinessTripBean.endDate}"
+                          partialTriggers="id1 id2 soc10">
+              <f:validator binding="#{bindings.PreferredDepartureTime.validator}"/>
+              <af:convertDateTime pattern="#{bindings.PreferredDepartureTime.format}"
+                                  type="both"/>
+            </af:inputDate>
+            <af:inputDate value="#{bindings.PreferredArrivalTime.inputValue}"
+                          label="Preferred Arrival Time" autoSubmit="true"
+                          required="false" disabled = "#{bindings.StepId.inputValue ne 1 || bindings.MeansTravel.inputValue eq 'Car (Company)' || bindings.MeansTravel.inputValue eq 'Train (Employee)'
+|| bindings.MeansTravel.inputValue eq 'Plane (Employee)' || bindings.MeansTravel.inputValue eq 'Car (Employee)'}"
+                          shortDesc="#{bindings.PreferredArrivalTime.hints.tooltip}"
+						    binding="#{pageFlowScope.BusinessTripBean.preArrivalTime}"
+                           minValue="#{pageFlowScope.BusinessTripBean.minValueForArrivalTime}"
+                          id="id6"  maxValue="#{pageFlowScope.BusinessTripBean.endDate}"
+                          partialTriggers="id1 id2 id5 soc10">
+              <f:validator binding="#{bindings.PreferredArrivalTime.validator}"/>
+              <af:convertDateTime pattern="#{bindings.PreferredArrivalTime.format}"
+                                  type="both"/>
+            </af:inputDate>
+    </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer  height="5" id="s13"/>
+    <af:panelBox text="Cost Center" id="pb5" inlineStyle="background-color:#ffffff;">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl6" rows="1" maxColumns="2">
+        <f:facet name="footer"/>
+        <af:selectOneChoice value="#{bindings.CostCenter.inputValue}"
+                            label="#{bindings.CostCenter.label}"
+                            shortDesc="#{bindings.CostCenter.hints.tooltip}"
+                            id="soc11" 
+                            disabled="#{bindings.StepId.inputValue ne 1 ||  bindings.TripType.inputValue eq 'Expense'}"
+                            partialTriggers="soc4 expenseBusinessTripIdId"
+                            showRequired="true"
+                            required="#{bindings.CostCenter.hints.mandatory}"
+                            immediate="true" autoSubmit="true"
+                          >
+          <f:selectItems value="#{bindings.CostCenter.items}" id="si13"/>
+        </af:selectOneChoice>
+        <af:outputText value="#{bindings.RequestAttachmentsView1Iterator.estimatedRowCount}"
+                       id="ot4" partialTriggers="pc1 pc1:t2"
+                       binding="#{pageFlowScope.BusinessTripBean.attachmentsRowCount}"
+                       visible="false"/>
+        <af:inputText value="#{bindings.CostCenterNumber.inputValue}"
+                      label="#{bindings.CostCenterNumber.hints.label}"
+                      required="#{bindings.CostCenterNumber.hints.mandatory}"
+                      columns="#{bindings.CostCenterNumber.hints.displayWidth}"
+                      maximumLength="#{bindings.CostCenterNumber.hints.precision}"
+                      shortDesc="#{bindings.CostCenterNumber.hints.tooltip}"
+                      id="it19"
+                      partialTriggers="soc4 soc11 expenseBusinessTripIdId" disabled="true">
+          <f:validator binding="#{bindings.CostCenterNumber.validator}"/>
+        </af:inputText>
+          </af:panelFormLayout>
+    </af:panelBox>
+        <af:spacer height="5" id="s12"/>
+        <af:panelBox text="Payment Details" id="pb8" inlineStyle="background-color:#ffffff;" rendered="#{bindings.RequestStatus.inputValue eq 'APPROVED'}">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl1" rows="1" maxColumns="2" labelWidth="200">
+            <af:inputText value="#{bindings.InvoiceNumber.inputValue}"
+                          label="Invoice Number"
+                          readOnly="true" contentStyle="font-weight:bold;font-size:small;"
+                          shortDesc="#{bindings.InvoiceNumber.hints.tooltip}"
+                          id="it34">
+              <f:validator binding="#{bindings.InvoiceNumber.validator}"/>
+            </af:inputText>
+            <af:panelLabelAndMessage label="Payment Status"
+                                     id="plam4">
+              <af:selectBooleanCheckbox id="sbc3" value="true" readOnly="true" rendered="#{bindings.PaymentStatus.inputValue eq 'Y'}"/>
+              <af:selectBooleanCheckbox id="sbc6" value="false" readOnly="true" rendered="#{bindings.PaymentStatus.inputValue ne 'Y'}"/>
+            </af:panelLabelAndMessage>
+          </af:panelFormLayout>
+      </af:panelBox>
+    <af:spacer  height="5" id="s132"/>
+    <af:panelBox text="Reason And Attachements" id="pb4"
+                 inlineStyle="background-color:#ffffff;" >
+      <f:facet name="toolbar"/>
+      <af:panelSplitter id="ps1" splitterPosition="700"
+                        styleClass="AFStretchWidth">
+        <f:facet name="first">
+          <af:panelFormLayout id="pfl5" maxColumns="1">
+            <f:facet name="footer"/>
+            <af:spacer width="10" height="40" id="s2"/>
+            <af:inputText value="#{bindings.TripReason.inputValue}"
+                          label="#{bindings.TripReason.hints.label}"
+                          required="#{bindings.TripReason.hints.mandatory}"
+                          columns="60"
+                          shortDesc="#{bindings.TripReason.hints.tooltip}"
+                            id="it14" rows="10" contentStyle="height: 100px;"
+                          disabled="#{bindings.StepId.inputValue ne 1 || bindings.TripType.inputValue eq 'Expense'}"
+                          partialTriggers="soc4"/>
+            <af:inputText value="#{bindings.RequestStatus.inputValue}"
+                          label="#{bindings.RequestStatus.hints.label}"
+                          readOnly="true" contentStyle="font-weight:bold;"/>
+            <af:inputText value="#{bindings.StepComment.inputValue}"
+                          label="#{bindings.StepComment.hints.label}"
+                          required="#{bindings.StepComment.hints.mandatory}"
+                          columns="#{bindings.StepComment.hints.displayWidth}"
+                          maximumLength="#{bindings.StepComment.hints.precision}"
+                          shortDesc="#{bindings.StepComment.hints.tooltip}"
+                          id="it25" rows="5" autoSubmit="true" rendered="false"
+                          valueChangeListener="#{pageFlowScope.BusinessTripBean.setTripCommentValue}"
+                          visible="#{bindings.StepId.inputValue ne 1 || !( bindings.TripType.inputValue eq 'Expense')}"
+                          disabled="#{bindings.StepId.inputValue eq 1}">
+              <f:validator binding="#{bindings.StepComment.validator}"/>
+            </af:inputText>
+          </af:panelFormLayout>
+        </f:facet>
+        <f:facet name="second">
+          <af:panelCollection id="pc1">
+            <f:facet name="menus"/>
+            <f:facet name="toolbar">
+              <af:toolbar id="t3">
+              <af:outputText value="*" id="ot11" rendered="#{bindings.TripType.inputValue eq 'Training'}"
+                                inlineStyle="font-size:large; color:Red; vertical-align:super; text-align:justify;"/>
+                <af:commandToolbarButton text="Add" id="ctb7"
+                                         action="#{pageFlowScope.BusinessTripBean.showAttachmentPopup}"
+                                         disabled="#{!(bindings.StepId.inputValue eq 1 || bindings.StepId.inputValue eq 1 ||(pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue))}"
+                                         partialTriggers="::soc4"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="statusbar"/>
+            <af:table value="#{bindings.RequestAttachmentsView1.collectionModel}"
+                      var="row"
+                      rows="#{bindings.RequestAttachmentsView1.rangeSize}"
+                      emptyText="#{bindings.RequestAttachmentsView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.RequestAttachmentsView1.rangeSize}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.RequestAttachmentsView1.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.RequestAttachmentsView1.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t2" columnStretching="column:c2"
+                      partialTriggers="cl4 :::ctb8" autoHeightRows="2">
+              <af:column sortProperty="#{bindings.RequestAttachmentsView1.hints.FileName.name}"
+                         sortable="false" 
+                         headerText="#{bindings.RequestAttachmentsView1.hints.FileName.label}"
+                         id="c2">
+                <!--<af:outputText value="#{row.FileName}" id="ot2"/>-->
+                <af:commandLink id="cl1" text="#{row.FileName}" >
+                  <af:fileDownloadActionListener filename="#{row.FileName}"
+                                                 method="#{pageFlowScope.BusinessTripBean.downloadFile}"
+                                                 contentType="#{row.FileType}"/>
+                </af:commandLink>
+              </af:column>
+              <af:column sortProperty="#{bindings.RequestAttachmentsView1.hints.UploadedBy.name}"
+                         sortable="false"
+                         headerText="#{bindings.RequestAttachmentsView1.hints.UploadedBy.label}"
+                         id="c1" width="200" rendered="false">
+                <af:outputText value="#{row.UploadedBy}" id="ot3"/>
+              </af:column>
+              <af:column id="c8"  align="center" headerText="Delete">
+                <af:commandLink actionListener="#{bindings.Delete.execute}"
+                                id="cl4" immediate="true" partialSubmit="true">
+                  <af:image source="/Skins/images/delete_ena.png" id="i4"/>
+                </af:commandLink>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </f:facet>
+         
+      </af:panelSplitter>
+      <af:popup id="attachmentPopup"
+                binding="#{pageFlowScope.BusinessTripBean.attachmentPopup}"
+                contentDelivery="lazyUncached" autoCancel="disabled">
+        <af:dialog id="d2" closeIconVisible="false" type="none"
+                   title="Add Attachments">
+          <af:panelFormLayout id="pfl15">
+            <af:inputText value="#{pageFlowScope.BusinessTripBean.attachmentFileName}"
+                          label="#{bindings.FileName.hints.label}"
+                          columns="#{bindings.FileName.hints.displayWidth}"
+                          maximumLength="#{bindings.FileName.hints.precision}"
+                          shortDesc="#{bindings.FileName.hints.tooltip}"
+                          id="it79" rendered="false">
+              <f:validator binding="#{bindings.FileName.validator}"/>
+            </af:inputText>
+            <af:inputFile label="#{bindings.AttachmentFile.hints.label}"
+                          id="if1"
+                          binding="#{pageFlowScope.BusinessTripBean.inputFile}"
+                          required="true"/>
+            <af:spacer width="10" height="10" id="s6"/>
+            <af:toolbar id="toolbar2">
+              <af:commandToolbarButton text="Save" id="ctb8"
+                                       action="#{pageFlowScope.BusinessTripBean.saveBtnAction}"/>
+              <af:commandToolbarButton text="Cancel" id="ctb9"
+                                       action="#{pageFlowScope.BusinessTripBean.cancelBtnAction}"
+                                       immediate="true"/>
+            </af:toolbar>
+          </af:panelFormLayout>
+        </af:dialog>
+      </af:popup>
+    </af:panelBox>
+       <af:spacer  height="5" id="s18"/>
+        <af:inputText value="#{bindings.Declaration.inputValue}"
+                      label="#{bindings.Declaration.hints.label}"
+                      required="#{bindings.Declaration.hints.mandatory}"
+                      columns="#{bindings.Declaration.hints.displayWidth}"
+                      maximumLength="#{bindings.Declaration.hints.precision}"
+                      shortDesc="#{bindings.Declaration.hints.tooltip}"
+                      id="it39" visible ="false">
+          <f:validator binding="#{bindings.Declaration.validator}"/>
+        </af:inputText>
+        <af:panelBox text="* Declaration" id="pb9"
+                    rendered="#{(bindings.TripType.inputValue eq 'Training') &amp;&amp; ( bindings.RequestStatus.inputValue eq null || bindings.RequestStatus.inputValue eq 'SAVED' ||  bindings.RequestStatus.inputValue eq 'EDIT' || bindings.RequestStatus.inputValue eq 'APPROVED')}" inlineStyle="background-color:#ffffff; ">
+          <af:panelFormLayout id="pfl10" maxColumns="2" rows="1"
+                              fieldWidth="300">
+            <af:outputText value="I agree for the below policies" id="ot12"
+                           inlineStyle="color:red; text-decoration:underline; font-size:large; font-weight:bolder;"/>
+            <af:selectBooleanCheckbox text="" label="" id="sbc7"
+                                      autoSubmit="true" rendered="#{bindings.TripType.inputValue eq 'Training' &amp;&amp; bindings.RequestStatus.inputValue ne 'APPROVED'}"
+                                      
+                                      inlineStyle="font-weight:bolder; font-size:x-small; color:red; text-decoration:underline; font-family:'Times New Roman', 'Arial Black', times, Serif;"
+                                      value=""
+                                      binding="#{pageFlowScope.BusinessTripBean.declarationBox}"/>
+          </af:panelFormLayout>
+          <af:image source="/Skins/images/training_declaration.png"
+                    shortDesc="trainingDeclaration" inlineStyle="width:1326px; height:420px;" id="i2"/>
+        </af:panelBox>
+        <af:spacer  height="5" id="s29"/>
+        <af:panelBox text="Approval History" id="pb7"  partialTriggers="pgl2"  rendered="#{bindings.RequestStatus.inputValue ne null &amp;&amp;  bindings.RequestStatus.inputValue ne 'SAVED' &amp;&amp;  bindings.RequestStatus.inputValue ne 'EDIT'}" inlineStyle="background-color:#ffffff; ">
+          <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+              <f:facet name="menus"/>
+              <f:facet name="toolbar"/>
+              <f:facet name="statusbar"/>
+          <af:table value="#{bindings.ApprovalHistoryBusiness.collectionModel}"
+                    var="row"
+                    rows="#{bindings.ApprovalHistoryBusiness.rangeSize}"
+                    emptyText="#{bindings.ApprovalHistoryBusiness.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    fetchSize="#{bindings.ApprovalHistoryBusiness.rangeSize}"
+                    rowBandingInterval="0"
+                    selectedRowKeys="#{bindings.ApprovalHistoryBusiness.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.ApprovalHistoryBusiness.collectionModel.makeCurrent}"
+                    rowSelection="single" id="t4">
+               <af:column sortProperty="#{bindings.ApprovalHistoryBusiness.hints.ApprovalType.name}"
+                       sortable="false" align="center" width="150"
+                       headerText="Status"
+                       id="c7">
+              <af:outputText value="#{row.ApprovalType}" id="ot10"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ApprovalHistoryBusiness.hints.AssigneeName.name}"
+                       sortable="false" align="center" width="150"
+                       headerText="Assignee Name"
+                       id="c6">
+              <af:outputText value="#{row.AssigneeName}" id="ot7"/>
+            </af:column>
+             <af:column sortProperty="#{bindings.ApprovalHistoryBusiness.hints.ActionTaken.name}"
+                       sortable="false" align="center" width="150"
+                       headerText="Status"
+                       id="c3">
+              <af:outputText value="#{row.ActionTaken}" id="ot6" inlineStyle="color:#{row.ActionTaken eq 'PENDING' ? 'Blue' : row.ActionTaken eq 'APPROVED' ? 'Green' : 'Red'};"/>
+            </af:column> 
+            <af:column sortProperty="#{bindings.ApprovalHistoryBusiness.hints.SubmitttedOn.name}"
+                       sortable="false" align="center" width="150"
+                       headerText="Assigned On"
+                       id="c5">
+              <af:outputText value="#{row.SubmitttedOn}" id="ot9">
+                <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ApprovalHistoryBusiness.hints.ApprovalOn.name}"
+                       sortable="false" align="center" width="150"
+                       headerText="Action On"
+                       id="c4">
+              <af:outputText value="#{row.ApprovalOn}" id="ot8"  inlineStyle="color:Blue;">
+                <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/>
+              </af:outputText>
+            </af:column>
+          </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+        
+        <af:spacer  height="5" id="s8"/>
+    <af:panelFormLayout id="pfl7"
+                        visible="#{bindings.RequestStatus.inputValue eq 'REJECTED'}">
+      <af:inputText value="#{bindings.RejectComments.inputValue}"
+                    label="#{bindings.RejectComments.hints.label}"
+                    required="#{bindings.RejectComments.hints.mandatory}"
+                    columns="#{bindings.RejectComments.hints.displayWidth}"
+                    maximumLength="#{bindings.RejectComments.hints.precision}"
+                    shortDesc="#{bindings.RejectComments.hints.tooltip}"
+                    id="it33" rows="5" contentStyle="height: 60px;"
+                    disabled="true">
+        <f:validator binding="#{bindings.RejectComments.validator}"/>
+      </af:inputText>
+    </af:panelFormLayout>
+  </af:panelBox>
+</f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:BusinessTripBean-->
+</jsp:root>

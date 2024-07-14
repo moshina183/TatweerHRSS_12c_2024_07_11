@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="TraineesExitFormPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="TraineesExitForm_VO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="TraineesExitForm_VOIterator"/>
+    <iterator id="AllPersons_VOIterator" Binds="AllPersons_VO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="AssigneesTraineeExitForm_ROVOIterator"
+              Binds="AssigneesTraineeExitForm_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <invokeAction Binds="ExecuteWithParams" id="executeWhere"
+                  Refresh="ifNeeded"/>
+    <iterator id="ApprovalHistoryVO3Iterator" Binds="ApprovalHistoryVO3"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="AssigneePosition">
+      <AttrNames>
+        <Item Value="AssigneePosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="CreatedBy">
+      <AttrNames>
+        <Item Value="CreatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="CreatedOn">
+      <AttrNames>
+        <Item Value="CreatedOn"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="DateOfJoining">
+      <AttrNames>
+        <Item Value="DateOfJoining"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="DepartmentAr">
+      <AttrNames>
+        <Item Value="DepartmentAr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="LastWorkingDate">
+      <AttrNames>
+        <Item Value="LastWorkingDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="LengthOfService">
+      <AttrNames>
+        <Item Value="LengthOfService"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="ManagerName">
+      <AttrNames>
+        <Item Value="ManagerName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="ManagerNameAr">
+      <AttrNames>
+        <Item Value="ManagerNameAr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="PersonName">
+      <AttrNames>
+        <Item Value="PersonName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="PersonNameAr">
+      <AttrNames>
+        <Item Value="PersonNameAr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="ReasonAr">
+      <AttrNames>
+        <Item Value="ReasonAr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="ReasonForExit">
+      <AttrNames>
+        <Item Value="ReasonForExit"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="RejectComment">
+      <AttrNames>
+        <Item Value="RejectComment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="RequestId">
+      <AttrNames>
+        <Item Value="RequestId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="TrainingTitle">
+      <AttrNames>
+        <Item Value="TrainingTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <list IterBinding="TraineesExitForm_VOIterator" StaticList="false"
+          Uses="LOV_SatisfiedWithTraining" id="SatisfiedWithTraining"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <list IterBinding="TraineesExitForm_VOIterator" StaticList="false"
+          Uses="LOV_IsTrainerHelpful" id="IsTrainerHelpful"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <list IterBinding="TraineesExitForm_VOIterator" StaticList="false"
+          Uses="LOV_FollowPlan" id="FollowPlan" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <list IterBinding="TraineesExitForm_VOIterator" StaticList="false"
+          Uses="LOV_MeetExpectations" id="MeetExpectations"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <list IterBinding="TraineesExitForm_VOIterator" StaticList="false"
+          Uses="LOV_PreparesPermanentJob" id="PreparesPermanentJob"
+          DTSupportsMRU="false" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="DistinguishesEmpTrainer">
+      <AttrNames>
+        <Item Value="DistinguishesEmpTrainer"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="SuggestionsForDev">
+      <AttrNames>
+        <Item Value="SuggestionsForDev"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="PersonalEmail">
+      <AttrNames>
+        <Item Value="PersonalEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="DhName">
+      <AttrNames>
+        <Item Value="DhName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="DhDate">
+      <AttrNames>
+        <Item Value="DhDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="DhComments">
+      <AttrNames>
+        <Item Value="DhComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="TraineesExitForm_VOIterator" id="DhQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DhQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="DhQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DhQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="DhQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DhQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="FmuDate">
+      <AttrNames>
+        <Item Value="FmuDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="FmuName">
+      <AttrNames>
+        <Item Value="FmuName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="FmuComments">
+      <AttrNames>
+        <Item Value="FmuComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="TraineesExitForm_VOIterator" id="FmuQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FmuQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="FmuQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="FmuQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="ItcName">
+      <AttrNames>
+        <Item Value="ItcName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="ItcDate">
+      <AttrNames>
+        <Item Value="ItcDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="ItcComments">
+      <AttrNames>
+        <Item Value="ItcComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="TraineesExitForm_VOIterator" id="ItcQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="ItcQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="ItcQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="ItcQues4"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ItcQues4"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="HroDate">
+      <AttrNames>
+        <Item Value="HroDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="HroName">
+      <AttrNames>
+        <Item Value="HroName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="HroComments">
+      <AttrNames>
+        <Item Value="HroComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="TraineesExitForm_VOIterator" id="HroQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HroQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="HroQues2"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HroQues2"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="HroQues3"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HroQues3"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="HrdDate">
+      <AttrNames>
+        <Item Value="HrdDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="HrdName">
+      <AttrNames>
+        <Item Value="HrdName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="HrdComments">
+      <AttrNames>
+        <Item Value="HrdComments"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="TraineesExitForm_VOIterator" id="HrdQues1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="HrdQues1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.TraineesExitFromType}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <action IterBinding="AssigneesTraineeExitForm_ROVOIterator"
+            id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.AssigneesTraineeExitForm_ROVO"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="BV_TYPE_ID"
+                 NDValue="#{pageFlowScope.TraineesExitFromType eq 'TraineesExitForm-Makka' ? '26' : pageFlowScope.TraineesExitFromType eq 'TraineesExitForm-Sultan' ? '25' :pageFlowScope.TraineesExitFromType eq 'TraineesExitForm-Alkhobar' ? '27' :pageFlowScope.TraineesExitFromType eq 'TraineesExitForm-Qassim' ? '28' : '24'}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="BV_ID" NDValue="#{bindings.RequestId.inputValue}"
+                 NDType="java.lang.String"/>
+    </action>
+    <tree IterBinding="AssigneesTraineeExitForm_ROVOIterator"
+          id="AssigneesTraineeExitForm_ROVO">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.ro.AssigneesTraineeExitForm_ROVO"
+                      Name="AssigneesTraineeExitForm_ROVO0">
+        <AttrNames>
+          <Item Value="StepName"/>
+          <Item Value="PersonName"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="ApprovalOn"/>
+          <Item Value="StepType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="Hro2Comments">
+      <AttrNames>
+        <Item Value="Hro2Comments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="Hro2Date">
+      <AttrNames>
+        <Item Value="Hro2Date"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator" id="Hro2Name">
+      <AttrNames>
+        <Item Value="Hro2Name"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="TraineesExitForm_VOIterator" id="Hro2Ques1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="Hro2Ques1"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <button IterBinding="TraineesExitForm_VOIterator" id="ExpCertificationFlag"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="ExpCertificationFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <attributeValues IterBinding="TraineesExitForm_VOIterator"
+                     id="LastAssignedTime">
+      <AttrNames>
+        <Item Value="LastAssignedTime"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="sendTrainingCertificate"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="sendTrainingCertificate"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="requestId" NDType="java.lang.Integer"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

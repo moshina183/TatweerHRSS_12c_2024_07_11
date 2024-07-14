@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="Loan-TF">
+    <default-activity id="__1">checkSession</default-activity>
+    <input-parameter-definition id="__7">
+      <name id="__18">loanPersonId</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__28">
+      <name id="__29">loanPersonName</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__36">
+      <name id="__35">empSalary</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__6">
+      <managed-bean-name id="__4">LoanMB</managed-bean-name>
+      <managed-bean-class id="__5">com.sbm.selfServices.view.mb.LoanMB</managed-bean-class>
+      <managed-bean-scope id="__3">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__62">
+      <managed-bean-name id="__61">FilmStripUI</managed-bean-name>
+      <managed-bean-class id="__60">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__59">backingBean</managed-bean-scope>
+    </managed-bean>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="LoanRequest">
+      <page>/RequestsFrags/LoanRequest.jsff</page>
+    </view>
+    <view id="LoanDetails">
+      <page>/RequestsFrags/LoanDetails.jsff</page>
+    </view>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__19">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case id="__43">
+        <expression id="__38">#{PersonInfo.perosnNumber ne null or
+                              PersonInfo.assignee ne null}</expression>
+        <outcome id="__40">success</outcome>
+      </case>
+      <case id="__42">
+        <expression id="__41">#{PersonInfo.perosnNumber eq null or
+                              PersonInfo.assignee eq null}</expression>
+        <outcome id="__39">expired</outcome>
+      </case>
+      <default-outcome id="__37">expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page>/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="checkSession">
+      <method>#{pageFlowScope.LoanMB.checkSession}</method>
+      <outcome id="__52">
+        <fixed-outcome>success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Hide_Strip_E">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__58">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Hide_Strip_C">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__63">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Show_Strip_B">
+      <method>#{backingBeanScope.FilmStripUI._showFilmStrip}</method>
+      <outcome id="__64">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__15">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__8">
+      <from-activity-id id="__9">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__11">
+        <from-outcome id="__10">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__12">LoanRequest</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__13">
+      <from-activity-id id="__14">LoanRequest</from-activity-id>
+      <control-flow-case id="__71">
+        <from-outcome id="__72">edit</from-outcome>
+        <to-activity-id id="__70">Hide_Strip_E</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__79">
+        <from-outcome id="__80">newLoan</from-outcome>
+        <to-activity-id id="__78">Hide_Strip_C</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__30">
+      <from-activity-id id="__31">LoanDetails</from-activity-id>
+      <control-flow-case id="__81">
+        <from-outcome id="__83">backToLoanRequest</from-outcome>
+        <to-activity-id id="__82">Show_Strip_B</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__23">
+      <from-activity-id id="__24">CreateInsert</from-activity-id>
+      <control-flow-case id="__26">
+        <from-outcome id="__25">CreateInsert</from-outcome>
+        <to-activity-id id="__27">LoanDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__44">
+      <from-activity-id id="__45">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__48">
+        <from-outcome id="__47">success</from-outcome>
+        <to-activity-id id="__46">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__50">
+        <from-outcome id="__49">expired</from-outcome>
+        <to-activity-id id="__51">SessionExpired</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__53">
+      <from-activity-id id="__54">checkSession</from-activity-id>
+      <control-flow-case id="__57">
+        <from-outcome id="__55">success</from-outcome>
+        <to-activity-id id="__56">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__65">
+      <from-activity-id id="__66">Hide_Strip_E</from-activity-id>
+      <control-flow-case id="__67">
+        <from-outcome id="__69">next</from-outcome>
+        <to-activity-id id="__68">LoanDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__73">
+      <from-activity-id id="__74">Hide_Strip_C</from-activity-id>
+      <control-flow-case id="__76">
+        <from-outcome id="__77">next</from-outcome>
+        <to-activity-id id="__75">CreateInsert</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__84">
+      <from-activity-id id="__85">Show_Strip_B</from-activity-id>
+      <control-flow-case id="__87">
+        <from-outcome id="__86">next</from-outcome>
+        <to-activity-id id="__88">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__17">Execute</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__22">Execute</from-outcome>
+        <to-activity-id id="__21">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="Loan_TF_Loan_TF_ExecuteWithParamsPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="LoanRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl" id="LoanRequestViewIterator"
+              Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="LoanRequestViewIterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="bindPersonId" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bindAssignee" NDValue="#{PersonInfo.assignee}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

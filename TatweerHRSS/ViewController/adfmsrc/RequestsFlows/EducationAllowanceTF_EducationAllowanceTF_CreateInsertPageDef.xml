@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="EducationAllowanceTF_EducationAllowanceTF_CreateInsertPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="EducationAllowanceView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="EducationAllowanceView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="EducationAllowanceView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createWithParams"
+            InstanceName="SBMModuleDataControl.EducationAllowanceView1"
+            DataControl="SBMModuleDataControl"> 
+            <NamedData NDName="PersonNumber" NDValue="#{pageFlowScope.eAPersonNummber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PersonName"
+                 NDValue="#{pageFlowScope.eAPersonName}" NDType="java.lang.String"/>
+          </action>  
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="DepartmentsVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="true"
+  SelectList="DepartmentsEO.DEPT_ID, 
+       DepartmentsEO.DEPT_NAME, 
+       DepartmentsEO.SEGMENT4, 
+       DepartmentsEO.SEGMENT2, 
+       DepartmentsEO.SEGMENT3, 
+       DepartmentsEO.CREATION_DATE"
+  FromList="DEPARTMENTS DepartmentsEO"
+  BindingStyle="OracleName"
+  CustomQuery="false"
+  RowClass="com.sbm.selfServices.model.views.up.DepartmentsVORowImpl"
+  ComponentClass="com.sbm.selfServices.model.views.up.DepartmentsVOImpl"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.up.DepartmentsVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <EntityUsage
+    Name="DepartmentsEO"
+    Entity="com.sbm.selfServices.model.entities.DepartmentsEO"/>
+  <ViewAttribute
+    Name="DeptId"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="DeptId"
+    EntityUsage="DepartmentsEO"
+    AliasName="DEPT_ID"/>
+  <ViewAttribute
+    Name="DeptName"
+    PrecisionRule="true"
+    EntityAttrName="DeptName"
+    EntityUsage="DepartmentsEO"
+    AliasName="DEPT_NAME"/>
+  <ViewAttribute
+    Name="Segment4"
+    PrecisionRule="true"
+    EntityAttrName="Segment4"
+    EntityUsage="DepartmentsEO"
+    AliasName="SEGMENT4"/>
+  <ViewAttribute
+    Name="Segment2"
+    PrecisionRule="true"
+    EntityAttrName="Segment2"
+    EntityUsage="DepartmentsEO"
+    AliasName="SEGMENT2"/>
+  <ViewAttribute
+    Name="Segment3"
+    PrecisionRule="true"
+    EntityAttrName="Segment3"
+    EntityUsage="DepartmentsEO"
+    AliasName="SEGMENT3"/>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="DepartmentsEO"
+    AliasName="CREATION_DATE"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

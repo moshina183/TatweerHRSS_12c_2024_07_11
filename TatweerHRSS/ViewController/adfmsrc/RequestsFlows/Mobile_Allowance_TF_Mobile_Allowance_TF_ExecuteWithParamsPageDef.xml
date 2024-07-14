@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="Mobile_Allowance_TF_Mobile_Allowance_TF_ExecuteWithParamsPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="MobileAllowanceRequestUPView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="MobileAllowanceRequestUPViewIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="MobileAllowanceRequestUPViewIterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bind_PersonNumber" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bind_assignee" NDValue="#{PersonInfo.assignee}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bindAssignee2" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

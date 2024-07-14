@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Association SYSTEM "jbo_03_01.dtd">
+<!---->
+<Association
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RequestAttachmentsFk1Assoc1Ass"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <AssociationEnd
+    Name="BusinessTripRequest1"
+    Cardinality="1"
+    Source="true"
+    Owner="com.sbm.selfServices.model.entities.BusinessTripRequest"
+    CascadeDelete="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="BusinessTripRequest1"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.BusinessTripRequest.LocalBusinessTripRequePk"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.BusinessTripRequest.LocalBusinessTripId"/>
+    </AttrArray>
+  </AssociationEnd>
+  <AssociationEnd
+    Name="RequestAttachments2"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.entities.RequestAttachments"
+    HasOwner="true">
+    <DesignTime>
+      <Attr Name="_aggregation" Value="0"/>
+      <Attr Name="_finderName" Value="RequestAttachments2"/>
+      <Attr Name="_foreignKey"
+        Value="com.sbm.selfServices.model.entities.RequestAttachments.RequestAttachmentsFk1"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RequestAttachments.LocalBusinessTripId"/>
+    </AttrArray>
+  </AssociationEnd>
+</Association>

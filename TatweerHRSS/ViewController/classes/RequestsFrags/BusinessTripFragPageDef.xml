@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="BusinessTripFragPageDef"
+                Package="RequestsFrags"
+                ControllerClass="com.view.beans.filmStrip.RegionPhaseListener">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="BusinessTripRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="BusinessTripRequestViewIterator"/>
+    <searchRegion Binds="BusinessTripRequestViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="BusinessTripRequestViewQuery"/>
+    <iterator id="CsecretaryROViewIterator" Binds="CsecretaryROView"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="DepartmentsVO1Iterator" Binds="DepartmentsVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="ApprovalHistoryBusinessIterator"
+              Binds="ApprovalHistoryBusiness" DataControl="SBMModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="BTStatusCount_ROVOIterator" Binds="BTStatusCount_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="BusinessTripRequestViewIterator"
+          id="BusinessTripRequestView">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.BusinessTripRequestView"
+                      Name="BusinessTripRequestView0">
+        <AttrNames>
+          <Item Value="LocalBusinessTripId"/>
+          <Item Value="TripType"/>
+          <Item Value="PersoneId"/>
+          <Item Value="CreationDate"/>
+          <Item Value="StartDate"/>
+          <Item Value="EndDate"/>
+          <Item Value="Days"/>
+          <Item Value="MeansTravel"/>
+          <Item Value="StepId"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="SubType"/>
+          <Item Value="Assignee"/>
+          <Item Value="PersoneName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="BusinessTripRequestViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.BusinessTripRequestView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="CsecretaryROViewIterator" id="ExecuteClevelWithParams"
+            InstanceName="SBMModuleDataControl.CsecretaryROView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="person_number" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+    </action>
+    <list IterBinding="CsecretaryROViewIterator" ListOperMode="navigation"
+          ListIter="CsecretaryROViewIterator" id="CsecretaryROView"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Clevel"/>
+      </AttrNames>
+    </list>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="ExpenseFlag">
+      <AttrNames>
+        <Item Value="ExpenseFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="CancelReason">
+      <AttrNames>
+        <Item Value="CancelReason"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="deleteDeptTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteDeptTableRows"
+                  IsViewObjectMethod="false"/>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="changeExpenseFlagToNo"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="changeExpenseFlagToNo"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="localBusinessTripId"
+                 NDValue="#{bindings.ExpenseBusinessTripId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="ExpenseBusinessTripId">
+      <AttrNames>
+        <Item Value="ExpenseBusinessTripId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="TripType">
+      <AttrNames>
+        <Item Value="TripType"/>
+      </AttrNames>
+    </attributeValues>
+	 <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="BenefitType">
+      <AttrNames>
+        <Item Value="BenefitType"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName" NDValue="#{pageFlowScope.TripTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="BusinessTripRequestViewIterator"
+                     id="LocalBusinessTripId">
+      <AttrNames>
+        <Item Value="LocalBusinessTripId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BTStatusCount_ROVOIterator" id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BTStatusCount_ROVOIterator" id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="BTStatusCount_ROVOIterator" id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getCEONextStepId"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getCEONextStepId"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getCEONextStepId_SBMModuleDataControl_dataProvider_getCEONextStepId_result">
+      <NamedData NDName="requestName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73"
+                id="ExitClearanceForm_BTF_ExitClearanceForm_BTF_ExecutePageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ExitClearanceForm_VO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExitClearanceForm_VOIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ExitClearanceForm_VOIterator" id="Execute"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

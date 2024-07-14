@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="MobileAllowanceApprovalVL"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.vl.MobileAllowanceApprovalVL_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <ViewLinkDefEnd
+    Name="MobileAllowanceRequestUPView"
+    Cardinality="1"
+    Owner="com.sbm.selfServices.model.views.up.MobileAllowanceRequestUPView"
+    Source="true">
+    <DesignTime>
+      <Attr Name="_finderName" Value="MobileAllowanceRequestUPView"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.views.up.MobileAllowanceRequestUPView.RequestId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="ApprovalHistoryVO"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.views.up.ApprovalHistoryVO">
+    <DesignTime>
+      <Attr Name="_finderName" Value="ApprovalHistoryVO"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.views.up.ApprovalHistoryVO.RequestId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewLink>

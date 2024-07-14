@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="ExceptionalRewardDetailsPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ExceptionalRewardView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExceptionalRewardView1Iterator"/>
+    <iterator Binds="ExceptionalRewardAttachmentsView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ExceptionalRewardAttachmentsView1Iterator"/>
+    <iterator Binds="ApprovalHistoryReward" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistoryRewardIterator"/>
+    <invokeAction Binds="ExecuteWithParams" id="executWithType" Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="ExceptionalRewardId">
+      <AttrNames>
+        <Item Value="ExceptionalRewardId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="CreationDate">
+      <AttrNames>
+        <Item Value="CreationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonName">
+      <AttrNames>
+        <Item Value="PersonName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator" id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="RejectionReason">
+      <AttrNames>
+        <Item Value="RejectionReason"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="RewardAmount">
+      <AttrNames>
+        <Item Value="RewardAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="Justification">
+      <AttrNames>
+        <Item Value="Justification"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="PercentageFromBasicSal">
+      <AttrNames>
+        <Item Value="PercentageFromBasicSal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="HrRecomendations">
+      <AttrNames>
+        <Item Value="HrRecomendations"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="LastRewardDate">
+      <AttrNames>
+        <Item Value="LastRewardDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ExceptionalRewardAttachmentsView1Iterator"
+          id="ExceptionalRewardAttachmentsView1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ExceptionalRewardAttachmentsView"
+                      Name="ExceptionalRewardAttachmentsView10">
+        <AttrNames>
+          <Item Value="AttachId"/>
+          <Item Value="FileName"/>
+          <Item Value="FileType"/>
+          <Item Value="AttachmentFile"/>
+          <Item Value="ExceptionalRewardId"/>
+          <Item Value="UploadedBy"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ExceptionalRewardAttachmentsView1Iterator" id="Delete"
+            InstanceName="SBMModuleDataControl.ExceptionalRewardAttachmentsView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <attributeValues IterBinding="ExceptionalRewardAttachmentsView1Iterator"
+                     id="FileName">
+      <AttrNames>
+        <Item Value="FileName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardAttachmentsView1Iterator"
+                     id="FileType">
+      <AttrNames>
+        <Item Value="FileType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardAttachmentsView1Iterator"
+                     id="UploadedBy">
+      <AttrNames>
+        <Item Value="UploadedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardAttachmentsView1Iterator"
+                     id="AttachmentFile">
+      <AttrNames>
+        <Item Value="AttachmentFile"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ExceptionalRewardAttachmentsView1Iterator"
+            id="CreateInsert"
+            InstanceName="SBMModuleDataControl.ExceptionalRewardAttachmentsView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="ExceptionalRewardView1Iterator" id="Execute"
+            InstanceName="SBMModuleDataControl.ExceptionalRewardView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.ExceptionalRewardTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="EmpBasicSalary">
+      <AttrNames>
+        <Item Value="EmpBasicSalary"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="CreatedByName">
+      <AttrNames>
+        <Item Value="CreatedByName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="deleteMngrEmpsTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteMngrEmpsTableRows"
+                  IsViewObjectMethod="false"/>
+    <listOfValues StaticList="false"
+                  IterBinding="ExceptionalRewardView1Iterator"
+                  Uses="LOV_CreatedByNo" id="CreatedByNo"/>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ExceptionalRewardView1Iterator"
+                     id="LastRewardDateString">
+      <AttrNames>
+        <Item Value="LastRewardDateString"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getLastExceptionalRewardDate"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="getLastExceptionalRewardDate"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getLastExceptionalRewardDate_SBMModuleDataControl_dataProvider_getLastExceptionalRewardDate_result">
+      <NamedData NDName="bindPersonNumber" NDType="java.lang.String"/>
+    </methodAction>
+    <tree IterBinding="ApprovalHistoryRewardIterator"
+          id="ApprovalHistoryReward">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistoryReward0">
+        <AttrNames>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalHistoryRewardIterator" id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistoryReward"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="ExceptionalReward"
+                 NDType="java.lang.String"/>
+    </action>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callTatHdrUpdateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callTatHdrUpdateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callTatHdrUpdateProcess_SBMModuleDataControl_dataProvider_callTatHdrUpdateProcess_result">
+      <NamedData NDName="request_id" NDType="java.lang.String"/>
+      <NamedData NDName="person_no" NDType="java.lang.String"/>
+      <NamedData NDName="request_status" NDType="java.lang.String"/>
+      <NamedData NDName="doc_title" NDType="java.lang.String"/>
+      <NamedData NDName="doc_author" NDType="java.lang.String"/>
+      <NamedData NDName="security_group" NDType="java.lang.String"/>
+      <NamedData NDName="element_name" NDType="java.lang.String"/>
+      <NamedData NDName="doc_account" NDType="java.lang.String"/>
+      <NamedData NDName="doc_type" NDType="java.lang.String"/>
+      <NamedData NDName="base_sixtyfour_file" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getElementAccount"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getElementAccount"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getElementAccount_SBMModuleDataControl_dataProvider_getElementAccount_result">
+      <NamedData NDName="elementName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="ManPowerTF_ManPowerTF_CreateInsertPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ManPowerRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ManPowerRequestViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ManPowerRequestViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createWithParams"
+            DataControl="SBMModuleDataControl"
+            InstanceName="SBMModuleDataControl.ManPowerRequestView">
+            
+            <NamedData NDName="PersonNumber" NDValue="#{pageFlowScope.mPPersonNummber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="PersonName"
+                 NDValue="#{pageFlowScope.mPPersonName}" NDType="java.lang.String"/>
+                 
+                 <NamedData NDName="PersonDepartment"
+                 NDValue="#{pageFlowScope.department}" NDType="java.lang.String"/>
+                 
+                 <NamedData NDName="PersonLocation"
+                 NDValue="#{pageFlowScope.location}" NDType="java.lang.String"/>
+            
+             </action>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE Entity SYSTEM "jbo_03_01.dtd">
+<!---->
+<Entity
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="RequestTypesEO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  DBObjectType="table"
+  DBObjectName="REQUEST_TYPES"
+  AliasName="RequestTypesEO"
+  BindingStyle="OracleName"
+  UseGlueCode="false">
+  <DesignTime>
+    <AttrArray Name="_publishEvents"/>
+  </DesignTime>
+  <Attribute
+    Name="RequestTypeId"
+    IsNotNull="true"
+    ColumnName="REQUEST_TYPE_ID"
+    SQLType="NUMERIC"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    TableName="REQUEST_TYPES"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="RequestName"
+    Precision="20"
+    ColumnName="REQUEST_NAME"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_TYPES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="20"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="EmailNotification"
+    Precision="1"
+    ColumnName="EMAIL_NOTIFICATION"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_TYPES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="FyiEmail"
+    Precision="2000"
+    ColumnName="FYI_EMAIL"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_TYPES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="2000"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="RequestVisible"
+    Precision="1"
+    ColumnName="REQUEST_VISIBLE"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_TYPES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="EditFlag"
+    Precision="10"
+    ColumnName="EDIT_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_TYPES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <Attribute
+    Name="WithdrawFlag"
+    Precision="10"
+    ColumnName="WITHDRAW_FLAG"
+    SQLType="VARCHAR"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    TableName="REQUEST_TYPES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="10"/>
+    </DesignTime>
+  </Attribute>
+  <AccessorAttribute
+    Name="BudgetValidationEO"
+    Association="com.sbm.selfServices.model.entities.RequestStepsFk1Assoc"
+    AssociationEnd="com.sbm.selfServices.model.entities.RequestStepsFk1Assoc.BudgetValidationEO"
+    AssociationOtherEnd="com.sbm.selfServices.model.entities.RequestStepsFk1Assoc.RequestTypesEO"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <Key
+    Name="RequestTypesPk"
+    PrimaryKey="true">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="REQUEST_TYPES_PK"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RequestTypesEO.RequestTypeId"/>
+    </AttrArray>
+  </Key>
+  <Key
+    Name="SysC0028077">
+    <DesignTime>
+      <Attr Name="_DBObjectName" Value="SYS_C0028077"/>
+      <Attr Name="_checkCondition" Value='"REQUEST_TYPE_ID" IS NOT NULL'/>
+      <Attr Name="_isCheck" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.entities.RequestTypesEO.RequestTypeId"/>
+    </AttrArray>
+  </Key>
+</Entity>

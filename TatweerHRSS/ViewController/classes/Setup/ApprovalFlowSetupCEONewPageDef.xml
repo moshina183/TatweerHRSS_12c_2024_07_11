@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.9.14" id="ApprovalFlowSetupCEONewPageDef"
+                Package="Setup">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ApproverStepsCEO_VO1" RangeSize="25" DataControl="SBMModuleDataControl"
+              id="ApproverStepsCEO_VO1Iterator"/>
+    <searchRegion Criteria="RequestStepsCEO_VOCriteria" Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="ApproverStepsCEO_VO1Iterator" id="RequestStepsCEOVOCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ApproverStepsCEO_VO1Iterator" id="ApproverStepsCEO_VO1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO" Name="ApproverStepsCEO_VO10">
+        <AttrNames>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedOn"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedOn"/>
+          <Item Value="StepId"/>
+          <Item Value="StepName"/>
+          <Item Value="NextStepId"/>
+          <Item Value="RequestTypeId"/>
+          <Item Value="StepType"/>
+          <Item Value="SpecialEdit"/>
+          <Item Value="SpecialEditFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="ApproverStepsCEO_VO1Iterator" id="SpecialEditFlag" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SpecialEditFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction" DataControl="SBMModuleDataControl"/>
+  </bindings>
+</pageDefinition>

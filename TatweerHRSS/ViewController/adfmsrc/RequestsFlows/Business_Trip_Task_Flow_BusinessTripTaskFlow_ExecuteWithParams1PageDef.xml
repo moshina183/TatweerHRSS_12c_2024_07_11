@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="Business_Trip_Task_Flow_BusinessTripTaskFlow_ExecuteWithParams1PageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="BusinessTripRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="BusinessTripRequestViewIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="BusinessTripRequestViewIterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="bind_assignee" NDValue="#{PersonInfo.assignee}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bind_PersonNumber" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bind_assignee2" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+	   <NamedData NDName="bind_tripType" NDValue="#{sessionScope.tripType}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+  <af:panelBox text="Exceptional Reward Requests" id="pb1" inlineStyle="background-color:#ffffff;">
+    <f:facet name="toolbar"/>
+    <af:spacer width="10" height="10" id="s1"/>
+      <af:panelDashboard id="pd1" styleClass="AFStretchWidth"  rowHeight="90px" columns="3" inlineStyle="height:100px"> 
+
+<af:panelBox text="All Tasks" id="pb3" showDisclosure="false" inlineStyle="border-left-style:inset;border-left-color:#2d37f7;border-left-width:4px;text-align:center;"
+             background="medium" titleHalign="center"> 
+<f:facet name="toolbar"/> 
+<af:commandLink text="#{bindings.AllTasks.inputValue}" id="l1" 
+		inlineStyle="font-size:7mm;color:Blue;text-align:center;"
+                actionListener="#{pageFlowScope.ExceptionalRewardMB.onClickStatusCount}"> 
+	<af:setPropertyListener from="AllTasks" to="#{pageFlowScope.statusType}" type="action"/> 
+</af:commandLink> 
+</af:panelBox> 
+<af:panelBox text="My Tasks" id="pb2" showDisclosure="false" inlineStyle="border-left-style:inset;border-left-color:#27fa23;border-left-width:4px;text-align:center;"
+             background="medium" titleHalign="center"> 
+<f:facet name="toolbar"/> 
+<af:commandLink text="#{bindings.MyTasks.inputValue}" id="cl3" 
+		inlineStyle="font-size:7mm;color:Green;text-align:center;"
+                actionListener="#{pageFlowScope.ExceptionalRewardMB.onClickStatusCount}"> 
+	<af:setPropertyListener from="MyTasks" to="#{pageFlowScope.statusType}" type="action"/> 
+</af:commandLink> 
+</af:panelBox>
+<af:panelBox text="Waiting Tasks" id="pb5" showDisclosure="false" inlineStyle="border-left-style:inset;border-left-color:#f0f72d;border-left-width:4px;text-align:center;"
+             background="medium" titleHalign="center"> 
+<f:facet name="toolbar"/> 
+<af:commandLink text="#{bindings.PendingTasks.inputValue}" id="l2" 
+		inlineStyle="font-size:7mm;color:Orange;text-align:center;"
+                actionListener="#{pageFlowScope.ExceptionalRewardMB.onClickStatusCount}"> 
+	<af:setPropertyListener from="PendingTasks" to="#{pageFlowScope.statusType}" type="action"/> 
+</af:commandLink> 
+</af:panelBox>  
+</af:panelDashboard>
+    <af:spacer width="10" height="10" id="s3"/>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                        inlineStyle="height:500px;">
+      <f:facet name="menus"/>
+      <f:facet name="toolbar">
+        <af:toolbar id="t2">
+          <af:commandToolbarButton id="ctb1" text="Start New Task"
+                                   action="#{pageFlowScope.ExceptionalRewardMB.newRequest}"
+                                   visible="#{PersonInfo.empIsMngrFlag eq 'Y'}"/>
+          <af:commandImageLink id="cil1"
+                               icon="/Skins/images/ic_autorenew_black_24dp_1x.png"
+                               actionListener="#{bindings.Execute.execute}"/>
+        </af:toolbar>
+      </f:facet>
+      <f:facet name="statusbar"/>
+      <af:table value="#{bindings.ExceptionalRewardView1.collectionModel}"
+                var="row" rows="#{bindings.ExceptionalRewardView1.rangeSize}"
+                emptyText="#{bindings.ExceptionalRewardView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.ExceptionalRewardView1.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.ExceptionalRewardView1Query.queryDescriptor}"
+                queryListener="#{bindings.ExceptionalRewardView1Query.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.ExceptionalRewardView1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.ExceptionalRewardView1.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" partialTriggers=":::d2">
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.ExceptionalRewardId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.ExceptionalRewardId.label}"
+                   id="c6">
+          <af:outputText value="#{row.ExceptionalRewardId}" id="ot4"
+                         rendered="false"/>
+          <af:commandLink text="#{row.ExceptionalRewardId}" id="cl1"
+                          action="#{pageFlowScope.ExceptionalRewardMB.onEditInSearch}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.PersonNumber.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.PersonNumber.label}"
+                   id="c7" rendered="false">
+          <af:outputText value="#{row.PersonNumber}" id="ot7" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.PersonName.name}"
+                   filterable="true" sortable="true" headerText="Created By"
+                   id="c2">
+          <af:outputText value="#{row.PersonName}" id="ot5" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.CreatedByNo.name}"
+                   filterable="true" sortable="false"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.CreatedByNo.label}"
+                   id="c9">
+          <af:outputText value="#{row.CreatedByNo}" id="ot8" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.CreatedByName.name}"
+                   filterable="true" sortable="false"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.CreatedByName.label}"
+                   id="c8">
+          <af:outputText value="#{row.CreatedByName}" id="ot9" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.AssigneeName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.AssigneeName.label}"
+                   id="c3">
+          <af:outputText value="#{row.AssigneeName}" id="ot6" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.StepId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.StepId.label}"
+                   id="c5">
+          <af:outputText value="#{row.StepId}" id="ot3" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.ExceptionalRewardView1.hints.StepId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.CreationDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.CreationDate.label}"
+                   id="c1">
+          <af:outputText value="#{row.CreationDate}" id="ot1" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}">
+            <af:convertDateTime pattern="#{bindings.ExceptionalRewardView1.hints.CreationDate.format}"/>
+          </af:outputText>
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.CreationDate}" id="id1"/>
+          </f:facet>
+        </af:column>
+        <af:column sortProperty="#{bindings.ExceptionalRewardView1.hints.RequestStatus.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.ExceptionalRewardView1.hints.RequestStatus.label}"
+                   id="c4">
+          <af:outputText value="#{row.RequestStatus}" id="ot2" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and row.RequestStatus eq 'PENDING' ? 'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column id="c14" width="50" align="center" headerText="Edit" rendered="#{sessionScope.ExceptionalReward_EDIT eq 'Y'}">
+          <af:panelGroupLayout id="pgl2" layout="horizontal">
+            <af:commandImageLink id="cil3" icon="/images/qual_pencil_16.png"  visible="#{row.RequestStatus eq 'PENDING' and PersonInfo.fullName eq row.PersonName}">
+              <af:showPopupBehavior popupId=":::editPopup"/>
+            </af:commandImageLink>
+          </af:panelGroupLayout>
+        </af:column>
+     <af:column id="c10" width="50" align="center" headerText="Delete" rendered="#{sessionScope.ExceptionalReward_WITHDRAW eq 'Y'}">
+          <af:panelGroupLayout id="pgl1" layout="horizontal">
+            <af:commandImageLink id="cil2" icon="/images/delete_ena.png" visible="#{row.RequestStatus eq 'PENDING'  and PersonInfo.fullName eq row.PersonName}">
+              <af:showPopupBehavior popupId=":::withdrawPopup"/>
+            </af:commandImageLink>
+          </af:panelGroupLayout>
+        </af:column>
+      </af:table>
+    </af:panelCollection>
+    <af:popup id="withdrawPopup" contentDelivery="lazyUncached">
+      <af:dialog id="d2" title="Confirmation Dialog"
+                 dialogListener="#{pageFlowScope.ExceptionalRewardMB.withdrawRequest}">
+        <af:outputLabel value="Are you sure you need to withdraw the request?" id="ol1"/>
+      </af:dialog>
+    </af:popup>
+      <af:popup id="editPopup" contentDelivery="lazyUncached">
+      <af:dialog id="d1" title="Confirmation Dialog"
+                 type="cancel">
+                 <af:panelGroupLayout layout="vertical" id="pgl3">
+        <af:outputLabel value="Are you sure you need to edit the request?" id="ol2"/>
+              <af:spacer width="10" height="10" id="s2"/>
+              <af:outputLabel value="Request will be enabled for edit and removed from the current approval"
+                        id="ol3"/>
+                        </af:panelGroupLayout>
+            <f:facet name="buttonBar">
+              <af:commandButton text="Ok" id="cb1"
+                                action="#{pageFlowScope.ExceptionalRewardMB.editPendingRequest}"/>
+            </f:facet>
+          </af:dialog>
+    </af:popup>
+  </af:panelBox>
+    </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+</jsp:root>

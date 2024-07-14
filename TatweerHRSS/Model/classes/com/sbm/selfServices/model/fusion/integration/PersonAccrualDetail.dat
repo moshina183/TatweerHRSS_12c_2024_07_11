@@ -1,0 +1,2 @@
+METADATA|PersonAccrualDetail|PersonNumber|WorkTermsNumber|PlanName|AccrualType|ProcdDate|Value|PerAccrualEntryDtlId|AdjustmentReason
+MERGE|PersonAccrualDetail|PLACEHOLDER_PersonNumber|PLACEHOLDER_WorkTermsNumber|Tickets Accrual|ADJOTH|PLACEHOLDER_Date|PLACEHOLDER_EndBal|PLACEHOLDER_PerAccrualEntryId|CE

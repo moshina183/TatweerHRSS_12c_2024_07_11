@@ -1,0 +1,394 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebServiceProxy xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webserviceproxy">
+   <list n="CHILD_NODES">
+      <url path="HCMDataLoader_Service.xml"/>
+      <url path="HCMDataLoader.wsdl"/>
+      <url path="ServiceException.wsdl"/>
+      <url path="BC4JService.xsd"/>
+      <url path="sdoJava.xsd"/>
+      <url path="HCMDataLoader.xsd"/>
+      <url path="ServiceException.xsd"/>
+      <url path="sdoModel.xsd"/>
+      <url path="oracle_webservices_async_fault_11_0.xsd"/>
+      <url path="sdoXML.xsd"/>
+      <url path="datagraph.xsd"/>
+      <url path="../../../../../../adf/svc/types/FindCriteria.java"/>
+      <url path="../../../../../../../../../sdo/commonj/Type.java"/>
+      <url path="../../../../../../adf/svc/errors/ServiceMessage.java"/>
+      <url path="types/GetEntityList.java"/>
+      <url path="../../../../../../adf/svc/types/SortAttribute.java"/>
+      <url path="../../../../../../adf/svc/types/ViewCriteria.java"/>
+      <url path="../../../../../../../../../sdo/commonj/Property.java"/>
+      <url path="types/ImportAndLoadDataAsyncResponse.java"/>
+      <url path="../../../../../../adf/svc/types/IntegerResult.java"/>
+      <url path="../../../../../../adf/svc/types/Conjunction.java"/>
+      <url path="types/package-info.java"/>
+      <url path="../../../../../../adf/svc/types/ViewCriteriaRow.java"/>
+      <url path="../../../../../../adf/svc/errors/ServiceErrorMessage.java"/>
+      <url path="../../../../../../adf/svc/errors/ServiceAttrValErrorMessage.java"/>
+      <url path="../../../../../../adf/svc/errors/ServiceDMLErrorMessage.java"/>
+      <url path="../../../../../../adf/svc/types/TimeResult.java"/>
+      <url path="types/ObjectFactory.java"/>
+      <url path="types/GetDfltObjAttrHints.java"/>
+      <url path="../../../../../../adf/svc/types/StringResult.java"/>
+      <url path="../../../../../../adf/svc/types/DoubleResult.java"/>
+      <url path="../../../../../../adf/svc/types/MeasureType.java"/>
+      <url path="types/ImportAndLoadDataResponse.java"/>
+      <url path="../../../../../../../../../sdo/commonj/ModelsType.java"/>
+      <url path="../../../../../../adf/svc/errors/ServiceRowValErrorMessage.java"/>
+      <url path="../../../../../../oracleas/schema/oracle_fault_11_0/ObjectFactory.java"/>
+      <url path="../../../../../../oracleas/schema/oracle_fault_11_0/FaultType.java"/>
+      <url path="HCMDataLoaderResponseImpl.java"/>
+      <url path="../../../../../../adf/svc/types/AttrCtrlHints.java"/>
+      <url path="HCMDataLoader.java"/>
+      <url path="../../../../../../adf/svc/types/FloatResult.java"/>
+      <url path="../../../../../../../../../sdo/commonj/xml/ObjectFactory.java"/>
+      <url path="ServiceException.java"/>
+      <url path="../../../../../../../../../sdo/commonj/DataObject.java"/>
+      <url path="../../../../../../adf/svc/types/ReturnMode.java"/>
+      <url path="../../../../../../adf/svc/types/SortOrder.java"/>
+      <url path="HCMDataLoaderSoapHttpPortClient.java"/>
+      <url path="../../../../../../adf/svc/types/AmountType.java"/>
+      <url path="../../../../../../../../../sdo/commonj/DataGraphType.java"/>
+      <url path="../../../../../../../../../sdo/commonj/BaseDataGraphType.java"/>
+      <url path="types/GetDfltObjAttrHintsResponse.java"/>
+      <url path="../../../../../../adf/svc/types/ChangeOperation.java"/>
+      <url path="../../../../../../adf/svc/types/ChildFindCriteria.java"/>
+      <url path="types/GetDfltObjAttrHintsAsync.java"/>
+      <url path="types/GetEntityListAsync.java"/>
+      <url path="types/GetServiceLastUpdateTimeResponse.java"/>
+      <url path="../../../../../../adf/svc/types/ShortResult.java"/>
+      <url path="../../../../../../adf/svc/types/BigIntegerResult.java"/>
+      <url path="../../../../../../../../../sdo/commonj/ChangeSummaryType.java"/>
+      <url path="../../../../../../../../../sdo/commonj/Types.java"/>
+      <url path="../../../../../../adf/svc/types/DataObjectResult.java"/>
+      <url path="../../../../../../../../../sdo/commonj/XSDType.java"/>
+      <url path="HCMDataLoader_Service.java"/>
+      <url path="../../../../../../adf/svc/errors/package-info.java"/>
+      <url path="../../../../../../adf/svc/errors/ObjectFactory.java"/>
+      <url path="../../../../../../adf/svc/types/LongResult.java"/>
+      <url path="types/GetDataSetStatusAsync.java"/>
+      <url path="types/GetDataSetStatus.java"/>
+      <url path="../../../../../../adf/svc/types/BigDecimalResult.java"/>
+      <url path="types/GetEntityListAsyncResponse.java"/>
+      <url path="../../../../../../adf/svc/types/MethodResult.java"/>
+      <url path="../../../../../../adf/svc/types/package-info.java"/>
+      <url path="types/GetServiceLastUpdateTimeAsync.java"/>
+      <url path="../../../../../../adf/svc/types/ObjectFactory.java"/>
+      <url path="../../../../../../../../../sdo/commonj/java/ObjectFactory.java"/>
+      <url path="../../../../../../adf/svc/types/FindControl.java"/>
+      <url path="../../../../../../../../../sdo/commonj/ObjectFactory.java"/>
+      <url path="types/ImportAndLoadData.java"/>
+      <url path="../../../../../../adf/svc/types/DateResult.java"/>
+      <url path="../../../../../../../../../sdo/commonj/xml/XMLInfo.java"/>
+      <url path="../../../../../../adf/svc/types/DataHandlerResult.java"/>
+      <url path="types/GetDataSetStatusAsyncResponse.java"/>
+      <url path="types/GetDfltObjAttrHintsAsyncResponse.java"/>
+      <url path="../../../../../../adf/svc/types/ServiceViewInfo.java"/>
+      <url path="types/GetDataSetStatusResponse.java"/>
+      <url path="../../../../../../adf/svc/types/ProcessControl.java"/>
+      <url path="types/GetServiceLastUpdateTimeAsyncResponse.java"/>
+      <url path="../../../../../../oracleas/schema/oracle_fault_11_0/package-info.java"/>
+      <url path="../../../../../../../../../sdo/commonj/TextType.java"/>
+      <url path="../../../../../../adf/svc/types/CtrlHint.java"/>
+      <url path="../../../../../../oracleas/schema/oracle_fault_11_0/Detail.java"/>
+      <url path="../../../../../../../../../sdo/commonj/package-info.java"/>
+      <url path="../../../../../../adf/svc/types/ByteResult.java"/>
+      <url path="../../../../../../adf/svc/types/BytesResult.java"/>
+      <url path="../../../../../../../../../sdo/commonj/xml/package-info.java"/>
+      <url path="../../../../../../../../../sdo/commonj/java/package-info.java"/>
+      <url path="../../../../../../adf/svc/types/TimestampResult.java"/>
+      <url path="../../../../../../adf/svc/types/ObjAttrHints.java"/>
+      <url path="types/GetEntityListResponse.java"/>
+      <url path="../../../../../../adf/svc/types/ViewCriteriaItem.java"/>
+      <url path="types/GetServiceLastUpdateTime.java"/>
+      <url path="../../../../../../../../../sdo/commonj/java/JavaInfo.java"/>
+      <url path="types/ImportAndLoadDataAsync.java"/>
+      <url path="../../../../../../adf/svc/types/BooleanResult.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="MTOM"/>
+      <list n="LOCAL_FILES"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy"/>
+      <url n="ORACLE_WEBSERVICES_XML" path="HCMDataLoader_Service.xml"/>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+         </hash>
+      </hash>
+      <value n="PROXY_ASYNC_METHODS" v="FOR_ENABLED"/>
+      <list n="PROXY_CLIENTS">
+         <url path="HCMDataLoaderSoapHttpPortClient.java"/>
+      </list>
+      <value n="PROXY_MAPPING_URL"/>
+      <url n="PROXY_ORIGINAL_WSDL_URL" protocol="https" host="egwo-test.hcm.em2.oraclecloud.com" path="/hcmCommonDataLoader/HCMDataLoader" query="wsdl"/>
+      <hash n="PROXY_PORTS">
+         <hash n="HCMDataLoaderSoapHttpPort">
+            <value n="ACCESSES_DOC_WRAPPPED" v="true"/>
+            <value n="ACCESSES_RPC_ENCODED" v="false"/>
+            <value n="CLASS_NAME" v="com.oracle.xmlns.apps.hcm.common.dataloader.core.dataloaderintegrationservice.HCMDataLoader"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyPort"/>
+            <value n="NAME" v="HCMDataLoaderSoapHttpPort"/>
+            <hash n="OPERATIONS">
+               <hash n="getDataSetStatus">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getDataSetStatusAsync">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getDfltObjAttrHints">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getDfltObjAttrHintsAsync">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getEntityList">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getEntityListAsync">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getServiceLastUpdateTime">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="getServiceLastUpdateTimeAsync">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="importAndLoadData">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+               <hash n="importAndLoadDataAsync">
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.ProxyOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </hash>
+            <hash n="PROPERTY_GROUPS">
+               <hash n="WS_CLIENT_POLICY">
+                  <value n="addressing"/>
+                  <list n="management"/>
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.policy.PolicyClientModel"/>
+                  <value n="mtom"/>
+                  <hash n="POLICY_OVERRIDE_PROPERTIES"/>
+                  <list n="security">
+                     <string v="oracle/wss_username_token_over_ssl_client_policy"/>
+                  </list>
+                  <value n="wsrm"/>
+               </hash>
+            </hash>
+            <url n="PROXY_ORIGINAL_PORT_ENDPOINT" protocol="https" host="egwo-test.hcm.em2.oraclecloud.com" port="443" path="/hcmService/HCMDataLoader"/>
+         </hash>
+      </hash>
+      <value n="PROXY_SERVICE_NAME" v="HCMDataLoader"/>
+      <value n="PROXY_SERVICE_NAMESPACE" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/"/>
+      <url n="PROXY_TARGET_PROJECT" path="../../../../../../../../../../LoadDataToHCM.jpr"/>
+      <list n="PROXY_WSDL_IMPORT_LIST">
+         <url path="ServiceException.wsdl"/>
+         <url path="BC4JService.xsd"/>
+         <url path="sdoJava.xsd"/>
+         <url path="HCMDataLoader.xsd"/>
+         <url path="ServiceException.xsd"/>
+         <url path="sdoModel.xsd"/>
+         <url path="oracle_webservices_async_fault_11_0.xsd"/>
+         <url path="sdoXML.xsd"/>
+         <url path="datagraph.xsd"/>
+      </list>
+      <url n="PROXY_WSDL_URL" path="HCMDataLoader.wsdl"/>
+      <hash n="REFERENCED_WEBSERVICE">
+         <list n="BD_">
+            <hash>
+               <value n="BOUND_PORT_TYPE" v="{http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/}HCMDataLoader"/>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPBinding"/>
+               <value n="NAME" v="{http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/}HCMDataLoaderSoapHttp"/>
+               <list n="OP_BINDINGS">
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/importAndLoadData"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_OUTPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="java.lang.String.importAndLoadData.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/importAndLoadDataAsync"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="void.importAndLoadDataAsync.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getDfltObjAttrHints"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_OUTPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="com.oracle.xmlns.adf.svc.types.ObjAttrHints.getDfltObjAttrHints.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getServiceLastUpdateTime"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_OUTPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="javax.xml.datatype.XMLGregorianCalendar.getServiceLastUpdateTime"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getEntityList"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_OUTPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="java.util.List&lt;com.oracle.xmlns.adf.svc.types.ServiceViewInfo>.getEntityList"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getEntityListAsync"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="void.getEntityListAsync"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getDfltObjAttrHintsAsync"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="void.getDfltObjAttrHintsAsync.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getServiceLastUpdateTimeAsync"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="void.getServiceLastUpdateTimeAsync"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getDataSetStatus"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_OUTPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="java.lang.String.getDataSetStatus.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="BD_SOAP_ACTION" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/getDataSetStatusAsync"/>
+                     <value n="BD_SOAP_INPUT_USE" v="1"/>
+                     <value n="BD_SOAP_STYLE" v="1"/>
+                     <value n="BOUND_OPERATION" v="void.getDataSetStatusAsync.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+               </list>
+               <hash n="PROPERTY_GROUPS"/>
+            </hash>
+         </list>
+         <list n="BINDING_FILES"/>
+         <value n="GUID" v="7493f1d2-0164-1000-8004-c0a8010ae0d7"/>
+         <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.proxy.WebServiceProxy$ProxyJavaWebService"/>
+         <list n="PO_">
+            <hash>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPPort"/>
+               <value n="NAME" v="HCMDataLoaderSoapHttpPort"/>
+               <value n="PORT_BINDING_NAME" v="{http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/}HCMDataLoaderSoapHttp"/>
+               <list n="PORT_OPS">
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="java.lang.String.importAndLoadData.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="void.importAndLoadDataAsync.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="com.oracle.xmlns.adf.svc.types.ObjAttrHints.getDfltObjAttrHints.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="javax.xml.datatype.XMLGregorianCalendar.getServiceLastUpdateTime"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="java.util.List&lt;com.oracle.xmlns.adf.svc.types.ServiceViewInfo>.getEntityList"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="void.getEntityListAsync"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="void.getDfltObjAttrHintsAsync.java.lang.String.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="void.getServiceLastUpdateTimeAsync"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="java.lang.String.getDataSetStatus.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+                  <hash>
+                     <value n="EXPOSED_BD_OPERATION" v="void.getDataSetStatusAsync.java.lang.String"/>
+                     <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                     <hash n="PROPERTY_GROUPS"/>
+                  </hash>
+               </list>
+               <hash n="PROPERTY_GROUPS"/>
+               <url n="URL" protocol="https" host="egwo-test.hcm.em2.oraclecloud.com" port="443" path="/hcmService/HCMDataLoader"/>
+            </hash>
+         </list>
+         <hash n="PROPERTY_GROUPS">
+            <hash n="WSDL_TO_JAVA_PROPERTIES">
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+            </hash>
+         </hash>
+         <list n="PT_">
+            <hash>
+               <value n="AUTO_SERVICE_INTERFACE"/>
+               <value n="DEFAULT_NAME" v="false"/>
+               <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaPortType"/>
+               <value n="NAME" v="{http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/}HCMDataLoader"/>
+               <hash n="PROPERTY_GROUPS"/>
+               <value n="PT_CLASS" v="com.oracle.xmlns.apps.hcm.common.dataloader.core.dataloaderintegrationservice.HCMDataLoaderImpl"/>
+               <value n="PT_SERVICE_INTERFACE" v="com.oracle.xmlns.apps.hcm.common.dataloader.core.dataloaderintegrationservice.HCMDataLoader"/>
+            </hash>
+         </list>
+         <url n="TARGET_PROJECT" path="../../../../../../../../../../LoadDataToHCM.jpr"/>
+         <value n="WS_CREATE_ONEWAY_OPERATIONS" v="true"/>
+         <value n="WS_ORIG_GEN_DIRECTION" v="TOP_DOWN"/>
+         <value n="WS_TARGET_NAMESPACE" v="http://xmlns.oracle.com/apps/hcm/common/dataLoader/core/dataLoaderIntegrationService/"/>
+         <value n="WS_URI" v="HCMDataLoader"/>
+         <url n="WS_WSDL_FILE" path="HCMDataLoader.wsdl"/>
+      </hash>
+      <value n="SERVICE_ASYNC" v="true"/>
+      <value n="SERVICE_ASYNC_FEATURES" v="true"/>
+      <value n="USE_WSDL_LOCATION" v="true"/>
+   </hash>
+</jdevws:WebServiceProxy>

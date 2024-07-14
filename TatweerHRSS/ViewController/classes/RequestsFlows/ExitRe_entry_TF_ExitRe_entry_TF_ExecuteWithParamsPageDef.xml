@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="ExitRe_entry_TF_ExitRe_entry_TF_ExecuteWithParamsPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ExitReEntryVO1" RangeSize="25"
+              DataControl="SBMModuleDataControl" id="ExitReEntryVO1Iterator"
+              Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ExitReEntryVO1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="bindPersonNumber" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bindAssignee" NDValue="#{PersonInfo.assignee}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="bindAssignee2" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

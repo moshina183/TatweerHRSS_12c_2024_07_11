@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Delegate Tasks" id="pb1"
+               inlineStyle="height:14.0cm;background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t3"></af:toolbar>
+    </f:facet>
+    <af:panelGroupLayout layout="vertical" id="pgl1">
+      <af:query id="qryId1" headerText="Search Task" disclosed="true"
+                value="#{bindings.SearchRequestQuery.queryDescriptor}"
+                model="#{bindings.SearchRequestQuery.queryModel}"
+                queryListener="#{bindings.SearchRequestQuery.processQuery}"
+                queryOperationListener="#{bindings.SearchRequestQuery.processQueryOperation}"
+                resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                modeChangeVisible="false" displayMode="default" maxColumns="3"
+                rows="2"/>
+    </af:panelGroupLayout>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelBox text="Search Result" id="pb2">
+      <f:facet name="toolbar"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                          inlineStyle="background-color:#ffffff;height:12.0cm;">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t2" flex="1"> 
+            <af:commandButton text="Delegate" id="cb1"
+                              actionListener="#{backingBeanScope.DelegateTasksMB.onDelegate}"></af:commandButton>
+            <af:spacer width="10" height="10" id="s3"/>
+            <af:commandImageLink text="Update Persons" id="cb3"
+                                 actionListener="#{backingBeanScope.DelegateTasksMB.updateAllPerson}"></af:commandImageLink>
+         <af:commandImageLink text=" " id="cil3" icon="/images/func_excel_16_ena.png"
+                              inlineStyle="margin-left:20px;">
+            <af:exportCollectionActionListener exportedId="t1"
+                                               type="excelHTML"
+                                               filename="AllWaitingTasks.xls"/>
+            </af:commandImageLink>
+          </af:toolbar>
+        </f:facet>
+        <af:table value="#{bindings.WaitingTasksToDelegate_ROVO.collectionModel}"
+                  var="row" scrollPolicy="page"
+                  rows="#{bindings.WaitingTasksToDelegate_ROVO.rangeSize}"
+                  emptyText="#{bindings.WaitingTasksToDelegate_ROVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="7" rowBandingInterval="0"
+                  filterModel="#{bindings.WaitingTasksToDelegate_ROVOQuery.queryDescriptor}"
+                  queryListener="#{bindings.WaitingTasksToDelegate_ROVOQuery.processQuery}"
+                  filterVisible="false" varStatus="vs"
+                  selectedRowKeys="#{bindings.WaitingTasksToDelegate_ROVO.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.WaitingTasksToDelegate_ROVO.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1" autoHeightRows="0">
+          <af:column headerText="Select" align="center" id="c9">
+            <af:selectBooleanCheckbox value="#{row.bindings.SelectFlag.inputValue}"
+                                      label="#{row.bindings.SelectFlag.label}"
+                                      shortDesc="#{bindings.WaitingTasksToDelegate_ROVO.hints.SelectFlag.tooltip}"
+                                      id="sbc1" autoSubmit="true"/>
+            <f:facet name="header">
+            <af:panelGroupLayout id="pgl2" layout="horizontal" halign="center">
+              <af:commandImageLink actionListener="#{backingBeanScope.DelegateTasksMB.onSelectAll}"
+                                   text=" " id="cil2" visible="#{pageFlowScope.SelectAllFlag ne 'Y'}"
+                                   icon="/images/cfg_checkboxunselected_ena.png"/>
+              <af:commandImageLink actionListener="#{backingBeanScope.DelegateTasksMB.onUnSelectAll}"
+                                    icon="/images/cfg_checkboxselected_ena.png"
+                                   text=" " id="cil1"  visible="#{pageFlowScope.SelectAllFlag eq 'Y'}"/>
+            </af:panelGroupLayout>
+            </f:facet>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.RequestName.name}"
+                     filterable="true" sortable="true" headerText="Request Name"
+                     id="c4" width="150" align="left">
+            <af:outputText value="#{row.RequestName}" id="ot5"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.RequestId.name}"
+                     filterable="true" sortable="true" headerText="Request ID"
+                     id="c6" align="left">
+            <af:outputText value="#{row.RequestId}" id="ot8">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.WaitingTasksToDelegate_ROVO.hints.RequestId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.PersonNumber.name}"
+                     filterable="true" sortable="true"
+                     headerText="Person Number" id="c2" align="left">
+            <af:outputText value="#{row.PersonNumber}" id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.PersonName.name}"
+                     filterable="true" sortable="true" headerText="Person Name"
+                     id="c3" width="150" align="left">
+            <af:outputText value="#{row.PersonName}" id="ot1"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.Assignee.name}"
+                     filterable="true" sortable="true" headerText="Assignee"
+                     id="c5" align="left">
+            <af:outputText value="#{row.Assignee}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.AssigneeName.name}"
+                     filterable="true" sortable="true"
+                     headerText="Assignee Name" id="c8" width="150"
+                     align="left">
+            <af:outputText value="#{row.AssigneeName}" id="ot4"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.RequestStatus.name}"
+                     filterable="true" sortable="true" id="c1" width="150"
+                     align="left" headerText="Request Status">
+            <af:outputText value="#{row.RequestStatus}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.WaitingTasksToDelegate_ROVO.hints.CreationDate.name}"
+                     filterable="false" sortable="true"
+                     headerText="Creation Date" id="c7" align="left">
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.CreationDate}" id="id1"/>
+            </f:facet>
+            <af:outputText value="#{row.CreationDate}" id="ot7">
+              <af:convertDateTime pattern="#{bindings.WaitingTasksToDelegate_ROVO.hints.CreationDate.format}"/>
+            </af:outputText>
+          </af:column>
+        </af:table>
+        <f:facet name="statusbar"/>
+      </af:panelCollection>
+      <af:popup id="p1"
+                binding="#{backingBeanScope.DelegateTasksMB.delegatePop}">
+        <af:dialog id="d1" type="cancel" title="Delegate / Reassign Request"
+                   contentWidth="400" contentHeight="150">
+          <f:facet name="buttonBar">
+            <af:commandButton text="Delegate" id="cb2"
+                              actionListener="#{backingBeanScope.DelegateTasksMB.onClickDelegate}"/>
+          </f:facet>
+          <af:panelFormLayout id="pfl1" labelWidth="150">
+            <af:inputListOfValues id="personNameId" autoSubmit="true"
+                                  popupTitle="Search and Select: #{bindings.PersonName.hints.label}"
+                                  value="#{bindings.PersonName.inputValue}"
+                                  label="Person Name"
+                                  model="#{bindings.PersonName.listOfValuesModel}"
+                                  required="true" contentStyle="width:250px"
+                                  columns="#{bindings.PersonName.hints.displayWidth}"
+                                  shortDesc="#{bindings.PersonName.hints.tooltip}">
+              <f:validator binding="#{bindings.PersonName.validator}"/>
+              <af:autoSuggestBehavior suggestItems="#{bindings.PersonName.suggestItems}"
+                                      maxSuggestedItems="5"/>
+            </af:inputListOfValues>
+            <af:spacer height="10" id="s2"/>
+            <af:panelLabelAndMessage label="Person Number" rendered="false"
+                                     partialTriggers="personNameId" id="plam1">
+              <af:outputText value="#{bindings.PersonNumber.inputValue}"
+                             partialTriggers="personNameId" id="ot9"/>
+            </af:panelLabelAndMessage>
+            <af:selectOneChoice value="#{bindings.Action.inputValue}"
+                                label="#{bindings.Action.label}" required="true"
+                                partialTriggers="personNameId"
+                                shortDesc="#{bindings.Action.hints.tooltip}"
+                                id="soc1" autoSubmit="true">
+              <f:selectItems value="#{bindings.Action.items}" id="si1"/>
+            </af:selectOneChoice>
+          </af:panelFormLayout>
+        </af:dialog>
+      </af:popup>
+    </af:panelBox>
+  </af:panelBox>
+</jsp:root>

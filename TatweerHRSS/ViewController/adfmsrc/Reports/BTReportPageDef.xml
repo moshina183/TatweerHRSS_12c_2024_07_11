@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="BTReportPageDef" Package="Reports">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="BusinessTripRequestReportsVO1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="BusinessTripRequestReportsVO1Iterator"/>
+    <iterator Binds="BtHistoryReportsVO1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="BtHistoryReportsVO1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="BusinessTripRequestReportsVO1Iterator"
+          id="BusinessTripRequestReportsVO1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.reports.BusinessTripRequestReportsVO"
+                      Name="BusinessTripRequestReportsVO10">
+        <AttrNames>
+          <Item Value="LocalBusinessTripId"/>
+          <Item Value="PersoneId"/>
+          <Item Value="StepId"/>
+          <Item Value="StartDate"/>
+          <Item Value="EndDate"/>
+          <Item Value="Days"/>
+          <Item Value="LaundryAllowanceAmount"/>
+          <Item Value="TransportationAllowanceType"/>
+          <Item Value="TransAllowanceAmount"/>
+          <Item Value="HousingAllowanceType"/>
+          <Item Value="HousingAllowanceAmount"/>
+          <Item Value="FoodAllowanceType"/>
+          <Item Value="FoodAllowanceAmount"/>
+          <Item Value="MeansTravel"/>
+          <Item Value="VisaCost"/>
+          <Item Value="OtherCost"/>
+          <Item Value="TripType"/>
+          <Item Value="PersoneName"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="RejectComments"/>
+          <Item Value="Assignee"/>
+          <Item Value="TripReason"/>
+          <Item Value="EventSubject"/>
+          <Item Value="EventType"/>
+          <Item Value="RequiredVisa"/>
+          <Item Value="TargetedCompetencies"/>
+          <Item Value="CourseName"/>
+          <Item Value="ExpenseBusinessTripId"/>
+          <Item Value="ExpenseType"/>
+          <Item Value="CancelReason"/>
+          <Item Value="SubType"/>
+          <Item Value="NewCity"/>
+          <Item Value="DestinationType"/>
+          <Item Value="CreationDate"/>
+          <Item Value="CostCenter"/>
+          <Item Value="CostCenterNumber"/>
+          <Item Value="TrainingCost"/>
+          <Item Value="OtherMeansTravel"/>
+          <Item Value="TravelCost"/>
+          <Item Value="EventCost"/>
+          <Item Value="TripComment"/>
+          <Item Value="PersonPosition"/>
+          <Item Value="PersonJob"/>
+          <Item Value="PersonDepartment"/>
+          <Item Value="PersonLocation"/>
+          <Item Value="OtherCities"/>
+          <Item Value="ToCity"/>
+          <Item Value="PerDiemAmount"/>
+          <Item Value="TotalForInvoice"/>
+          <Item Value="BenefitType"/>
+          <Item Value="TotalAmount"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="BtHistoryReportsVO1Iterator" id="BtHistoryReportsVO1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.reports.BtHistoryReportsVO"
+                      Name="BtHistoryReportsVO10">
+        <AttrNames>
+          <Item Value="BtHistoryId"/>
+          <Item Value="LocalBusinessTripId"/>
+          <Item Value="PersoneId"/>
+          <Item Value="StepId"/>
+          <Item Value="StartDate"/>
+          <Item Value="EndDate"/>
+          <Item Value="Days"/>
+          <Item Value="LaundryAllowanceAmount"/>
+          <Item Value="TransportationAllowanceType"/>
+          <Item Value="TransAllowanceAmount"/>
+          <Item Value="HousingAllowanceType"/>
+          <Item Value="HousingAllowanceAmount"/>
+          <Item Value="FoodAllowanceType"/>
+          <Item Value="FoodAllowanceAmount"/>
+          <Item Value="MeansTravel"/>
+          <Item Value="VisaCost"/>
+          <Item Value="OtherCost"/>
+          <Item Value="BudgetFlag"/>
+          <Item Value="TripType"/>
+          <Item Value="PersoneName"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="RejectComments"/>
+          <Item Value="Assignee"/>
+          <Item Value="TripReason"/>
+          <Item Value="EventSubject"/>
+          <Item Value="EventType"/>
+          <Item Value="RequiredVisa"/>
+          <Item Value="TargetedCompetencies"/>
+          <Item Value="CourseName"/>
+          <Item Value="ExpenseBusinessTripId"/>
+          <Item Value="ExpenseType"/>
+          <Item Value="CancelReason"/>
+          <Item Value="SubType"/>
+          <Item Value="NewCity"/>
+          <Item Value="DestinationType"/>
+          <Item Value="CreationDate"/>
+          <Item Value="CostCenter"/>
+          <Item Value="CostCenterNumber"/>
+          <Item Value="TrainingCost"/>
+          <Item Value="OtherMeansTravel"/>
+          <Item Value="TravelCost"/>
+          <Item Value="EventCost"/>
+          <Item Value="TripComment"/>
+          <Item Value="OtherCities"/>
+          <Item Value="ToCity"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="TotalForInvoice"/>
+          <Item Value="PerDiemAmount"/>
+          <Item Value="BenefitType"/>
+          <Item Value="TotalAmount"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

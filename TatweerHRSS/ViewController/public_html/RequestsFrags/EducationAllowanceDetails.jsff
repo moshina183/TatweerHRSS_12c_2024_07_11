@@ -1,0 +1,844 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+  <af:panelBox text="Educational Allowance Request Details" id="pb1" inlineStyle="background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton text="Save" id="ctb1" partialSubmit="true"
+                                 rendered="#{bindings.StepId.inputValue eq 1 and !(bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED')}"
+                                 action="#{pageFlowScope.EducationAllowanceMB.saveRequest}"/>
+        <af:commandToolbarButton text="Submit" id="ctb2" partialSubmit="true"
+                                 action="#{pageFlowScope.EducationAllowanceMB.submitRequest}"
+                                 rendered="#{bindings.StepId.inputValue eq 1 || bindings.RequestStatus.inputValue eq 'SAVED'}"/>
+        <!--<af:commandToolbarButton text="Direct Approve" id="ctb12"
+                                 action="#{pageFlowScope.EducationAllowanceMB.directApprove}"
+                                 rendered="#{bindings.StepId.inputValue eq null || bindings.RequestStatus.inputValue eq 'SAVED'}"/>-->
+        <af:commandToolbarButton text="Approve" id="ctb3"
+                                 action="#{pageFlowScope.EducationAllowanceMB.approveRequest}"
+                                 rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"/>
+        <af:commandToolbarButton text="Reject" id="ctb4"
+                                 rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}">
+          <af:showPopupBehavior popupId="p2" triggerType="action"
+                                align="afterEnd"/>
+        </af:commandToolbarButton>
+        <af:commandToolbarButton text="Cancel" id="ctb5" action="back"
+                                 actionListener="#{bindings.Rollback.execute}"
+                                 immediate="true">
+              <af:resetActionListener/>
+            </af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelBox  id="pb24"  text="Person Details" inlineStyle="background-color:#ffffff;" rendered="#{(bindings.PersonNumber.inputValue ne null or bindings.PersonPosition.inputValue ne null or bindings.PersonJob.inputValue ne null or bindings.PersonDepartment.inputValue ne null or bindings.PersonLocation.inputValue ne null) and (bindings.StepId.inputValue gt 1 )}"
+                 partialTriggers="ctb5 ctb4 ctb3 ctb2 ctb1">
+     <af:panelFormLayout id="pf21" rows="2" maxColumns="2">
+      <af:inputText value="#{bindings.PersonNumber.inputValue}"
+                    label="Number"    rendered="#{bindings.PersonName.inputValue ne null}"
+                    required="#{bindings.PersonNumber.hints.mandatory}"
+                  columns="50" visible="#{bindings.StepId.inputValue ne 1}"
+                    maximumLength="#{bindings.PersonNumber.hints.precision}"
+                    shortDesc="#{bindings.PersonNumber.hints.tooltip}"
+                    id="it142"  disabled="true">
+        <f:validator binding="#{bindings.PersonNumber.validator}"/>
+      </af:inputText>
+          <af:inputText value="#{bindings.PersonPosition.inputValue}"
+                    label="Position" rendered="#{bindings.PersonPosition.inputValue ne null}"
+                    required="#{bindings.PersonPosition.hints.mandatory}"
+                    columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonPosition.hints.precision}"
+                    shortDesc="#{bindings.PersonPosition.hints.tooltip}"
+                    id="it113" visible="#{bindings.StepId.inputValue ne 1}">
+        <f:validator binding="#{bindings.PersonPosition.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonJob.inputValue}" rendered="#{bindings.PersonJob.inputValue ne null}"
+                    label="Job"
+                    required="#{bindings.PersonJob.hints.mandatory}"
+                   columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonJob.hints.precision}"
+                    shortDesc="#{bindings.PersonJob.hints.tooltip}" id="it124"
+                  visible="#{bindings.StepId.inputValue ne 1}">
+        <f:validator binding="#{bindings.PersonJob.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonDepartment.inputValue}"  rendered="#{bindings.PersonDepartment.inputValue ne null}"
+                    label=" Department"
+                    required="#{bindings.PersonDepartment.hints.mandatory}"
+                     columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonDepartment.hints.precision}"
+                    shortDesc="#{bindings.PersonDepartment.hints.tooltip}"
+                    id="it65"  visible="#{bindings.StepId.inputValue ne 1}">>
+        <f:validator binding="#{bindings.PersonDepartment.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonLocation.inputValue}"  rendered="#{bindings.PersonLocation.inputValue ne null}"
+                    label="Location"
+                    required="#{bindings.PersonLocation.hints.mandatory}"
+                    columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonLocation.hints.precision}"
+                    shortDesc="#{bindings.PersonLocation.hints.tooltip}"
+                    id="it93"  visible="#{bindings.StepId.inputValue ne 1}">>
+        <f:validator binding="#{bindings.PersonLocation.validator}"/>
+      </af:inputText>
+     </af:panelFormLayout>
+     </af:panelBox>
+     <af:spacer height="10" id="s3"/>
+    <af:panelBox id="pb3" inlineStyle="background-color:#ffffff;">
+      <af:panelFormLayout id="pfl1" maxColumns="2">
+        <af:inputText value="#{bindings.EducationAllowanceId.inputValue}"
+                      label="#{bindings.EducationAllowanceId.hints.label}"
+                      required="#{bindings.EducationAllowanceId.hints.mandatory}"
+                      columns="#{bindings.EducationAllowanceId.hints.displayWidth}"
+                      maximumLength="#{bindings.EducationAllowanceId.hints.precision}"
+                      shortDesc="#{bindings.EducationAllowanceId.hints.tooltip}"
+                      id="it14" visible="false">
+          <f:validator binding="#{bindings.EducationAllowanceId.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.EducationAllowanceId.format}"/>
+        </af:inputText>
+        <af:inputDate value="#{bindings.CreationDate.inputValue}"
+                      label="#{bindings.CreationDate.hints.label}"
+                      required="#{bindings.CreationDate.hints.mandatory}"
+                      shortDesc="#{bindings.CreationDate.hints.tooltip}"
+                      id="id1" visible="false">
+          <f:validator binding="#{bindings.CreationDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.CreationDate.format}"/>
+        </af:inputDate>
+        <af:inputText value="#{bindings.PersonNumber.inputValue}"
+                      label="#{bindings.PersonNumber.hints.label}"
+                      required="#{bindings.PersonNumber.hints.mandatory}"
+                      columns="#{bindings.PersonNumber.hints.displayWidth}"
+                      maximumLength="#{bindings.PersonNumber.hints.precision}"
+                      shortDesc="#{bindings.PersonNumber.hints.tooltip}"
+                      id="it6" visible="false">
+          <f:validator binding="#{bindings.PersonNumber.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonName.inputValue}"
+                      label="#{bindings.PersonName.hints.label}"
+                      required="#{bindings.PersonName.hints.mandatory}"
+                      columns="#{bindings.PersonName.hints.displayWidth}"
+                      maximumLength="#{bindings.PersonName.hints.precision}"
+                      shortDesc="#{bindings.PersonName.hints.tooltip}" id="it11"
+                      visible="false">
+          <f:validator binding="#{bindings.PersonName.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.StepId.inputValue}"
+                      label="#{bindings.StepId.hints.label}"
+                      required="#{bindings.StepId.hints.mandatory}"
+                      columns="#{bindings.StepId.hints.displayWidth}"
+                      maximumLength="#{bindings.StepId.hints.precision}"
+                      shortDesc="#{bindings.StepId.hints.tooltip}" id="it3"
+                      visible="false">
+          <f:validator binding="#{bindings.StepId.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.StepId.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.Assignee.inputValue}"
+                      label="#{bindings.Assignee.hints.label}"
+                      required="#{bindings.Assignee.hints.mandatory}"
+                      columns="#{bindings.Assignee.hints.displayWidth}"
+                      maximumLength="#{bindings.Assignee.hints.precision}"
+                      shortDesc="#{bindings.Assignee.hints.tooltip}" id="it22"
+                      visible="false">
+          <f:validator binding="#{bindings.Assignee.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.AssigneeName.inputValue}"
+                      label="#{bindings.AssigneeName.hints.label}"
+                      required="#{bindings.AssigneeName.hints.mandatory}"
+                      columns="#{bindings.AssigneeName.hints.displayWidth}"
+                      maximumLength="#{bindings.AssigneeName.hints.precision}"
+                      shortDesc="#{bindings.AssigneeName.hints.tooltip}"
+                      id="it24" visible="false">
+          <f:validator binding="#{bindings.AssigneeName.validator}"/>
+        </af:inputText>
+ 
+        <af:inputText value="#{bindings.PersonGrade.inputValue}"
+                      label="#{bindings.PersonGrade.hints.label}"
+                      required="#{bindings.PersonGrade.hints.mandatory}"
+                      columns="#{bindings.PersonGrade.hints.displayWidth}"
+                      maximumLength="#{bindings.PersonGrade.hints.precision}"
+                      shortDesc="#{bindings.PersonGrade.hints.tooltip}"
+                      id="it26" visible="false">
+          <f:validator binding="#{bindings.PersonGrade.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.RequestStatus.inputValue}"
+                      label="#{bindings.RequestStatus.hints.label}"
+                      required="#{bindings.RequestStatus.hints.mandatory}"
+                      columns="#{bindings.RequestStatus.hints.displayWidth}"
+                      maximumLength="#{bindings.RequestStatus.hints.precision}"
+                      shortDesc="#{bindings.RequestStatus.hints.tooltip}"
+                      id="it19" visible="false">
+          <f:validator binding="#{bindings.RequestStatus.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.RejectionReason.inputValue}"
+                      label="#{bindings.RejectionReason.hints.label}"
+                      required="#{bindings.RejectionReason.hints.mandatory}"
+                      columns="#{bindings.RejectionReason.hints.displayWidth}"
+                      maximumLength="#{bindings.RejectionReason.hints.precision}"
+                      shortDesc="#{bindings.RejectionReason.hints.tooltip}"
+                      id="it5" visible="false">
+          <f:validator binding="#{bindings.RejectionReason.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice value="#{pageFlowScope.inv1}"
+                            label="#{bindings.NumberOfChildren.label}"
+                            required="#{bindings.NumberOfChildren.hints.mandatory}"
+                            shortDesc="#{bindings.NumberOfChildren.hints.tooltip}"
+                            id="soc1" autoSubmit="true"
+                            valueChangeListener="#{pageFlowScope.EducationAllowanceMB.showHideChildrenFields}"
+                            disabled="true"
+                            visible="#{bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2 }"
+                            showRequired="true" changedDesc="s">
+          <f:selectItems value="#{bindings.NumberOfChildren.items}" id="si1"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.NumberOfChildren1.inputValue}"
+                      label="#{bindings.NumberOfChildren1.hints.label}"
+                      required="true"
+                      columns="#{bindings.NumberOfChildren1.hints.displayWidth}"
+                      maximumLength="#{bindings.NumberOfChildren1.hints.precision}"
+                      shortDesc="#{bindings.NumberOfChildren1.hints.tooltip}"
+                      id="it29" visible="#{bindings.StepId.inputValue gt 1}"
+                      disabled="true" showRequired="true">
+          <f:validator binding="#{bindings.NumberOfChildren1.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.NumberOfChildren1.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.FirstChild.inputValue}"
+                      label="#{bindings.FirstChild.hints.label}"
+                      required="#{bindings.FirstChild.hints.mandatory}"
+                      columns="#{bindings.FirstChild.hints.displayWidth}"
+                      maximumLength="#{bindings.FirstChild.hints.precision}"
+                      shortDesc="#{bindings.FirstChild.hints.tooltip}" id="it2"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}">
+          <f:validator binding="#{bindings.FirstChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.FirstChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.SecondChild.inputValue}"
+                      label="#{bindings.SecondChild.hints.label}"
+                      required="#{bindings.SecondChild.hints.mandatory}"
+                      columns="#{bindings.SecondChild.hints.displayWidth}"
+                      maximumLength="#{bindings.SecondChild.hints.precision}"
+                      shortDesc="#{bindings.SecondChild.hints.tooltip}"
+                      id="it4"
+                      binding="#{pageFlowScope.EducationAllowanceMB.secondChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 1 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 1)}">
+          <f:validator binding="#{bindings.SecondChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.SecondChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.ThirdChild.inputValue}"
+                      label="#{bindings.ThirdChild.hints.label}"
+                      required="#{bindings.ThirdChild.hints.mandatory}"
+                      columns="#{bindings.ThirdChild.hints.displayWidth}"
+                      maximumLength="#{bindings.ThirdChild.hints.precision}"
+                      shortDesc="#{bindings.ThirdChild.hints.tooltip}"
+                      id="it27"
+                      binding="#{pageFlowScope.EducationAllowanceMB.thirdChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 2 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 2)}">
+          <f:validator binding="#{bindings.ThirdChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.ThirdChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.FourthChild.inputValue}"
+                      label="#{bindings.FourthChild.hints.label}"
+                      required="#{bindings.FourthChild.hints.mandatory}"
+                      columns="#{bindings.FourthChild.hints.displayWidth}"
+                      maximumLength="#{bindings.FourthChild.hints.precision}"
+                      shortDesc="#{bindings.FourthChild.hints.tooltip}"
+                      id="it13"
+                      binding="#{pageFlowScope.EducationAllowanceMB.fourthChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 3 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 3)}">
+          <f:validator binding="#{bindings.FourthChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.FourthChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.FifthChild.inputValue}"
+                      label="#{bindings.FifthChild.hints.label}"
+                      required="#{bindings.FifthChild.hints.mandatory}"
+                      columns="#{bindings.FifthChild.hints.displayWidth}"
+                      maximumLength="#{bindings.FifthChild.hints.precision}"
+                      shortDesc="#{bindings.FifthChild.hints.tooltip}"
+                      id="it20"
+                      binding="#{pageFlowScope.EducationAllowanceMB.fifthChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 4 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 4)}">
+          <f:validator binding="#{bindings.FifthChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.FifthChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.SixthChild.inputValue}"
+                      label="#{bindings.SixthChild.hints.label}"
+                      required="#{bindings.SixthChild.hints.mandatory}"
+                      columns="#{bindings.SixthChild.hints.displayWidth}"
+                      maximumLength="#{bindings.SixthChild.hints.precision}"
+                      shortDesc="#{bindings.SixthChild.hints.tooltip}"
+                      id="it23"
+                      binding="#{pageFlowScope.EducationAllowanceMB.sixthChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 5 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 5)}">
+          <f:validator binding="#{bindings.SixthChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.SixthChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.SeventhChild.inputValue}"
+                      label="#{bindings.SeventhChild.hints.label}"
+                      required="#{bindings.SeventhChild.hints.mandatory}"
+                      columns="#{bindings.SeventhChild.hints.displayWidth}"
+                      maximumLength="#{bindings.SeventhChild.hints.precision}"
+                      shortDesc="#{bindings.SeventhChild.hints.tooltip}"
+                      id="it7"
+                      binding="#{pageFlowScope.EducationAllowanceMB.seventhChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 6 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 6)}">
+          <f:validator binding="#{bindings.SeventhChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.SeventhChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.EightthChild.inputValue}"
+                      label="#{bindings.EightthChild.hints.label}"
+                      required="#{bindings.EightthChild.hints.mandatory}"
+                      columns="#{bindings.EightthChild.hints.displayWidth}"
+                      maximumLength="#{bindings.EightthChild.hints.precision}"
+                      shortDesc="#{bindings.EightthChild.hints.tooltip}"
+                      id="it21"
+                      binding="#{pageFlowScope.EducationAllowanceMB.eightthChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 7 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 7)}">
+          <f:validator binding="#{bindings.EightthChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.EightthChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.NinthChild.inputValue}"
+                      label="#{bindings.NinthChild.hints.label}"
+                      required="#{bindings.NinthChild.hints.mandatory}"
+                      columns="#{bindings.NinthChild.hints.displayWidth}"
+                      maximumLength="#{bindings.NinthChild.hints.precision}"
+                      shortDesc="#{bindings.NinthChild.hints.tooltip}" id="it9"
+                      binding="#{pageFlowScope.EducationAllowanceMB.ninthChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 8 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 8)}">
+          <f:validator binding="#{bindings.NinthChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.NinthChild.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.TenthChild.inputValue}"
+                      label="#{bindings.TenthChild.hints.label}"
+                      required="#{bindings.TenthChild.hints.mandatory}"
+                      columns="#{bindings.TenthChild.hints.displayWidth}"
+                      maximumLength="#{bindings.TenthChild.hints.precision}"
+                      shortDesc="#{bindings.TenthChild.hints.tooltip}" id="it18"
+                      binding="#{pageFlowScope.EducationAllowanceMB.tenthChild}"
+                      partialTriggers="soc1" autoSubmit="true"
+                      disabled="#{bindings.StepId.inputValue gt 1}"
+                      visible="#{(pageFlowScope.inv1 gt 9 &amp;&amp; (bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2))  ||(bindings.NumberOfChildren1.inputValue gt 9)}">
+          <f:validator binding="#{bindings.TenthChild.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.TenthChild.format}"/>
+        </af:inputText>
+         <!--<af:selectManyChoice label="Name of Child"
+                                 value="#{bindings.NameOfChild.selectedIndices}"
+                                 id="smc1"
+                                 valueChangeListener="#{pageFlowScope.EducationAllowanceMB.showNameofChildNID}"
+                                 autoSubmit="true"
+                              visible="#{bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2 }"
+                              changed="false"
+                              required="#{(bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2) ? true : false}">
+              <f:selectItems value="#{pageFlowScope.EducationAllowanceMB.childDetailsList}" id="si4"/>
+            </af:selectManyChoice>-->
+            <!--<af:selectOneChoice label="Name of Child"
+                                 value="#{bindings.NameOfChild.inputValue}"
+                                 id="smc1"
+                                 valueChangeListener="#{pageFlowScope.EducationAllowanceMB.showNameofChildNID}"
+                                 autoSubmit="true"
+                              visible="#{bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2 }"
+                              changed="false"
+                              required="#{(bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2) ? true : false}">
+              <f:selectItems value="#{pageFlowScope.EducationAllowanceMB.childDetailsList}" id="si4"/>
+            </af:selectOneChoice>-->
+            <af:selectOneChoice value="#{bindings.NameOfChild.inputValue}"
+                                label="#{bindings.NameOfChild.label}"
+                                shortDesc="#{bindings.NameOfChild.hints.tooltip}"
+                                id="soc3" valuePassThru="true"
+                                valueChangeListener="#{pageFlowScope.EducationAllowanceMB.showNameofChildNID}"
+                                 autoSubmit="true"
+                              visible="#{bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2 }"
+                              
+                              required="#{(bindings.StepId.inputValue eq null || bindings.StepId.inputValue lt 2) ? true : false}">
+              <f:selectItems value="#{pageFlowScope.EducationAllowanceMB.childDetailsList}" id="si3"/>
+            </af:selectOneChoice>
+            <af:inputText value="#{bindings.NameOfChildOne.inputValue}"
+                          label="#{bindings.NameOfChildOne.hints.label}"
+                          required="#{bindings.NameOfChildOne.hints.mandatory}"
+                          columns="#{bindings.NameOfChildOne.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildOne.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildOne.hints.tooltip}"
+                          id="it1" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 0 || bindings.NameOfChildOne.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildOne.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildTwo.inputValue}"
+                          label="#{bindings.NameOfChildTwo.hints.label}"
+                          required="#{bindings.NameOfChildTwo.hints.mandatory}"
+                          columns="#{bindings.NameOfChildTwo.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildTwo.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildTwo.hints.tooltip}"
+                          id="it15" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 1 || bindings.NameOfChildTwo.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildTwo.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildThree.inputValue}"
+                          label="#{bindings.NameOfChildThree.hints.label}"
+                          required="#{bindings.NameOfChildThree.hints.mandatory}"
+                          columns="#{bindings.NameOfChildThree.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildThree.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildThree.hints.tooltip}"
+                          id="it17" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 2 || bindings.NameOfChildThree.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildThree.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildFour.inputValue}"
+                          label="#{bindings.NameOfChildFour.hints.label}"
+                          required="#{bindings.NameOfChildFour.hints.mandatory}"
+                          columns="#{bindings.NameOfChildFour.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildFour.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildFour.hints.tooltip}"
+                          id="it25" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 3 || bindings.NameOfChildFour.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildFour.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildFive.inputValue}"
+                          label="#{bindings.NameOfChildFive.hints.label}"
+                          required="#{bindings.NameOfChildFive.hints.mandatory}"
+                          columns="#{bindings.NameOfChildFive.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildFive.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildFive.hints.tooltip}"
+                          id="it30" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 4 || bindings.NameOfChildFive.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildFive.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildSix.inputValue}"
+                          label="#{bindings.NameOfChildSix.hints.label}"
+                          required="#{bindings.NameOfChildSix.hints.mandatory}"
+                          columns="#{bindings.NameOfChildSix.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildSix.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildSix.hints.tooltip}"
+                          id="it31" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 5 || bindings.NameOfChildSix.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildSix.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildSeven.inputValue}"
+                          label="#{bindings.NameOfChildSeven.hints.label}"
+                          required="#{bindings.NameOfChildSeven.hints.mandatory}"
+                          columns="#{bindings.NameOfChildSeven.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildSeven.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildSeven.hints.tooltip}"
+                          id="it32" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 6 || bindings.NameOfChildSeven.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildSeven.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildEight.inputValue}"
+                          label="#{bindings.NameOfChildEight.hints.label}"
+                          required="#{bindings.NameOfChildEight.hints.mandatory}"
+                          columns="#{bindings.NameOfChildEight.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildEight.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildEight.hints.tooltip}"
+                          id="it33" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 7 || bindings.NameOfChildEight.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildEight.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildNine.inputValue}"
+                          label="#{bindings.NameOfChildNine.hints.label}"
+                          required="#{bindings.NameOfChildNine.hints.mandatory}"
+                          columns="#{bindings.NameOfChildNine.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildNine.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildNine.hints.tooltip}"
+                          id="it35" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 8 || bindings.NameOfChildNine.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildNine.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NameOfChildTen.inputValue}"
+                          label="#{bindings.NameOfChildTen.hints.label}"
+                          required="#{bindings.NameOfChildTen.hints.mandatory}"
+                          columns="#{bindings.NameOfChildTen.hints.displayWidth}"
+                          maximumLength="#{bindings.NameOfChildTen.hints.precision}"
+                          shortDesc="#{bindings.NameOfChildTen.hints.tooltip}"
+                          id="it36" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 9 || bindings.NameOfChildTen.inputValue ne null)}">
+              <f:validator binding="#{bindings.NameOfChildTen.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildOne.inputValue}"
+                          label="#{bindings.NidOfChildOne.hints.label}"
+                          required="#{bindings.NidOfChildOne.hints.mandatory}"
+                          columns="#{bindings.NidOfChildOne.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildOne.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildOne.hints.tooltip}"
+                          id="it37" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 0 || bindings.NidOfChildOne.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildOne.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildTwo.inputValue}"
+                          label="#{bindings.NidOfChildTwo.hints.label}"
+                          required="#{bindings.NidOfChildTwo.hints.mandatory}"
+                          columns="#{bindings.NidOfChildTwo.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildTwo.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildTwo.hints.tooltip}"
+                          id="it38" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 1 || bindings.NidOfChildTwo.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildTwo.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildThree.inputValue}"
+                          label="#{bindings.NidOfChildThree.hints.label}"
+                          required="#{bindings.NidOfChildThree.hints.mandatory}"
+                          columns="#{bindings.NidOfChildThree.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildThree.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildThree.hints.tooltip}"
+                          id="it39" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 2 || bindings.NidOfChildThree.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildThree.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildFour.inputValue}"
+                          label="#{bindings.NidOfChildFour.hints.label}"
+                          required="#{bindings.NidOfChildFour.hints.mandatory}"
+                          columns="#{bindings.NidOfChildFour.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildFour.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildFour.hints.tooltip}"
+                          id="it40" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 3 || bindings.NidOfChildFour.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildFour.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildFive.inputValue}"
+                          label="#{bindings.NidOfChildFive.hints.label}"
+                          required="#{bindings.NidOfChildFive.hints.mandatory}"
+                          columns="#{bindings.NidOfChildFive.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildFive.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildFive.hints.tooltip}"
+                          id="it41" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 4 || bindings.NidOfChildFive.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildFive.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildSix.inputValue}"
+                          label="#{bindings.NidOfChildSix.hints.label}"
+                          required="#{bindings.NidOfChildSix.hints.mandatory}"
+                          columns="#{bindings.NidOfChildSix.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildSix.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildSix.hints.tooltip}"
+                          id="it42" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 5 || bindings.NidOfChildSix.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildSix.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildSeven.inputValue}"
+                          label="#{bindings.NidOfChildSeven.hints.label}"
+                          required="#{bindings.NidOfChildSeven.hints.mandatory}"
+                          columns="#{bindings.NidOfChildSeven.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildSeven.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildSeven.hints.tooltip}"
+                          id="it43" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 6 || bindings.NidOfChildSeven.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildSeven.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildEight.inputValue}"
+                          label="#{bindings.NidOfChildEight.hints.label}"
+                          required="#{bindings.NidOfChildEight.hints.mandatory}"
+                          columns="#{bindings.NidOfChildEight.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildEight.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildEight.hints.tooltip}"
+                          id="it44" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 7 || bindings.NidOfChildEight.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildEight.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildNine.inputValue}"
+                          label="#{bindings.NidOfChildNine.hints.label}"
+                          required="#{bindings.NidOfChildNine.hints.mandatory}"
+                          columns="#{bindings.NidOfChildNine.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildNine.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildNine.hints.tooltip}"
+                          id="it45" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 8 || bindings.NidOfChildNine.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildNine.validator}"/>
+            </af:inputText>
+            <af:inputText value="#{bindings.NidOfChildTen.inputValue}"
+                          label="#{bindings.NidOfChildTen.hints.label}"
+                          required="#{bindings.NidOfChildTen.hints.mandatory}"
+                          columns="#{bindings.NidOfChildTen.hints.displayWidth}"
+                          maximumLength="#{bindings.NidOfChildTen.hints.precision}"
+                          shortDesc="#{bindings.NidOfChildTen.hints.tooltip}"
+                          id="it46" partialTriggers="soc3" disabled="true"
+                          visible="#{(pageFlowScope.NameOfChild gt 9 || bindings.NidOfChildTen.inputValue ne null)}">
+              <f:validator binding="#{bindings.NidOfChildTen.validator}"/>
+            </af:inputText>
+            <af:panelLabelAndMessage label="#{bindings.TotalAmountTrans.hints.label}"
+                                 id="plam2"
+                                 partialTriggers="it2 it4 it27 it13 it20 it23 it7 it21 it9 it18">
+          <af:outputText value="#{bindings.TotalAmountTrans.inputValue}"
+                         id="ot7"
+                         inlineStyle="font-weight:bold; color:Red; font-size:small;">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.TotalAmountTrans.format}"/>
+          </af:outputText>
+            </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.TotalAmount.hints.label}"
+                                 id="plam1"
+                                 partialTriggers="it2 it4 it27 it13 it20 it23 it7 it21 it9 it18"
+                                 visible="false">
+          <af:outputText value="#{bindings.TotalAmount.inputValue}" id="ot5"
+                         inlineStyle="font-weight:bold; color:Red; font-size:small;"
+                         partialTriggers="it2 it4 it27 it13 it20 it23 it7 it21 it9 it18">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.TotalAmount.format}"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+        <af:selectOneChoice value="#{bindings.PaymentMethod.inputValue}"
+                            label="#{bindings.PaymentMethod.label}"
+                            required="#{bindings.PaymentMethod.hints.mandatory}"
+                            shortDesc="#{bindings.PaymentMethod.hints.tooltip}"
+                            id="soc2"
+                            autoSubmit="true"
+                            disabled="#{bindings.StepId.inputValue gt 1}"
+                            valueChangeListener="#{pageFlowScope.EducationAllowanceMB.showHideIBAN}">
+          <f:selectItems value="#{bindings.PaymentMethod.items}" id="si2"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.IbanEmployee.inputValue}"
+                      label="#{bindings.IbanEmployee.hints.label}"
+                      required="#{bindings.IbanEmployee.hints.mandatory}"
+                      columns="#{bindings.IbanEmployee.hints.displayWidth}"
+                      maximumLength="#{bindings.IbanEmployee.hints.precision}"
+                      shortDesc="#{bindings.IbanEmployee.hints.tooltip}"
+                      id="it8"
+                      binding="#{pageFlowScope.EducationAllowanceMB.empIBAN}"
+                      partialTriggers="soc2" visible="false" rendered="false">
+          <f:validator binding="#{bindings.IbanEmployee.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.IbanSchool.inputValue}"
+                      label="#{bindings.IbanSchool.hints.label}"
+                      required="#{bindings.IbanSchool.hints.mandatory}"
+                      columns="#{bindings.IbanSchool.hints.displayWidth}"
+                      maximumLength="#{bindings.IbanSchool.hints.precision}"
+                      shortDesc="#{bindings.IbanSchool.hints.tooltip}"
+                      id="it28"
+                      binding="#{pageFlowScope.EducationAllowanceMB.schoolIBAN}"
+                      partialTriggers="soc2"
+                      visible="#{bindings.PaymentMethod.inputValue eq 'School'}"
+                      disabled="#{bindings.StepId.inputValue gt 1}">
+          <f:validator binding="#{bindings.IbanSchool.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.Comments.inputValue}"
+                      label="#{bindings.Comments.hints.label}"
+                      required="#{bindings.Comments.hints.mandatory}"
+                      columns="35"
+                      maximumLength="#{bindings.Comments.hints.precision}"
+                      shortDesc="#{bindings.Comments.hints.tooltip}" id="it16"
+                      rows="5" disabled="#{bindings.StepId.inputValue gt 1}">
+          <f:validator binding="#{bindings.Comments.validator}"/>
+        </af:inputText>
+        <af:popup id="p2">
+          <af:dialog id="d2" title="Please Enter Rejection Comment"
+                     type="cancel">
+            <af:inputText value="#{bindings.RejectionReason.inputValue}"
+                          simple="true"
+                          required="#{bindings.RejectionReason.hints.mandatory}"
+                          columns="50"
+                          maximumLength="#{bindings.RejectionReason.hints.precision}"
+                          shortDesc="#{bindings.RejectionReason.hints.tooltip}"
+                          id="it12" rows="5">
+              <f:validator binding="#{bindings.RejectionReason.validator}"/>
+            </af:inputText>
+            <f:facet name="buttonBar">
+              <af:commandButton text="Reject" id="cb1"
+                                action="#{pageFlowScope.EducationAllowanceMB.rejectRequest}"/>
+            </f:facet>
+          </af:dialog>
+        </af:popup>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:spacer width="10" height="10" id="s832"/>
+    <af:panelBox text="Invoices Attachments" id="pb2" inlineStyle="background-color:#ffffff;">
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t4">
+            <af:commandToolbarButton text="Add Attachment" id="ctb8"
+                                     action="#{pageFlowScope.EducationAllowanceMB.showAttachmentPopup}"
+                                     disabled="#{!(bindings.StepId.inputValue eq null || bindings.StepId.inputValue eq 1 || bindings.AssigneeName.inputValue eq null || (pageFlowScope.SpecialEdit eq 'Y' and PersonInfo.personName eq bindings.AssigneeName.inputValue))}"/>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.EducationAllowanceAttachView1.collectionModel}"
+                  var="row"
+                  rows="#{bindings.EducationAllowanceAttachView1.rangeSize}"
+                  emptyText="#{bindings.EducationAllowanceAttachView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.EducationAllowanceAttachView1.rangeSize}"
+                  rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.EducationAllowanceAttachView1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.EducationAllowanceAttachView1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t2" partialTriggers="cl1 :::ctb6">
+          <af:column sortProperty="#{bindings.EducationAllowanceAttachView1.hints.AttachId.name}"
+                     sortable="false"
+                     headerText="#{bindings.EducationAllowanceAttachView1.hints.AttachId.label}"
+                     id="c1" rendered="false">
+            <af:outputText value="#{row.AttachId}" id="ot1">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.EducationAllowanceAttachView1.hints.AttachId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.EducationAllowanceAttachView1.hints.FileName.name}"
+                     sortable="false"
+                     headerText="#{bindings.EducationAllowanceAttachView1.hints.FileName.label}"
+                     id="c4">
+           <!-- <af:outputText value="#{row.FileName}" id="ot5"/>-->
+            <af:commandLink id="cl2" text="#{row.FileName}">
+              <af:fileDownloadActionListener contentType="#{row.FileType}"
+                                             filename="#{row.FileName}"
+                                             method="#{pageFlowScope.EducationAllowanceMB.downloadFile}"/>
+            </af:commandLink>
+          </af:column>
+          <af:column sortProperty="#{bindings.EducationAllowanceAttachView1.hints.FileType.name}"
+                     sortable="false"
+                     headerText="#{bindings.EducationAllowanceAttachView1.hints.FileType.label}"
+                     id="c5" rendered="false">
+            <af:outputText value="#{row.FileType}" id="ot2"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.EducationAllowanceAttachView1.hints.AttachmentFile.name}"
+                     sortable="false"
+                     headerText="#{bindings.EducationAllowanceAttachView1.hints.AttachmentFile.label}"
+                     id="c2" rendered="false">
+            <af:outputText value="#{row.AttachmentFile}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.EducationAllowanceAttachView1.hints.EducationAllowanceId.name}"
+                     sortable="false"
+                     headerText="#{bindings.EducationAllowanceAttachView1.hints.EducationAllowanceId.label}"
+                     id="c3" rendered="false">
+            <af:outputText value="#{row.EducationAllowanceId}" id="ot4">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.EducationAllowanceAttachView1.hints.EducationAllowanceId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.EducationAllowanceAttachView1.hints.UploadedBy.name}"
+                     sortable="false"
+                     headerText="#{bindings.EducationAllowanceAttachView1.hints.UploadedBy.label}"
+                     id="c6" rendered="false">
+            <af:outputText value="#{row.UploadedBy}" id="ot6"/>
+          </af:column>
+          <af:column id="c7" headerText="Delete">
+            <af:commandLink id="cl1" actionListener="#{bindings.Delete.execute}"
+                            disabled="#{!(bindings.StepId.inputValue eq null || bindings.StepId.inputValue eq 1 || bindings.AssigneeName.inputValue eq null)}">
+              <af:image source="/Skins/images/delete_ena.png" id="i1"/>
+            </af:commandLink>
+          </af:column>
+        </af:table>
+      </af:panelCollection>
+      <af:popup id="p1"
+                binding="#{pageFlowScope.EducationAllowanceMB.attachmentPopup}">
+        <af:dialog id="d1" type="none" title="Add Attachments">
+          <af:panelFormLayout id="pfl2">
+            <af:inputText
+                          label="#{bindings.FileName.hints.label}"
+                          required="#{bindings.FileName.hints.mandatory}"
+                          columns="#{bindings.FileName.hints.displayWidth}"
+                          maximumLength="#{bindings.FileName.hints.precision}"
+                          shortDesc="#{bindings.FileName.hints.tooltip}"
+                          id="it10" rendered="false"
+                          value="#{pageFlowScope.EducationAllowanceMB.attachmentFileName}">
+              <f:validator binding="#{bindings.FileName.validator}"/>
+            </af:inputText>
+            <af:inputFile id="if1" required="true"
+                          label="#{bindings.AttachmentFile.hints.label}"
+                          binding="#{pageFlowScope.EducationAllowanceMB.inputFile}"/>
+            <af:spacer width="10" height="10" id="s2"/>
+            <af:toolbar id="t3">
+              <af:commandToolbarButton text="Save" id="ctb6"
+                                       action="#{pageFlowScope.EducationAllowanceMB.saveBtnAction}"/>
+              <af:commandToolbarButton text="Cancel" id="ctb7"
+                                       action="#{pageFlowScope.EducationAllowanceMB.cancelBtnAction}"/>
+            </af:toolbar>
+          </af:panelFormLayout>
+        </af:dialog>
+      </af:popup>
+    </af:panelBox>
+    <af:spacer width="10" height="10" id="s4"/>
+     <af:panelBox text="Payment Details" id="pb8" inlineStyle="background-color:#ffffff;" rendered="#{bindings.RequestStatus.inputValue eq 'APPROVED'}">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl3" rows="1" maxColumns="2" labelWidth="200">
+            <af:inputText value="#{bindings.InvoiceNumber.inputValue}"
+                          label="Invoice Number"
+                          readOnly="true" contentStyle="font-weight:bold;font-size:small;"
+                          shortDesc="#{bindings.InvoiceNumber.hints.tooltip}"
+                          id="it34">
+              <f:validator binding="#{bindings.InvoiceNumber.validator}"/>
+            </af:inputText>
+            <af:panelLabelAndMessage label="Payment Status"
+                                     id="plam4">
+              <af:selectBooleanCheckbox id="sbc3" value="true" readOnly="true" rendered="#{bindings.PaymentStatus.inputValue eq 'Y'}"/>
+              <af:selectBooleanCheckbox id="sbc6" value="false" readOnly="true" rendered="#{bindings.PaymentStatus.inputValue ne 'Y'}"/>
+            </af:panelLabelAndMessage>
+          </af:panelFormLayout>
+      </af:panelBox>
+    <af:spacer width="10" height="10" id="s5"/>
+        <af:panelBox text="Approval History" id="pb4"  inlineStyle="background-color:#ffffff;" rendered="#{bindings.RequestStatus.inputValue ne 'EDIT'}">
+          <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+            <af:table value="#{bindings.ApprovalHistoryEducation.collectionModel}"
+                      var="row"
+                      rows="#{bindings.ApprovalHistoryEducation.rangeSize}"
+                      emptyText="#{bindings.ApprovalHistoryEducation.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.ApprovalHistoryEducation.rangeSize}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.ApprovalHistoryEducation.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.ApprovalHistoryEducation.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t5">
+              <af:column sortProperty="#{bindings.ApprovalHistoryEducation.hints.AssigneeName.name}"
+                         sortable="false" width="150" align="center"
+                         headerText="Assignee Name"
+                         id="c10">
+                <af:outputText value="#{row.AssigneeName}" id="ot11"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryEducation.hints.ActionTaken.name}"
+                         sortable="false"
+                        width="150" align="center"
+                         headerText="Status"
+                         id="c8">
+                <af:outputText value="#{row.ActionTaken}" inlineStyle="color:#{row.ActionTaken eq 'PENDING' ? 'Blue' : row.ActionTaken eq 'APPROVED' ? 'Green' : 'Red'};" id="ot10"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryEducation.hints.SubmitttedOn.name}"
+                         sortable="false"
+                        width="150" align="center"
+                         headerText="Assigned On"
+                         id="c11">
+                <af:outputText value="#{row.SubmitttedOn}" id="ot9">
+                  <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/>
+                </af:outputText>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryEducation.hints.ApprovalOn.name}"
+                         sortable="false" align="center"
+                         headerText="Action On" width="150"
+                         id="c9">
+                <af:outputText value="#{row.ApprovalOn}" inlineStyle="color:Blue;" id="ot8">
+                  <af:convertDateTime  pattern="dd/MM/yyyy hh:mm:ss a"/>
+                </af:outputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+      </af:panelBox>
+  </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+       
+</jsp:root>

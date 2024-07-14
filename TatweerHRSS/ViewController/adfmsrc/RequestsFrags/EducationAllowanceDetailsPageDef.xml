@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="EducationAllowanceDetailsPageDef"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="EducationAllowanceView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="EducationAllowanceView1Iterator"/>
+    <iterator Binds="EducationAllowanceAttachView1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="EducationAllowanceAttachView1Iterator"/>
+    <iterator Binds="ApprovalHistoryEducation" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ApprovalHistoryEducationIterator"/>
+    <invokeAction Binds="ExecuteWithParams" id="executeWithType"
+                  Refresh="always"/>
+    <iterator id="LookUpValuesView1Iterator" Binds="LookUpValuesView1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="LookUpValuesROVO1Iterator" Binds="LookUpValuesROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="EducationAllowanceId">
+      <AttrNames>
+        <Item Value="EducationAllowanceId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="CreationDate">
+      <AttrNames>
+        <Item Value="CreationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonName">
+      <AttrNames>
+        <Item Value="PersonName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="Assignee">
+      <AttrNames>
+        <Item Value="Assignee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonPosition">
+      <AttrNames>
+        <Item Value="PersonPosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonJob">
+      <AttrNames>
+        <Item Value="PersonJob"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonDepartment">
+      <AttrNames>
+        <Item Value="PersonDepartment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonLocation">
+      <AttrNames>
+        <Item Value="PersonLocation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PersonGrade">
+      <AttrNames>
+        <Item Value="PersonGrade"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="RejectionReason">
+      <AttrNames>
+        <Item Value="RejectionReason"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="FirstChild">
+      <AttrNames>
+        <Item Value="FirstChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="SecondChild">
+      <AttrNames>
+        <Item Value="SecondChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="ThirdChild">
+      <AttrNames>
+        <Item Value="ThirdChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="FourthChild">
+      <AttrNames>
+        <Item Value="FourthChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="FifthChild">
+      <AttrNames>
+        <Item Value="FifthChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="SixthChild">
+      <AttrNames>
+        <Item Value="SixthChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="SeventhChild">
+      <AttrNames>
+        <Item Value="SeventhChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="EightthChild">
+      <AttrNames>
+        <Item Value="EightthChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NinthChild">
+      <AttrNames>
+        <Item Value="NinthChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="TenthChild">
+      <AttrNames>
+        <Item Value="TenthChild"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="IbanEmployee">
+      <AttrNames>
+        <Item Value="IbanEmployee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="IbanSchool">
+      <AttrNames>
+        <Item Value="IbanSchool"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="Comments">
+      <AttrNames>
+        <Item Value="Comments"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="EducationAllowanceView1Iterator" id="PaymentMethod"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"
+          StaticList="true">
+      <AttrNames>
+        <Item Value="PaymentMethod"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Employee"/>
+        <Item Value="School"/>
+      </ValueList>
+    </list>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="EducationAllowanceView1Iterator" id="Execute"
+            InstanceName="SBMModuleDataControl.EducationAllowanceView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <tree IterBinding="EducationAllowanceAttachView1Iterator"
+          id="EducationAllowanceAttachView1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.EducationAllowanceAttachView"
+                      Name="EducationAllowanceAttachView10">
+        <AttrNames>
+          <Item Value="AttachId"/>
+          <Item Value="FileName"/>
+          <Item Value="FileType"/>
+          <Item Value="AttachmentFile"/>
+          <Item Value="EducationAllowanceId"/>
+          <Item Value="UploadedBy"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="EducationAllowanceAttachView1Iterator" id="Delete"
+            InstanceName="SBMModuleDataControl.EducationAllowanceAttachView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <attributeValues IterBinding="EducationAllowanceAttachView1Iterator"
+                     id="FileName">
+      <AttrNames>
+        <Item Value="FileName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceAttachView1Iterator"
+                     id="FileType">
+      <AttrNames>
+        <Item Value="FileType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceAttachView1Iterator"
+                     id="UploadedBy">
+      <AttrNames>
+        <Item Value="UploadedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceAttachView1Iterator"
+                     id="AttachmentFile">
+      <AttrNames>
+        <Item Value="AttachmentFile"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="EducationAllowanceAttachView1Iterator"
+            id="CreateInsert"
+            InstanceName="SBMModuleDataControl.EducationAllowanceAttachView1"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="TotalAmount">
+      <AttrNames>
+        <Item Value="TotalAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="TotalAmountTrans">
+      <AttrNames>
+        <Item Value="TotalAmountTrans"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getTotalAmountEducAllow"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getTotalAmountEducAllow"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getTotalAmountEducAllow_SBMModuleDataControl_dataProvider_getTotalAmountEducAllow_result">
+      <NamedData NDName="PersonNumber" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.EducationAllowanceName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <list IterBinding="EducationAllowanceView1Iterator" StaticList="false"
+          Uses="LOV_NumberOfChildren" id="NumberOfChildren"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject"/>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="ActionTaken">
+      <AttrNames>
+        <Item Value="ActionTaken"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NumberOfChildren1">
+      <AttrNames>
+        <Item Value="NumberOfChildren"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ApprovalHistoryEducationIterator"
+          id="ApprovalHistoryEducation">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ApprovalHistoryVO"
+                      Name="ApprovalHistoryEducation0">
+        <AttrNames>
+          <Item Value="AssigneeName"/>
+          <Item Value="ActionTaken"/>
+          <Item Value="SubmitttedOn"/>
+          <Item Value="ApprovalOn"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ApprovalHistoryEducationIterator"
+            id="ExecuteWithParams"
+            InstanceName="SBMModuleDataControl.ApprovalHistoryEducation"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="req_type" NDValue="EducationAllowance"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="InvoiceNumber">
+      <AttrNames>
+        <Item Value="InvoiceNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="PaymentStatus">
+      <AttrNames>
+        <Item Value="PaymentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="LookUpValuesView1Iterator"
+                     id="LookupValueNameDisp">
+      <AttrNames>
+        <Item Value="LookupValueNameDisp"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callSendInvoiceEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="callSendInvoiceEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="p_request_type" NDType="java.lang.String"/>
+      <NamedData NDName="p_request_number" NDType="java.lang.String"/>
+      <NamedData NDName="p_attachment" NDType="oracle.jbo.domain.BlobDomain"/>
+    </methodAction>
+    
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildOne">
+      <AttrNames>
+        <Item Value="NameOfChildOne"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildTwo">
+      <AttrNames>
+        <Item Value="NameOfChildTwo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildThree">
+      <AttrNames>
+        <Item Value="NameOfChildThree"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildFour">
+      <AttrNames>
+        <Item Value="NameOfChildFour"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildFive">
+      <AttrNames>
+        <Item Value="NameOfChildFive"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildSix">
+      <AttrNames>
+        <Item Value="NameOfChildSix"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildSeven">
+      <AttrNames>
+        <Item Value="NameOfChildSeven"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildEight">
+      <AttrNames>
+        <Item Value="NameOfChildEight"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildNine">
+      <AttrNames>
+        <Item Value="NameOfChildNine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NameOfChildTen">
+      <AttrNames>
+        <Item Value="NameOfChildTen"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildOne">
+      <AttrNames>
+        <Item Value="NidOfChildOne"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildTwo">
+      <AttrNames>
+        <Item Value="NidOfChildTwo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildThree">
+      <AttrNames>
+        <Item Value="NidOfChildThree"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildFour">
+      <AttrNames>
+        <Item Value="NidOfChildFour"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildFive">
+      <AttrNames>
+        <Item Value="NidOfChildFive"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildSix">
+      <AttrNames>
+        <Item Value="NidOfChildSix"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildSeven">
+      <AttrNames>
+        <Item Value="NidOfChildSeven"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildEight">
+      <AttrNames>
+        <Item Value="NidOfChildEight"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildNine">
+      <AttrNames>
+        <Item Value="NidOfChildNine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="EducationAllowanceView1Iterator"
+                     id="NidOfChildTen">
+      <AttrNames>
+        <Item Value="NidOfChildTen"/>
+      </AttrNames>
+    </attributeValues>
+    <list ListOperMode="navigation"
+          IterBinding="EducationAllowanceView1Iterator"
+          ListIter="EducationAllowanceView1Iterator" id="NameOfChild"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="NameOfChild"/>
+      </AttrNames>
+    </list>
+    <methodAction id="callTatHdrUpdateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callTatHdrUpdateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callTatHdrUpdateProcess_SBMModuleDataControl_dataProvider_callTatHdrUpdateProcess_result">
+      <NamedData NDName="request_id" NDType="java.lang.String"/>
+      <NamedData NDName="person_no" NDType="java.lang.String"/>
+      <NamedData NDName="request_status" NDType="java.lang.String"/>
+      <NamedData NDName="doc_title" NDType="java.lang.String"/>
+      <NamedData NDName="doc_author" NDType="java.lang.String"/>
+      <NamedData NDName="security_group" NDType="java.lang.String"/>
+      <NamedData NDName="element_name" NDType="java.lang.String"/>
+      <NamedData NDName="doc_account" NDType="java.lang.String"/>
+      <NamedData NDName="doc_type" NDType="java.lang.String"/>
+      <NamedData NDName="base_sixtyfour_file" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getElementAccount"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getElementAccount"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getElementAccount_SBMModuleDataControl_dataProvider_getElementAccount_result">
+      <NamedData NDName="elementName" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

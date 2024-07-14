@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+      <af:panelBox text=" #{sessionScope.tripType eq 'Local' ? 'Local Business Trip Requests' : sessionScope.tripType eq 'Inter' ? 'International Business Trip Requests' : sessionScope.tripType eq 'Training' ? 'Training Requests' : sessionScope.tripType eq 'Event' ? 'Event Requests' : sessionScope.tripType eq 'Expense' ? 'Expense Requests' : 'Business Trip Requests'}" id="pb1" inlineStyle="background-color:#ffffff;"
+                   showDisclosure="false">
+        <f:facet name="toolbar"/>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelDashboard id="pd1" styleClass="AFStretchWidth"  rowHeight="90px" columns="3" inlineStyle="height:100px" rendered="true"> 
+
+<af:panelBox text="All Tasks" id="pb3" showDisclosure="false" inlineStyle="border-left-style:inset;border-left-color:#2d37f7;border-left-width:4px;text-align:center;"
+             background="medium" titleHalign="center"> 
+<f:facet name="toolbar"/> 
+<af:commandLink text="#{bindings.AllTasks.inputValue}" id="l1" 
+		inlineStyle="font-size:7mm;color:Blue;text-align:center;"
+                actionListener="#{pageFlowScope.BusinessTripBean.onClickStatusCount}"> 
+	<af:setPropertyListener from="AllTasks" to="#{pageFlowScope.statusType}" type="action"/> 
+</af:commandLink> 
+</af:panelBox> 
+<af:panelBox text="My Tasks" id="pb2" showDisclosure="false" inlineStyle="border-left-style:inset;border-left-color:#27fa23;border-left-width:4px;text-align:center;"
+             background="medium" titleHalign="center"> 
+<f:facet name="toolbar"/> 
+<af:commandLink text="#{bindings.MyTasks.inputValue}" id="cl3" 
+		inlineStyle="font-size:7mm;color:Green;text-align:center;"
+                actionListener="#{pageFlowScope.BusinessTripBean.onClickStatusCount}"> 
+	<af:setPropertyListener from="MyTasks" to="#{pageFlowScope.statusType}" type="action"/> 
+</af:commandLink> 
+</af:panelBox>
+<af:panelBox text="Waiting Tasks" id="pb5" showDisclosure="false" inlineStyle="border-left-style:inset;border-left-color:#f0f72d;border-left-width:4px;text-align:center;"
+             background="medium" titleHalign="center"> 
+<f:facet name="toolbar"/> 
+<af:commandLink text="#{bindings.PendingTasks.inputValue}" id="l2" 
+		inlineStyle="font-size:7mm;color:Orange;text-align:center;"
+                actionListener="#{pageFlowScope.BusinessTripBean.onClickStatusCount}"> 
+	<af:setPropertyListener from="PendingTasks" to="#{pageFlowScope.statusType}" type="action"/> 
+</af:commandLink> 
+</af:panelBox>  
+</af:panelDashboard>
+    <af:spacer width="10" height="10" id="s3"/>
+    <af:panelBox text="Employee Data" id="pb4" background="medium" inlineStyle="background-color:#ffffff;" rendered="false">
+      <f:facet name="toolbar"/>
+      <af:panelFormLayout id="pfl1" maxColumns="3" rows="2">
+        <f:facet name="footer"/>
+        
+        <af:panelLabelAndMessage label="Person Number" id="plam1">
+          <af:outputText value="#{PersonInfo.perosnNumber}" id="ot9"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Name" id="plam5">
+          <af:outputText value="#{PersonInfo.personName}" id="ot13"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Position" id="plam6">
+          <af:outputText value="#{PersonInfo.position}" id="ot14"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Job" id="plam2">
+          <af:outputText value="#{PersonInfo.job}" id="ot10"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Location" id="plam3">
+          <af:outputText value="#{PersonInfo.location}" id="ot11"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Department" id="plam4">
+          <af:outputText value="#{PersonInfo.department}" id="ot12"/>
+        </af:panelLabelAndMessage>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth" inlineStyle="background-color:#ffffff;"
+                            featuresOff="statusBar" >
+          <f:facet name="menus"/>
+          <f:facet name="toolbar">
+            <af:toolbar id="t2">
+              <af:commandToolbarButton text="Start New Task" id="ctb1"
+                                       action="#{pageFlowScope.BusinessTripBean.startRequestAction}"/>
+              <af:commandImageLink id="cil1"
+                                   icon="/Skins/images/ic_autorenew_black_24dp_1x.png"
+                                   shortDesc="Refresh"
+                                   actionListener="#{bindings.Execute.execute}"/>
+          <af:goButton text="View Report" id="ctb2"
+                       destination="https://dbtatweert1-noor3ttar.db.em2.oraclecloudapps.com/apex/f?p=30400137:1:23853022748023:::::"
+                       targetFrame="_blank"
+                       rendered="#{PersonInfo.assignee eq 'HRManager'}"/>
+        </af:toolbar>
+          </f:facet>
+          <f:facet name="statusbar"/>
+          <af:table value="#{bindings.BusinessTripRequestView.collectionModel}"
+                    var="row"
+                    rows="#{bindings.BusinessTripRequestView.rangeSize}"
+                    emptyText="#{bindings.BusinessTripRequestView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    fetchSize="#{bindings.BusinessTripRequestView.rangeSize}"
+                    rowBandingInterval="0"
+                    filterModel="#{bindings.BusinessTripRequestViewQuery.queryDescriptor}"
+                    queryListener="#{bindings.BusinessTripRequestViewQuery.processQuery}"
+                    filterVisible="true" varStatus="vs"
+                    selectedRowKeys="#{bindings.BusinessTripRequestView.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.BusinessTripRequestView.collectionModel.makeCurrent}"
+                    rowSelection="single" id="t1" columnStretching="multiple"
+                    partialTriggers="::ctb1 ::cil1 :::d2" styleClass="AFStretchWidth">
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.LocalBusinessTripId.name}"
+                   filterable="true" sortable="false"
+                   headerText="#{bindings.BusinessTripRequestView.hints.LocalBusinessTripId.label}"
+                   id="c12">
+          <af:outputText value="#{row.LocalBusinessTripId}" id="ot15"
+                         rendered="false"/>
+          <af:commandLink text="#{row.LocalBusinessTripId}" id="cl2"
+                          disabled="#{ not((( row.RequestStatus eq 'SAVED' or row.RequestStatus eq 'APPROVED' or row.RequestStatus eq 'REJECTED' ))  or (PersonInfo.position eq row.Assignee) or ( PersonInfo.assignee eq row.Assignee ) or (PersonInfo.perosnNumber eq row.PersoneId)  or (PersonInfo.perosnNumber eq row.Assignee))}"
+                          action="#{pageFlowScope.BusinessTripBean.makeMoreCitesVisible}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.TripType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.TripType.label}"
+                   id="c8" width="20%">
+          <af:outputText value="#{row.TripType}" id="ot3"/>
+          <af:commandLink text="#{row.TripType}" id="cl1" action="edit"
+                          disabled="#{row.PersoneId eq PersonInfo.perosnNumber and row.RequestStatus ne 'SAVED'}"
+                          rendered="false"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.PersoneId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.PersoneId.label}"
+                   id="c6" width="20%">
+          <af:outputText value="#{row.PersoneId}" id="ot2"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.CreationDate.name}"
+                   sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.CreationDate.label}"
+                   id="c2" width="20%" filterable="true">
+          <af:outputText value="#{row.CreationDate}" id="ot6" inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+            <af:convertDateTime pattern="#{bindings.BusinessTripRequestView.hints.CreationDate.format}"/>
+          </af:outputText>
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.CreationDate}" id="id3"/>
+          </f:facet>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.StartDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.StartDate.label}"
+                   id="c7" width="20%">
+          <af:outputText value="#{row.StartDate}" id="ot4"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+            <af:convertDateTime pattern="#{bindings.BusinessTripRequestView.hints.StartDate.format}"/>
+          </af:outputText>
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.StartDate}" id="id2"/>
+          </f:facet>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.EndDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.EndDate.label}"
+                   id="c5" width="20%">
+          <af:outputText value="#{row.EndDate}" id="ot8"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+            <af:convertDateTime pattern="#{bindings.BusinessTripRequestView.hints.EndDate.format}"/>
+          </af:outputText>
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.EndDate}" id="id1"/>
+          </f:facet>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.Days.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.Days.label}"
+                   id="c3" width="20%">
+          <af:outputText value="#{row.Days}" id="ot5"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.BusinessTripRequestView.hints.Days.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.MeansTravel.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.MeansTravel.label}"
+                   id="c1" width="20%">
+          <af:outputText value="#{row.MeansTravel}" id="ot1"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column headerText="#{bindings.BusinessTripRequestView.hints.StepId.label}"
+                   id="c4" width="20%"
+                   sortProperty="#{bindings.BusinessTripRequestView.hints.StepId.name}"
+                   filterable="true" sortable="false" visible="false">
+          <af:selectOneChoice value="#{row.bindings.StepId.inputValue}"
+                              label="#{row.bindings.StepId.label}"
+                              required="#{bindings.BusinessTripRequestView.hints.StepId.mandatory}"
+                              shortDesc="#{bindings.BusinessTripRequestView.hints.StepId.tooltip}"
+                              id="soc1" readOnly="true"
+                              inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}">
+            <f:selectItems value="#{row.bindings.StepId.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+            <af:column headerText="Approver" id="c16" width="20%"
+                       filterable="true"
+                       sortProperty="#{bindings.BusinessTripRequestView.hints.Assignee.name}">
+              <af:outputText value="#{row.RequestStatus eq 'APPROVED' ?  'Finished' : (row.RequestStatus eq 'SAVED' || row.RequestStatus eq 'Withdrawn Rejected' || row.RequestStatus eq 'Withdrawn' || row.RequestStatus eq 'REJECTED' || row.RequestStatus eq 'EDIT') ? '' : row.Assignee}" id="ot17"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.AssigneeName.name}"
+                   filterable="true" sortable="false"
+                   headerText="#{bindings.BusinessTripRequestView.hints.AssigneeName.label}"
+                   id="c14">
+          <af:outputText value="#{row.AssigneeName}" id="ot16"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.RequestStatus.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.BusinessTripRequestView.hints.RequestStatus.label}"
+                   id="c9" width="20%">
+          <af:outputText value="#{row.RequestStatus}" id="ot7"
+                         inlineStyle="#{PersonInfo.personName eq row.AssigneeName and (row.RequestStatus eq 'PENDING' || row.RequestStatus eq 'Waiting Withdraw Approval')?'font-weight:bold;':''}"/>
+        </af:column>
+        <af:column id="c10" width="8%" align="center" headerText="Delete" rendered="#{sessionScope.tripType eq 'Local' and sessionScope.Local_WITHDRAW eq 'Y' || sessionScope.tripType eq 'Inter' and sessionScope.Inter_WITHDRAW eq 'Y' || sessionScope.tripType eq 'Training' and sessionScope.Training_WITHDRAW eq 'Y' || sessionScope.tripType eq 'Event' and sessionScope.Event_WITHDRAW eq 'Y'}">
+          <af:panelGroupLayout id="pgl1" layout="horizontal">
+            <af:commandImageLink id="cil2" icon="/Skins/images/delete_ena.png"
+                                 rendered="true"
+                                 visible="#{(PersonInfo.perosnNumber eq row.PersoneId and (row.RequestStatus eq 'PENDING' or row.RequestStatus eq 'APPROVED')) and row.TripType ne 'Expense'}">
+              <af:showPopupBehavior popupId=":::deletePopup"/>
+            </af:commandImageLink>
+          </af:panelGroupLayout>
+        </af:column>
+         <af:column id="c15" width="50" align="center" headerText="Edit" rendered="#{sessionScope.tripType eq 'Local' and sessionScope.Local_EDIT eq 'Y' || sessionScope.tripType eq 'Inter' and sessionScope.Inter_EDIT eq 'Y' || sessionScope.tripType eq 'Training' and sessionScope.Training_EDIT eq 'Y' || sessionScope.tripType eq 'Event' and sessionScope.Event_EDIT eq 'Y'}">
+          <af:panelGroupLayout id="pgl2" layout="horizontal">
+            <af:commandImageLink id="cil3" icon="/images/qual_pencil_16.png"  visible="#{row.RequestStatus eq 'PENDING' and PersonInfo.fullName eq row.PersoneName}">
+              <af:showPopupBehavior popupId=":::editPopup"/>
+            </af:commandImageLink>
+          </af:panelGroupLayout>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.SubType.name}"
+                   filterable="true" sortable="false"
+                   headerText="#{bindings.BusinessTripRequestView.hints.SubType.label}"
+                   id="c11" rendered="false" width="20%">
+          <af:selectOneChoice value="#{row.bindings.SubType.inputValue}"
+                              label="#{row.bindings.SubType.label}"
+                              required="#{bindings.BusinessTripRequestView.hints.SubType.mandatory}"
+                              shortDesc="#{bindings.BusinessTripRequestView.hints.SubType.tooltip}"
+                              id="soc3">
+            <f:selectItems value="#{row.bindings.SubType.items}" id="si5"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.BusinessTripRequestView.hints.Assignee.name}"
+                   filterable="true" sortable="false"
+                   headerText="#{bindings.BusinessTripRequestView.hints.Assignee.label}"
+                   id="c13" visible="false" width="20%">
+          <af:inputText value="#{row.bindings.Assignee.inputValue}"
+                        label="#{bindings.BusinessTripRequestView.hints.Assignee.label}"
+                        required="#{bindings.BusinessTripRequestView.hints.Assignee.mandatory}"
+                        columns="#{bindings.BusinessTripRequestView.hints.Assignee.displayWidth}"
+                        maximumLength="#{bindings.BusinessTripRequestView.hints.Assignee.precision}"
+                        shortDesc="#{bindings.BusinessTripRequestView.hints.Assignee.tooltip}"
+                        id="it2">
+            <f:validator binding="#{row.bindings.Assignee.validator}"/>
+          </af:inputText>
+        </af:column>
+          </af:table>
+    </af:panelCollection>
+     <af:popup id="editPopup" contentDelivery="lazyUncached">
+      <af:dialog id="d123" title="Confirmation Dialog"
+                 type="cancel">
+                 <af:panelGroupLayout layout="vertical" id="pgl3">
+        <af:outputLabel value="Are you sure you need to edit the request?" id="ol22"/>
+              <af:spacer width="10" height="10" id="s2"/>
+              <af:outputLabel value="Request will be enabled for edit and removed from the current approval"
+                        id="ol3"/>
+                        </af:panelGroupLayout>
+            <f:facet name="buttonBar">
+              <af:commandButton text="Ok" id="cb1"
+                                action="#{pageFlowScope.BusinessTripBean.editPendingRequest}"/>
+            </f:facet>
+          </af:dialog>
+    </af:popup>
+    <af:popup id="request_pop"
+              binding="#{pageFlowScope.BusinessTripBean.requestPopup}">
+      <af:dialog id="d1" title="Start New Request" type="cancel">
+        <f:facet name="buttonBar">
+            <af:commandButton text="Ok" id="ctb3"
+                                     action="#{pageFlowScope.BusinessTripBean.okPopRequestAction}"/>
+        </f:facet>
+        <af:selectOneRadio id="sor1" required="true" showRequired="true"
+                           value="#{pageFlowScope.reqType}" autoSubmit="true">
+          <af:selectItem label="Request For Me" value="me" id="si3"/>
+          <af:selectItem label="Request For C Level" value="clevel" id="si4"/>
+        </af:selectOneRadio>
+        <af:selectOneChoice value="#{bindings.CsecretaryROView.inputValue}"
+                            label="#{bindings.CsecretaryROView.label}"
+                            required="#{bindings.CsecretaryROView.hints.mandatory}"
+                            shortDesc="#{bindings.CsecretaryROView.hints.tooltip}"
+                            id="soc2" partialTriggers="sor1"
+                            visible="#{pageFlowScope.reqType eq 'clevel'}">
+          <f:selectItems value="#{bindings.CsecretaryROView.items}" id="si2"/>
+        </af:selectOneChoice>
+      </af:dialog>
+    </af:popup>
+    <af:popup id="deletePopup" contentDelivery="lazyUncached">
+      <af:dialog id="d2" title="Confirmation Dialog"
+                 dialogListener="#{pageFlowScope.BusinessTripBean.confirmationDL}">
+        <af:outputLabel value="Note : Selected Busniess Trip has been Expensed"
+                        id="ol2" inlineStyle="color:Red;"
+                        visible="#{bindings.ExpenseFlag eq 'Y'}"/>
+        <af:outputLabel value="You Sure you need to withdraw Selected Busniess Trip?" id="ol1"/>
+        <af:inputText value="#{bindings.CancelReason.inputValue}"
+                      label="#{bindings.CancelReason.hints.label}"
+                      required="#{bindings.ExpenseFlag eq 'Y'}"
+                      columns="50"
+                      maximumLength="#{bindings.CancelReason.hints.precision}"
+                      shortDesc="#{bindings.CancelReason.hints.tooltip}"
+                      id="it1" visible="#{bindings.ExpenseFlag eq 'Y'}"
+                      rows="5">
+          <f:validator binding="#{bindings.CancelReason.validator}"/>
+        </af:inputText>
+      </af:dialog>
+    </af:popup>
+  </af:panelBox>
+  </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+</jsp:root>

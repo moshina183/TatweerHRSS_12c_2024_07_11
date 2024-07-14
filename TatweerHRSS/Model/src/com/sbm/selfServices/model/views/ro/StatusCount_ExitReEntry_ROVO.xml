@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="StatusCount_ExitReEntry_ROVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="BV_USER"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[select    
+(select count(*) from EXIT_RE_ENTRY_REQUEST where PERSON_NAME = :BV_USER or (ASSIGNEE_NAME = :BV_USER and REQUEST_STATUS IN ('PENDING','Waiting Withdraw Approval'))) ALL_TASKS,
+(select count(*) from EXIT_RE_ENTRY_REQUEST where PERSON_NAME = :BV_USER) MY_TASKS,
+(select count(*) from EXIT_RE_ENTRY_REQUEST where ASSIGNEE_NAME = :BV_USER and REQUEST_STATUS IN ('PENDING','Waiting Withdraw Approval')) PENDING_TASKS
+from dual]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="AllTasks"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="ALL_TASKS"
+    Expression="ALL_TASKS"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MyTasks"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="MY_TASKS"
+    Expression="MY_TASKS"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PendingTasks"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="PENDING_TASKS"
+    Expression="PENDING_TASKS"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+</ViewObject>

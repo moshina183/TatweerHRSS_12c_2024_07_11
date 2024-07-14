@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewLink SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewLink
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="EducationAllowanceAttacFk1Link"
+  Version="11.1.1.65.57"
+  InheritPersonalization="true"
+  EntityAssociation="com.sbm.selfServices.model.entities.assoc.EducationAllowanceAttacFk1Assoc">
+  <DesignTime>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <ViewLinkDefEnd
+    Name="EducationAllowanceView"
+    Cardinality="1"
+    Owner="com.sbm.selfServices.model.views.up.EducationAllowanceView"
+    Source="true">
+    <DesignTime>
+      <Attr Name="_finderName" Value="EducationAllowanceView"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.views.up.EducationAllowanceView.EducationAllowanceId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+  <ViewLinkDefEnd
+    Name="EducationAllowanceAttachView"
+    Cardinality="-1"
+    Owner="com.sbm.selfServices.model.views.up.EducationAllowanceAttachView">
+    <DesignTime>
+      <Attr Name="_finderName" Value="EducationAllowanceAttachView"/>
+      <Attr Name="_isUpdateable" Value="true"/>
+    </DesignTime>
+    <AttrArray Name="Attributes">
+      <Item
+        Value="com.sbm.selfServices.model.views.up.EducationAllowanceAttachView.EducationAllowanceId"/>
+    </AttrArray>
+  </ViewLinkDefEnd>
+</ViewLink>

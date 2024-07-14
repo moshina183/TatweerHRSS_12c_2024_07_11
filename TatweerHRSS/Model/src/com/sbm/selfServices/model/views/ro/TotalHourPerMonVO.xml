@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="TotalHourPerMonVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.ro.TotalHourPerMonVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="PERSON_ID_BIND"
+    Kind="where"
+    Type="oracle.jbo.domain.Number"/>
+  <SQLQuery>
+    <![CDATA[SELECT (60-nvl(SUM(OTREQ.NUMBER_OF_HOURS),0))  TotalHours  
+FROM 
+OVERTIME_REQUEST OTREQ
+WHERE
+OTREQ.PERSONE_ID  = :PERSON_ID_BIND
+And To_Char(Req_Date,'yy') = (Select To_Char(Sysdate,'yy') From Dual)
+AND to_char(REQ_DATE,'mm') = (select to_char(sysdate,'mm') FROM dual) and OTREQ.request_status in('PENDING','APPROVED')]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="Totalhours"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TOTALHOURS"
+    Expression="TOTALHOURS"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

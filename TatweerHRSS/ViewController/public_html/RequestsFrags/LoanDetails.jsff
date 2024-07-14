@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+      <af:group id="g1">
+        <af:panelBox text="Loan Request Details" id="pb1"
+                     inlineStyle="background-color:#ffffff;">
+          <f:facet name="toolbar">
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="Save" id="ctb1"
+                                       action="#{pageFlowScope.LoanMB.save_action}"
+                                       rendered="#{bindings.StepId.inputValue eq 1 and !(bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED')}"/>
+              <af:commandToolbarButton text="Submit" id="ctb2"
+                                       rendered="#{bindings.StepId.inputValue eq 1 || bindings.RequestStatus.inputValue eq 'SAVED'}"
+                                       action="#{pageFlowScope.LoanMB.submit_action}"/>
+              <af:commandToolbarButton text="Approve" id="ctb3"
+                                       action="#{pageFlowScope.LoanMB.approve_action}"
+                                       rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"/>
+              <af:commandToolbarButton text="Reject" id="ctb4"
+                                       rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}">
+                <af:showPopupBehavior popupId="p1" triggerType="action"
+                                      align="afterEnd"/>
+              </af:commandToolbarButton>
+              <af:commandToolbarButton text="Approve Withdraw" id="ctb7"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"
+                                   action="#{pageFlowScope.LoanMB.approve_withdraw}"/>
+            <af:commandToolbarButton text="Reject Withdraw" id="ctb8"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"
+                                   action="#{pageFlowScope.LoanMB.reject_withdraw}"/>
+              <af:popup id="p1">
+                <af:dialog id="d1" type="cancel"
+                           title="Please Enter the Rejection comment">
+                  <af:inputText id="it3"
+                                value="#{bindings.RejectComment.inputValue}"
+                                columns="50" rows="5"/>
+                  <f:facet name="buttonBar">
+                    <af:commandButton text="Reject" id="cb1"
+                                      action="#{pageFlowScope.LoanMB.reject_action}"/>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
+              <af:commandToolbarButton text="Cancel" id="ctb5"
+                                       action="backToLoanRequest"
+                                       actionListener="#{bindings.Rollback.execute}"
+                                       immediate="true">
+                    <af:resetActionListener/>                       
+                </af:commandToolbarButton>
+              <af:commandToolbarButton text="OK" id="ctb6"
+                                       action="backToLoanRequest"
+                                       rendered="false"/>
+            </af:toolbar>
+          </f:facet>
+          <af:spacer width="10" height="10" id="s821"/>
+          <af:panelBox text="Person Details" id="pb2"
+                       inlineStyle="background-color:#ffffff;"
+                       rendered="#{(bindings.PersonId.inputValue ne null or bindings.PersonPosition.inputValue ne null or bindings.PersonJob.inputValue ne null or bindings.PersonDepartment.inputValue ne null or bindings.PersonLocation.inputValue ne null) and (bindings.StepId.inputValue gt 1 )}"
+                       partialTriggers="ctb1 ctb2 ctb3 ctb4 ctb5 ctb6">
+            <af:panelFormLayout id="pfl2" rows="2" maxColumns="2">
+              <af:inputText value="#{bindings.PersonId.inputValue}" label=" Id"
+                            rendered="#{bindings.PersonId.inputValue ne null}"
+                            required="#{bindings.PersonId.hints.mandatory}"
+                            columns="#{bindings.PersonId.hints.displayWidth}"
+                            visible="#{bindings.StepId.inputValue ne 1}"
+                            maximumLength="#{bindings.PersonId.hints.precision}"
+                            shortDesc="#{bindings.PersonId.hints.tooltip}"
+                            id="it1" disabled="true">
+                <f:validator binding="#{bindings.PersonId.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.PersonGrade.inputValue}"
+                            label="Person Grade"
+                            required="#{bindings.PersonGrade.hints.mandatory}"
+                            columns="#{bindings.PersonGrade.hints.displayWidth}"
+                            maximumLength="#{bindings.PersonGrade.hints.precision}"
+                            shortDesc="#{bindings.PersonGrade.hints.tooltip}"
+                            id="it6" visible="false">
+                <f:validator binding="#{bindings.PersonGrade.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.PersonName.inputValue}"
+                            visible="#{bindings.StepId.inputValue ne 1}"
+                            label=" Name"
+                            rendered="#{bindings.PersonName.inputValue ne null}"
+                            required="#{bindings.PersonName.hints.mandatory}"
+                            columns="#{bindings.PersonName.hints.displayWidth}"
+                            maximumLength="#{bindings.PersonName.hints.precision}"
+                            shortDesc="#{bindings.PersonName.hints.tooltip}"
+                            id="it2" disabled="true">
+                <f:validator binding="#{bindings.PersonName.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.PersonPosition.inputValue}"
+                            rendered="#{bindings.PersonPosition.inputValue ne null}"
+                            label=" Position" disabled="true"
+                            required="#{bindings.PersonPosition.hints.mandatory}"
+                            columns="50" partialTriggers="it4"
+                            maximumLength="#{bindings.PersonPosition.hints.precision}"
+                            shortDesc="#{bindings.PersonPosition.hints.tooltip}"
+                            id="it9"
+                            visible="#{bindings.StepId.inputValue ne 1}">
+                <f:validator binding="#{bindings.PersonPosition.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.PersonDepartment.inputValue}"
+                            rendered="#{bindings.PersonDepartment.inputValue ne null}"
+                            label="Department" disabled="true"
+                            required="#{bindings.PersonDepartment.hints.mandatory}"
+                            columns="50" partialTriggers="it4"
+                            maximumLength="#{bindings.PersonDepartment.hints.precision}"
+                            shortDesc="#{bindings.PersonDepartment.hints.tooltip}"
+                            id="it5"
+                            visible="#{bindings.StepId.inputValue ne 1}">
+                <f:validator binding="#{bindings.PersonDepartment.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.PersonJob.inputValue}"
+                            rendered="#{bindings.PersonJob.inputValue ne null}"
+                            label="Job"
+                            required="#{bindings.PersonJob.hints.mandatory}"
+                            columns="50" disabled="true" partialTriggers="it4"
+                            maximumLength="#{bindings.PersonJob.hints.precision}"
+                            shortDesc="#{bindings.PersonJob.hints.tooltip}"
+                            id="it7"
+                            visible="#{bindings.StepId.inputValue ne 1}">
+                <f:validator binding="#{bindings.PersonJob.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.PersonLocation.inputValue}"
+                            rendered="#{bindings.PersonLocation.inputValue ne null}"
+                            label="Location" disabled="true"
+                            required="#{bindings.PersonLocation.hints.mandatory}"
+                            columns="50" partialTriggers="it4"
+                            maximumLength="#{bindings.PersonLocation.hints.precision}"
+                            shortDesc="#{bindings.PersonLocation.hints.tooltip}"
+                            id="it8"
+                            visible="#{bindings.StepId.inputValue ne 1}">
+                <f:validator binding="#{bindings.PersonLocation.validator}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:panelBox>
+          <af:spacer height="10" id="s1"/>
+          <af:panelFormLayout id="pfl1" rows="6" maxColumns="2">
+            <af:inputText value="#{bindings.EmpBasicSalary.inputValue}"
+                          label="#{bindings.EmpBasicSalary.hints.label}"
+                          required="#{bindings.EmpBasicSalary.hints.mandatory}"
+                          columns="#{bindings.EmpBasicSalary.hints.displayWidth}"
+                          maximumLength="#{bindings.EmpBasicSalary.hints.precision}"
+                          shortDesc="#{bindings.EmpBasicSalary.hints.tooltip}"
+                          id="it10" disabled="true">
+              <f:validator binding="#{bindings.EmpBasicSalary.validator}"/>
+            </af:inputText>
+            <af:inputDate value="#{bindings.CreationDate.inputValue}"
+                          label="#{bindings.CreationDate.hints.label}"
+                          required="#{bindings.CreationDate.hints.mandatory}"
+                          shortDesc="#{bindings.CreationDate.hints.tooltip}"
+                          id="id1" disabled="true">
+              <f:validator binding="#{bindings.CreationDate.validator}"/>
+              <af:convertDateTime pattern="#{bindings.CreationDate.format}"/>
+            </af:inputDate>
+            <af:selectOneChoice value="#{bindings.NoOfMonths.inputValue}"
+                                label="#{bindings.NoOfMonths.label}"
+                                required="#{bindings.NoOfMonths.hints.mandatory}"
+                                shortDesc="#{bindings.NoOfMonths.hints.tooltip}"
+                                id="soc1"
+                                disabled="#{bindings.StepId.inputValue gt 1}"
+                                valueChangeListener="#{pageFlowScope.LoanMB.calcTotalLoanAmount}"
+                                autoSubmit="true">
+              <f:selectItems value="#{bindings.NoOfMonths.items}" id="si2"/>
+            </af:selectOneChoice>
+            <af:inputText value="#{bindings.TotalAmount.inputValue}"
+                          label="#{bindings.TotalAmount.hints.label}"
+                          required="#{bindings.TotalAmount.hints.mandatory}"
+                          columns="#{bindings.TotalAmount.hints.displayWidth}"
+                          maximumLength="#{bindings.TotalAmount.hints.precision}"
+                          shortDesc="#{bindings.TotalAmount.hints.tooltip}"
+                          id="it11" disabled="true" partialTriggers="soc1">
+              <f:validator binding="#{bindings.TotalAmount.validator}"/>
+            </af:inputText>
+            <af:selectOneChoice value="#{bindings.Division.inputValue}"
+                                label="#{bindings.Division.label}"
+                                disabled="#{bindings.StepId.inputValue gt 1}"
+                                required="#{bindings.Division.hints.mandatory}"
+                                shortDesc="#{bindings.Division.hints.tooltip}"
+                                id="soc2">
+              <f:selectItems value="#{bindings.Division.items}" id="si1"/>
+            </af:selectOneChoice>
+            <af:inputDate value="#{bindings.YearEnd.inputValue}"
+                          label="#{bindings.YearEnd.hints.label}"
+                          required="#{bindings.YearEnd.hints.mandatory}"
+                          shortDesc="#{bindings.YearEnd.hints.tooltip}" id="id2"
+                          disabled="true" visible="false">
+              <f:validator binding="#{bindings.YearEnd.validator}"/>
+              <af:convertDateTime pattern="#{bindings.YearEnd.format}"/>
+            </af:inputDate>
+            <af:inputDate value="#{bindings.CreationDatePlusYear.inputValue}"
+                          label="#{bindings.CreationDatePlusYear.hints.label}"
+                          required="#{bindings.CreationDatePlusYear.hints.mandatory}"
+                          shortDesc="#{bindings.CreationDatePlusYear.hints.tooltip}"
+                          id="id3" disabled="true" visible="false">
+              <f:validator binding="#{bindings.CreationDatePlusYear.validator}"/>
+              <af:convertDateTime pattern="#{bindings.CreationDatePlusYear.format}"/>
+            </af:inputDate>
+            <af:inputText value="#{bindings.StepId.inputValue}"
+                          label="#{bindings.StepId.hints.label}"
+                          required="#{bindings.StepId.hints.mandatory}"
+                          columns="#{bindings.StepId.hints.displayWidth}"
+                          maximumLength="#{bindings.StepId.hints.precision}"
+                          shortDesc="#{bindings.StepId.hints.tooltip}" id="it4"
+                          rendered="false">
+              <f:validator binding="#{bindings.StepId.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.StepId.format}"/>
+            </af:inputText>
+             <af:inputText value="#{bindings.RequestStatus.inputValue}"
+                          label="#{bindings.RequestStatus.hints.label}" id="it12"
+                          readOnly="true">
+            </af:inputText>
+            
+          </af:panelFormLayout>
+        </af:panelBox>
+        <af:panelBox text="Approval History" id="pb3" inlineStyle="background-color:#ffffff;" rendered="#{bindings.RequestStatus.inputValue ne null &amp;&amp;  bindings.RequestStatus.inputValue ne 'SAVED' and bindings.RequestStatus.inputValue ne 'EDIT'}">
+          <af:panelCollection id="pc1"  styleClass="AFStretchWidth">
+            <af:table value="#{bindings.ApprovalHistoryLoan.collectionModel}"
+                      var="row" rows="#{bindings.ApprovalHistoryLoan.rangeSize}"
+                      emptyText="#{bindings.ApprovalHistoryLoan.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.ApprovalHistoryLoan.rangeSize}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.ApprovalHistoryLoan.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.ApprovalHistoryLoan.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t2">
+               <af:column sortProperty="#{bindings.ApprovalHistoryLoan.hints.ApprovalType.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Type"
+                         id="c2">
+                <af:outputText value="#{row.ApprovalType}" id="ot3"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryLoan.hints.AssigneeName.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Assignee Name"
+                         id="c5">
+                <af:outputText value="#{row.AssigneeName}" id="ot5"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryLoan.hints.ActionTaken.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Status"
+                         id="c1">
+                <af:outputText value="#{row.ActionTaken}" inlineStyle="color:#{row.ActionTaken eq 'PENDING' ? 'Blue' : row.ActionTaken eq 'APPROVED' ? 'Green' : 'Red'};" id="ot4"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryLoan.hints.SubmitttedOn.name}"
+                         sortable="false"
+                           width="150" align="center"
+                         headerText="Assigned On"
+                         id="c4">
+                <af:outputText value="#{row.SubmitttedOn}" id="ot1">
+                  <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/>
+                </af:outputText>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryLoan.hints.ApprovalOn.name}"
+                         sortable="false"
+                         align="center"
+                         headerText="Action On" width="150"
+                         id="c3">
+                <af:outputText value="#{row.ApprovalOn}" inlineStyle="color:Blue;" id="ot2">
+                   <af:convertDateTime  pattern="dd/MM/yyyy hh:mm:ss a"/>
+                </af:outputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+      </af:group>
+    </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:LoanMB-->
+</jsp:root>

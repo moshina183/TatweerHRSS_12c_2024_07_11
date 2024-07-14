@@ -1,0 +1,5 @@
+METADATA|ElementEntry|EffectiveStartDate|ElementName|LegislativeDataGroupName|AssignmentNumber|MultipleEntryCount|EntryType
+MERGE|ElementEntry|PLACEHOLDER_StartDate|Overtime Allowance|THC LDG|PLACEHOLDER_AssignmentNumber|PLACEHOLDER_Count|E
+
+METADATA|ElementEntryValue|EffectiveStartDate|InputValueName|ScreenEntryValue|AssignmentNumber|ElementName|LegislativeDataGroupName|MultipleEntryCount|EntryType
+MERGE|ElementEntryValue|PLACEHOLDER_StartDate|No of Hours|PLACEHOLDER_HoursValue|PLACEHOLDER_AssignmentNumber|Overtime Allowance|THC LDG|PLACEHOLDER_Count|E

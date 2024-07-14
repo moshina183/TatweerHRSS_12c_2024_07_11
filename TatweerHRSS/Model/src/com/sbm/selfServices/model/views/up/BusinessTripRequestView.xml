@@ -1,0 +1,1559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BusinessTripRequestView"
+  Version="11.1.1.66.73"
+  InheritPersonalization="true"
+  OrderBy="LOCAL_BUSINESS_TRIP_ID DESC"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false"
+  RowClass="com.sbm.selfServices.model.views.up.BusinessTripRequestViewRowImpl"
+  ComponentClass="com.sbm.selfServices.model.views.up.BusinessTripRequestViewImpl">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_isCodegen" Value="true"/>
+  </DesignTime>
+  <Variable
+    Name="bind_assignee"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bind_PersonNumber"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bind_assignee2"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <Variable
+    Name="bind_tripType"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <ViewAccessor
+    Name="TripTypeStaticView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.TripTypeStaticView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CountriesLOV"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.CountriesLOV"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="CitiesLOV"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.CitiesLOV"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="AllowanceTypeStaticView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.AllowanceTypeStaticView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="RequestStepsROView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.RequestStepsROView">
+    <ViewCriteriaUsage
+      Name="RequestStepsNextStep"
+      FullName="com.sbm.selfServices.model.views.ro.RequestStepsROView.RequestStepsNextStep"/>
+    <ParameterMap>
+      <PIMap Variable="bind_requestName">
+        <TransientExpression><![CDATA[TripType]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="BusinessTripExpenseROView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.BusinessTripExpenseROView">
+    <ParameterMap>
+      <PIMap Variable="bind_persone_id">
+        <TransientExpression><![CDATA[PersoneId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="EventTypeStaticView"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.EventTypeStaticView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="BusinessTripSubTypeStaticView1"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.BusinessTripSubTypeStaticView"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="DestinationStaticView1"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.DestinationStaticView">
+    <ViewCriteriaUsage
+      Name="DestinationStaticViewCriteria"
+      FullName="com.sbm.selfServices.model.views.ro.DestinationStaticView.DestinationStaticViewCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="b_type">
+        <TransientExpression><![CDATA[destinationTypeTrans]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
+  <ViewAccessor
+    Name="DepartmentsLOV1"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.DepartmentsLOV"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_TripType"
+    ListVOName="TripTypeStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_TripType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TripType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="trip"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="trip"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CountryId"
+    ListVOName="CountriesLOV"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CountryId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CountryId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CountryName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CityId"
+    ListVOName="CitiesLOV"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CityId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CityId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_TransportationAllowanceType"
+    ListVOName="AllowanceTypeStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="TransportationAllowanceType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="allowance"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="label"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_HousingAllowanceType"
+    ListVOName="AllowanceTypeStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="HousingAllowanceType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="allowance"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="label"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_FoodAllowanceType"
+    ListVOName="AllowanceTypeStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="FoodAllowanceType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="allowance"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="label"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_StepId"
+    ListVOName="RequestStepsROView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="StepId"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="StepId"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="StepName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ExpenseBusinessTripId"
+    ListVOName="BusinessTripExpenseROView"
+    ListRangeSize="10"
+    NullValueFlag="none"
+    NullValueId="LOV_ExpenseBusinessTripId_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ExpenseBusinessTripId"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="MeansTravel"/>
+      <Item Value="OtherCost"/>
+      <Item Value="RequiredVisa"/>
+      <Item Value="StartDate"/>
+      <Item Value="TargetedCompetencies"/>
+      <Item Value="TransportationAllowanceType"/>
+      <Item Value="TransAllowanceAmount"/>
+      <Item Value="BudgetFlag"/>
+      <Item Value="CityId"/>
+      <Item Value="CountryId"/>
+      <Item Value="CourseName"/>
+      <Item Value="DestinationId"/>
+      <Item Value="EndDate"/>
+      <Item Value="EventSubject"/>
+      <Item Value="EventType"/>
+      <Item Value="ExpenseType"/>
+      <Item Value="FoodAllowanceType"/>
+      <Item Value="FoodAllowanceAmount"/>
+      <Item Value="HousingAllowanceType"/>
+      <Item Value="HousingAllowanceAmount"/>
+      <Item Value="LaundryAllowanceAmount"/>
+      <Item Value="VisaCost"/>
+      <Item Value="SubType"/>
+      <Item Value="NewCity"/>
+      <Item Value="DestinationType"/>
+      <Item Value="CreationDate"/>
+      <Item Value="CostCenter"/>
+      <Item Value="CostCenterNumber"/>
+      <Item Value="TrainingCost"/>
+      <Item Value="OtherMeansTravel"/>
+      <Item Value="TravelCost"/>
+      <Item Value="EventCost"/>
+      <Item Value="TripComment"/>
+      <Item Value="Days"/>
+      <Item Value="PersonDepartment"/>
+      <Item Value="PersonJob"/>
+      <Item Value="PersonLocation"/>
+      <Item Value="PersonPosition"/>
+      <Item Value="OtherCities"/>
+      <Item Value="ToCity"/>
+      <Item Value="PerDiemAmount"/>
+      <Item Value="BenefitType"/>
+      <Item Value="TotalForInvoice"/>
+      <Item Value="Division"/>
+      <Item Value="Lob"/>
+      <Item Value="ActualStartDate"/>
+      <Item Value="ActualEndDate"/>
+      <Item Value="OneWayTrip"/>
+      <Item Value="MoreCitiesCheck"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="LocalBusinessTripId"/>
+      <Item Value="MeansTravel"/>
+      <Item Value="OtherCost"/>
+      <Item Value="RequiredVisa"/>
+      <Item Value="StartDate"/>
+      <Item Value="TargetedCompetencies"/>
+      <Item Value="TransportationAllowanceType"/>
+      <Item Value="TransAllowanceAmount"/>
+      <Item Value="BudgetFlag"/>
+      <Item Value="CityId"/>
+      <Item Value="CountryId"/>
+      <Item Value="CourseName"/>
+      <Item Value="DestinationId"/>
+      <Item Value="EndDate"/>
+      <Item Value="EventSubject"/>
+      <Item Value="EventType"/>
+      <Item Value="TripType"/>
+      <Item Value="FoodAllowanceType"/>
+      <Item Value="FoodAllowanceAmount"/>
+      <Item Value="HousingAllowanceType"/>
+      <Item Value="HousingAllowanceAmount"/>
+      <Item Value="LaundryAllowanceAmount"/>
+      <Item Value="VisaCost"/>
+      <Item Value="SubType"/>
+      <Item Value="NewCity"/>
+      <Item Value="DestinationType"/>
+      <Item Value="CreationDate"/>
+      <Item Value="CostCenter"/>
+      <Item Value="CostCenterNumber"/>
+      <Item Value="TrainingCost"/>
+      <Item Value="OtherMeansTravel"/>
+      <Item Value="TravelCost"/>
+      <Item Value="EventCost"/>
+      <Item Value="TripComment"/>
+      <Item Value="Days"/>
+      <Item Value="PersonDepartment"/>
+      <Item Value="PersonJob"/>
+      <Item Value="PersonLocation"/>
+      <Item Value="PersonPosition"/>
+      <Item Value="OtherCities"/>
+      <Item Value="ToCity"/>
+      <Item Value="PerDiemAmount"/>
+      <Item Value="BenefitType"/>
+      <Item Value="TotalForInvoice"/>
+      <Item Value="Division"/>
+      <Item Value="Lob"/>
+      <Item Value="ActualStartDate"/>
+      <Item Value="ActualEndDate"/>
+      <Item Value="OneWayTrip"/>
+      <Item Value="MoreCitiesCheck"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LocalBusinessTripId"/>
+      <Item Value="TripType"/>
+      <Item Value="PersoneName"/>
+      <Item Value="CreationDate"/>
+      <Item Value="StartDate"/>
+      <Item Value="EndDate"/>
+    </AttrArray>
+    <DisplayCriteria
+      Name="BusinessTripExpenseROViewCriteria"/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_EventType"
+    ListVOName="EventTypeStaticView"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="EventType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="type"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="type"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_SubType"
+    ListVOName="BusinessTripSubTypeStaticView1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_SubType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="SubType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="subType"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="subType"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_DestinationType"
+    ListVOName="DestinationStaticView1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_DestinationType_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="DestinationType"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="destination"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="destination"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_CostCenter"
+    ListVOName="DepartmentsLOV1"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="CostCenter"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="CostCenterNumber"/>
+      <Item Value="Lob"/>
+      <Item Value="Division"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="DeptName"/>
+      <Item Value="Segment4"/>
+      <Item Value="Segment3"/>
+      <Item Value="Segment2"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="DeptName"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_NewCity"
+    ListVOName="CitiesLOV"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="NewCity"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ToCity"
+    ListVOName="CitiesLOV"
+    ListRangeSize="-1"
+    NullValueFlag="start"
+    NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ToCity"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_OtherCitiesTrans"
+    ListVOName="CitiesLOV"
+    ListRangeSize="-1"
+     Delimiter=","
+    NullValueFlag="none"
+    NullValueId="LOV_OtherCitiesTrans_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="OtherCitiesTrans"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="CityNameEn"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <SQLQuery>
+    <![CDATA[SELECT BusinessTripRequest.LOCAL_BUSINESS_TRIP_ID, 
+       BusinessTripRequest.PERSONE_ID, 
+       BusinessTripRequest.STEP_ID, 
+       BusinessTripRequest.START_DATE, 
+       BusinessTripRequest.END_DATE, 
+       BusinessTripRequest.DAYS, 
+       BusinessTripRequest.COUNTRY_ID, 
+       BusinessTripRequest.CITY_ID, 
+       BusinessTripRequest.DESTINATION_ID, 
+       BusinessTripRequest.LAUNDRY_ALLOWANCE_AMOUNT, 
+       BusinessTripRequest.TRANSPORTATION_ALLOWANCE_TYPE, 
+       BusinessTripRequest.TRANS_ALLOWANCE_AMOUNT, 
+       BusinessTripRequest.HOUSING_ALLOWANCE_TYPE, 
+       BusinessTripRequest.HOUSING_ALLOWANCE_AMOUNT, 
+       BusinessTripRequest.FOOD_ALLOWANCE_TYPE, 
+       BusinessTripRequest.FOOD_ALLOWANCE_AMOUNT, 
+       BusinessTripRequest.MEANS_TRAVEL, 
+       BusinessTripRequest.VISA_COST, 
+       BusinessTripRequest.OTHER_COST, 
+       BusinessTripRequest.BUDGET_FLAG, 
+       BusinessTripRequest.TRIP_TYPE, 
+       BusinessTripRequest.PERSONE_NAME,
+       BusinessTripRequest.REQUEST_STATUS,
+       BusinessTripRequest.REJECT_COMMENTS,
+       BusinessTripRequest.ASSIGNEE,
+       BusinessTripRequest.TRIP_REASON,
+       BusinessTripRequest.EVENT_SUBJECT,
+       BusinessTripRequest.EVENT_TYPE,
+       BusinessTripRequest.REQUIRED_VISA,
+       BusinessTripRequest.TARGETED_COMPETENCIES,
+       BusinessTripRequest.COURSE_NAME,
+       BusinessTripRequest.EXPENSE_BUSINESS_TRIP_ID,
+       BusinessTripRequest.EXPENSE_FLAG,
+       BusinessTripRequest.EXPENSE_TYPE,
+       BusinessTripRequest.CANCEL_REASON,
+       BusinessTripRequest.SUB_TYPE,
+       BusinessTripRequest.NEW_CITY,
+       BusinessTripRequest.DESTINATION_TYPE,
+       BusinessTripRequest.CREATION_DATE,
+       BusinessTripRequest.COST_CENTER,
+       BusinessTripRequest.COST_CENTER_NUMBER,
+       BusinessTripRequest.TRAINING_COST,
+       BusinessTripRequest.OTHER_MEANS_TRAVEL,
+       BusinessTripRequest.TRAVEL_COST,
+       BusinessTripRequest.EVENT_COST,
+       BusinessTripRequest.TRIP_COMMENT,
+       BusinessTripRequest.PERSON_POSITION,
+       BusinessTripRequest.PERSON_JOB,
+       BusinessTripRequest.PERSON_DEPARTMENT,
+       BusinessTripRequest.PERSON_LOCATION,
+       BusinessTripRequest.OTHER_CITIES,
+       BusinessTripRequest.TO_CITY,
+       BusinessTripRequest.ACTION_TAKEN,
+       BusinessTripRequest.TOTAL_FOR_INVOICE,
+       BusinessTripRequest.ASSIGNEE_NAME,
+       BusinessTripRequest.per_diem_amount,
+       BusinessTripRequest.benefit_type,
+       BusinessTripRequest.LOB,
+       BusinessTripRequest.DIVISION,
+       BusinessTripRequest.actual_start_date,
+       BusinessTripRequest.actual_end_date,
+        BusinessTripRequest.ONE_WAY_TRIP,
+BusinessTripRequest.more_cities_check,
+BusinessTripRequest.INVOICE_NUMBER,
+BusinessTripRequest.TOTAL_BT_COST,
+BusinessTripRequest.PAYMENT_STATUS,
+BusinessTripRequest.PREFERRED_DEPARTURE_TIME,
+BusinessTripRequest.PREFERRED_ARRIVAL_TIME,
+BusinessTripRequest.EDIT_REQUEST,
+BusinessTripRequest.OTHER_BY_EMPLOYEE,
+BusinessTripRequest.OTHER_BY_TATWEER,
+BusinessTripRequest.TRAINING_BY_EMPLOYEE,
+BusinessTripRequest.TRAVEL_COST_BY_EMPLOYEE,
+BusinessTripRequest.DECLARATION
+FROM BUSINESS_TRIP_REQUEST BusinessTripRequest]]>
+  </SQLQuery>
+  <EntityUsage
+    Name="BusinessTripRequest"
+    Entity="com.sbm.selfServices.model.entities.BusinessTripRequest"/>
+  <ViewAttribute
+    Name="LocalBusinessTripId"
+    IsUpdateable="while_insert"
+    IsNotNull="true"
+    PrecisionRule="true"
+    EntityAttrName="LocalBusinessTripId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="LOCAL_BUSINESS_TRIP_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.LocalBusinessTripId_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PersoneId"
+    PrecisionRule="true"
+    EntityAttrName="PersoneId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PERSONE_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.PersoneId_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepId"
+    LOVName="LOV_StepId"
+    PrecisionRule="true"
+    EntityAttrName="StepId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="STEP_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StartDate"
+    PrecisionRule="true"
+    EntityAttrName="StartDate"
+    EntityUsage="BusinessTripRequest"
+    AliasName="START_DATE"/>
+  <ViewAttribute
+    Name="EndDate"
+    PrecisionRule="true"
+    EntityAttrName="EndDate"
+    EntityUsage="BusinessTripRequest"
+    AliasName="END_DATE"/>
+  <ViewAttribute
+    Name="Days"
+    PrecisionRule="true"
+    EntityAttrName="Days"
+    EntityUsage="BusinessTripRequest"
+    AliasName="DAYS"/>
+  <ViewAttribute
+    Name="CountryId"
+    LOVName="LOV_CountryId"
+    PrecisionRule="true"
+    EntityAttrName="CountryId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="COUNTRY_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CityId"
+    LOVName="LOV_CityId"
+    PrecisionRule="true"
+    EntityAttrName="CityId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="CITY_ID">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestinationId"
+    PrecisionRule="true"
+    EntityAttrName="DestinationId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="DESTINATION_ID"/>
+  <ViewAttribute
+    Name="LaundryAllowanceAmount"
+    PrecisionRule="true"
+    EntityAttrName="LaundryAllowanceAmount"
+    EntityUsage="BusinessTripRequest"
+    AliasName="LAUNDRY_ALLOWANCE_AMOUNT"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="TransportationAllowanceType"
+    LOVName="LOV_TransportationAllowanceType"
+    PrecisionRule="true"
+    EntityAttrName="TransportationAllowanceType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRANSPORTATION_ALLOWANCE_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TransAllowanceAmount"
+    PrecisionRule="true"
+    EntityAttrName="TransAllowanceAmount"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRANS_ALLOWANCE_AMOUNT"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="HousingAllowanceType"
+    LOVName="LOV_HousingAllowanceType"
+    PrecisionRule="true"
+    EntityAttrName="HousingAllowanceType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="HOUSING_ALLOWANCE_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="HousingAllowanceAmount"
+    PrecisionRule="true"
+    EntityAttrName="HousingAllowanceAmount"
+    EntityUsage="BusinessTripRequest"
+    AliasName="HOUSING_ALLOWANCE_AMOUNT"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="FoodAllowanceType"
+    LOVName="LOV_FoodAllowanceType"
+    PrecisionRule="true"
+    EntityAttrName="FoodAllowanceType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="FOOD_ALLOWANCE_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="FoodAllowanceAmount"
+    PrecisionRule="true"
+    EntityAttrName="FoodAllowanceAmount"
+    EntityUsage="BusinessTripRequest"
+    AliasName="FOOD_ALLOWANCE_AMOUNT"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="MeansTravel"
+    PrecisionRule="true"
+    EntityAttrName="MeansTravel"
+    EntityUsage="BusinessTripRequest"
+    AliasName="MEANS_TRAVEL"
+    DefaultValue="Plane"/>
+  <ViewAttribute
+    Name="VisaCost"
+    PrecisionRule="true"
+    EntityAttrName="VisaCost"
+    EntityUsage="BusinessTripRequest"
+    AliasName="VISA_COST"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="OtherCost"
+    PrecisionRule="true"
+    EntityAttrName="OtherCost"
+    EntityUsage="BusinessTripRequest"
+    AliasName="OTHER_COST"
+    DefaultValue="0"/>
+  <ViewAttribute
+    Name="BudgetFlag"
+    PrecisionRule="true"
+    EntityAttrName="BudgetFlag"
+    EntityUsage="BusinessTripRequest"
+    AliasName="BUDGET_FLAG"/>
+  <ViewAttribute
+    Name="TripType"
+    LOVName="LOV_TripType"
+    PrecisionRule="true"
+    EntityAttrName="TripType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRIP_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PersoneName"
+    PrecisionRule="true"
+    EntityAttrName="PersoneName"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PERSONE_NAME"/>
+  <ViewAttribute
+    Name="RequestStatus"
+    PrecisionRule="true"
+    EntityAttrName="RequestStatus"
+    EntityUsage="BusinessTripRequest"
+    AliasName="REQUEST_STATUS"/>
+  <ViewAttribute
+    Name="RejectComments"
+    PrecisionRule="true"
+    EntityAttrName="RejectComments"
+    EntityUsage="BusinessTripRequest"
+    AliasName="REJECT_COMMENTS">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.RejectComments_LABEL"/>
+        <DISPLAYWIDTH
+          Value="100"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Assignee"
+    PrecisionRule="true"
+    EntityAttrName="Assignee"
+    EntityUsage="BusinessTripRequest"
+    AliasName="ASSIGNEE"/>
+  <ViewAttribute
+    Name="TripReason"
+    PrecisionRule="true"
+    EntityAttrName="TripReason"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRIP_REASON"/>
+  <ViewAttribute
+    Name="EventSubject"
+    PrecisionRule="true"
+    EntityAttrName="EventSubject"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EVENT_SUBJECT">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.EventSubject_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EventType"
+    PrecisionRule="true"
+    EntityAttrName="EventType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EVENT_TYPE"
+    LOVName="LOV_EventType">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="choice"/>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.EventType_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="RequiredVisa"
+    PrecisionRule="true"
+    EntityAttrName="RequiredVisa"
+    EntityUsage="BusinessTripRequest"
+    AliasName="REQUIRED_VISA">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.RequiredVisa_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TargetedCompetencies"
+    PrecisionRule="true"
+    EntityAttrName="TargetedCompetencies"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TARGETED_COMPETENCIES">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.TargetedCompetencies_LABEL"/>
+        <DISPLAYWIDTH
+          Value="50"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CourseName"
+    PrecisionRule="true"
+    EntityAttrName="CourseName"
+    EntityUsage="BusinessTripRequest"
+    AliasName="COURSE_NAME">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.CourseName_LABEL"/>
+        <DISPLAYWIDTH
+          Value="50"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExpenseBusinessTripId"
+    PrecisionRule="true"
+    EntityAttrName="ExpenseBusinessTripId"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EXPENSE_BUSINESS_TRIP_ID"
+    LOVName="LOV_ExpenseBusinessTripId">
+    <Properties>
+      <SchemaBasedProperties>
+        <AUTOSUBMIT
+          Value="true"/>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.ExpenseBusinessTripId_LABEL"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ExpenseFlag"
+    PrecisionRule="true"
+    EntityAttrName="ExpenseFlag"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EXPENSE_FLAG"/>
+  <ViewAttribute
+    Name="ExpenseType"
+    PrecisionRule="true"
+    EntityAttrName="ExpenseType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EXPENSE_TYPE">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.ExpenseType_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CancelReason"
+    PrecisionRule="true"
+    EntityAttrName="CancelReason"
+    EntityUsage="BusinessTripRequest"
+    AliasName="CANCEL_REASON"/>
+  <ViewAttribute
+    Name="SubType"
+    PrecisionRule="true"
+    EntityAttrName="SubType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="SUB_TYPE"
+    LOVName="LOV_SubType"
+    DefaultValue="Local">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.SubType_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="NewCity"
+    PrecisionRule="true"
+    EntityAttrName="NewCity"
+    EntityUsage="BusinessTripRequest"
+    AliasName="NEW_CITY"
+    LOVName="LOV_NewCity">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.NewCity_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="DestinationType"
+    PrecisionRule="true"
+    EntityAttrName="DestinationType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="DESTINATION_TYPE"
+    LOVName="LOV_DestinationType"
+    DefaultValue="Local">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.DestinationType_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CreationDate"
+    PrecisionRule="true"
+    EntityAttrName="CreationDate"
+    EntityUsage="BusinessTripRequest"
+    AliasName="CREATION_DATE">
+    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.CreationDate_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CostCenter"
+    PrecisionRule="true"
+    EntityAttrName="CostCenter"
+    EntityUsage="BusinessTripRequest"
+    AliasName="COST_CENTER"
+    LOVName="LOV_CostCenter">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.CostCenter_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CostCenterNumber"
+    PrecisionRule="true"
+    EntityAttrName="CostCenterNumber"
+    EntityUsage="BusinessTripRequest"
+    AliasName="COST_CENTER_NUMBER">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.CostCenterNumber_LABEL"/>
+        <DISPLAYWIDTH
+          Value="25"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TrainingCost"
+    PrecisionRule="true"
+    EntityAttrName="TrainingCost"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRAINING_COST"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.TrainingCost_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OtherMeansTravel"
+    PrecisionRule="true"
+    EntityAttrName="OtherMeansTravel"
+    EntityUsage="BusinessTripRequest"
+    AliasName="OTHER_MEANS_TRAVEL">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.OtherMeansTravel_LABEL"/>
+        <DISPLAYWIDTH
+          Value="55"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TravelCost"
+    PrecisionRule="true"
+    EntityAttrName="TravelCost"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRAVEL_COST"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.TravelCost_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EventCost"
+    PrecisionRule="true"
+    EntityAttrName="EventCost"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EVENT_COST"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.EventCost_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TripComment"
+    PrecisionRule="true"
+    EntityAttrName="TripComment"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRIP_COMMENT"/>
+  <ViewAttribute
+    Name="PersonPosition"
+    PrecisionRule="true"
+    EntityAttrName="PersonPosition"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PERSON_POSITION"/>
+  <ViewAttribute
+    Name="PersonJob"
+    PrecisionRule="true"
+    EntityAttrName="PersonJob"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PERSON_JOB"/>
+  <ViewAttribute
+    Name="PersonDepartment"
+    PrecisionRule="true"
+    EntityAttrName="PersonDepartment"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PERSON_DEPARTMENT"/>
+  <ViewAttribute
+    Name="PersonLocation"
+    PrecisionRule="true"
+    EntityAttrName="PersonLocation"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PERSON_LOCATION"/>
+  <ViewAttribute
+    Name="OtherCities"
+    PrecisionRule="true"
+    EntityAttrName="OtherCities"
+    EntityUsage="BusinessTripRequest"
+    AliasName="OTHER_CITIES">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="300"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ToCity"
+    PrecisionRule="true"
+    EntityAttrName="ToCity"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TO_CITY"
+    LOVName="LOV_ToCity">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.ToCity_LABEL"/>
+        <CONTROLTYPE
+          Value="choice"/>
+        <AUTOSUBMIT
+          Value="true"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ActionTaken"
+    PrecisionRule="true"
+    EntityAttrName="ActionTaken"
+    EntityUsage="BusinessTripRequest"
+    AliasName="ACTION_TAKEN"/>
+  <ViewAttribute
+    Name="TotalForInvoice"
+    PrecisionRule="true"
+    EntityAttrName="TotalForInvoice"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TOTAL_FOR_INVOICE"/>
+  <ViewAttribute
+    Name="AssigneeName"
+    PrecisionRule="true"
+    EntityAttrName="AssigneeName"
+    EntityUsage="BusinessTripRequest"
+    AliasName="ASSIGNEE_NAME">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.AssigneeName_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="PerDiemAmount"
+    PrecisionRule="true"
+    EntityAttrName="PerDiemAmount"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PER_DIEM_AMOUNT"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.PerDiemAmount_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="BenefitType"
+    PrecisionRule="true"
+    EntityAttrName="BenefitType"
+    EntityUsage="BusinessTripRequest"
+    AliasName="BENEFIT_TYPE"
+    DefaultValue="P"/>
+  <ViewAttribute
+    Name="Lob"
+    PrecisionRule="true"
+    EntityAttrName="Lob"
+    EntityUsage="BusinessTripRequest"
+    AliasName="LOB"/>
+  <ViewAttribute
+    Name="Division"
+    PrecisionRule="true"
+    EntityAttrName="Division"
+    EntityUsage="BusinessTripRequest"
+    AliasName="DIVISION"/>
+  <ViewAttribute
+    Name="ActualStartDate"
+    PrecisionRule="true"
+    EntityAttrName="ActualStartDate"
+    EntityUsage="BusinessTripRequest"
+    AliasName="ACTUAL_START_DATE"/>
+  <ViewAttribute
+    Name="ActualEndDate"
+    PrecisionRule="true"
+    EntityAttrName="ActualEndDate"
+    EntityUsage="BusinessTripRequest"
+    AliasName="ACTUAL_END_DATE"/>
+  <ViewAttribute
+    Name="OneWayTrip"
+    PrecisionRule="true"
+    EntityAttrName="OneWayTrip"
+    EntityUsage="BusinessTripRequest"
+    AliasName="ONE_WAY_TRIP"
+    DefaultValue="N"/>
+  <ViewAttribute
+    Name="MoreCitiesCheck"
+    PrecisionRule="true"
+    EntityAttrName="MoreCitiesCheck"
+    EntityUsage="BusinessTripRequest"
+    AliasName="MORE_CITIES_CHECK"
+    DefaultValue="N"/>
+  <ViewAttribute
+    Name="InvoiceNumber"
+    PrecisionRule="true"
+    EntityAttrName="InvoiceNumber"
+    EntityUsage="BusinessTripRequest"
+    AliasName="INVOICE_NUMBER"/>
+  <ViewAttribute
+    Name="TotalBtCost"
+    PrecisionRule="true"
+    EntityAttrName="TotalBtCost"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TOTAL_BT_COST"/>
+  <ViewAttribute
+    Name="PaymentStatus"
+    PrecisionRule="true"
+    EntityAttrName="PaymentStatus"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PAYMENT_STATUS"/>
+  <ViewAttribute
+    Name="PreferredDepartureTime"
+    PrecisionRule="true"
+    EntityAttrName="PreferredDepartureTime"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PREFERRED_DEPARTURE_TIME"/>
+  <ViewAttribute
+    Name="PreferredArrivalTime"
+    PrecisionRule="true"
+    EntityAttrName="PreferredArrivalTime"
+    EntityUsage="BusinessTripRequest"
+    AliasName="PREFERRED_ARRIVAL_TIME"/>
+  <ViewAttribute
+    Name="TotalAmount"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if(BenefitType == 'A'){(LaundryAllowanceAmount == null ? 0 : LaundryAllowanceAmount) + (TransAllowanceAmount== null ? 0 :TransAllowanceAmount) + (HousingAllowanceAmount== null ? 0 :HousingAllowanceAmount) + (FoodAllowanceAmount== null ? 0 :FoodAllowanceAmount) +(VisaCost == null ? 0 : VisaCost)+(OtherCost== null ? 0 :OtherCost)+(TrainingCost== null ? 0 :TrainingCost)+(TravelCost== null ? 0 :TravelCost)+(EventCost== null ? 0 :EventCost)}
+else{
+(PerDiemAmount == null ? 0 : PerDiemAmount) +(VisaCost == null ? 0 : VisaCost)+(OtherCost== null ? 0 :OtherCost)+(TrainingCost== null ? 0 :TrainingCost)+(TravelCost== null ? 0 :TravelCost)+(EventCost== null ? 0 :EventCost)+(OtherByEmployee== null ? 0 :OtherByEmployee)+(OtherByTatweer== null ? 0 :OtherByTatweer)+(TrainingByEmployee== null ? 0 :TrainingByEmployee)+(TravelCostByEmployee== null ? 0 :TravelCostByEmployee)
+}]]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="BenefitType"/>
+      <Item
+        Value="FoodAllowanceAmount"/>
+      <Item
+        Value="HousingAllowanceAmount"/>
+      <Item
+        Value="LaundryAllowanceAmount"/>
+      <Item
+        Value="OtherByEmployee"/>
+      <Item
+        Value="OtherByTatweer"/>
+      <Item
+        Value="OtherCost"/>
+      <Item
+        Value="PerDiemAmount"/>
+      <Item
+        Value="TrainingByEmployee"/>
+      <Item
+        Value="TrainingCost"/>
+      <Item
+        Value="TransAllowanceAmount"/>
+      <Item
+        Value="TravelCostByEmployee"/>
+      <Item
+        Value="VisaCost"/>
+    </Dependencies>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.TotalAmount_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="StepComment"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.StepComment_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="attachmentRowCount"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="destinationTypeTrans"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[if(TripType=='Expense'){
+return 'O'
+}
+else if(RequestStatus == null || RequestStatus == 'SAVED')
+return 'N'
+else
+return 'O']]></TransientExpression>
+    <Dependencies>
+      <Item
+        Value="RequestStatus"/>
+      <Item
+        Value="TripType"/>
+    </Dependencies>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="MoreCities"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT"/>
+  <ViewAttribute
+    Name="OneWay_TRANS"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT"/>
+  <ViewAttribute
+    Name="More_Cities_Check_Trans"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="NUMBER"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT"/>
+  <ViewAttribute
+    Name="OtherCitiesTrans"
+    IsQueriable="false"
+    PrecisionRule="true"
+    IsSelected="false"
+    EntityAttrName="OtherCitiesTrans"
+    EntityUsage="BusinessTripRequest"
+    AliasName="OTHER_CITIES_TRANS"
+    LOVName="LOV_OtherCitiesTrans"
+    IsPersistent="false">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYWIDTH
+          Value="40"/>
+        <CONTROLTYPE
+          Value="delimited_ids_choice"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="EditRequest"
+    PrecisionRule="true"
+    EntityAttrName="EditRequest"
+    EntityUsage="BusinessTripRequest"
+    AliasName="EDIT_REQUEST"/>
+  <ViewAttribute
+    Name="OtherByEmployee"
+    PrecisionRule="true"
+    EntityAttrName="OtherByEmployee"
+    EntityUsage="BusinessTripRequest"
+    AliasName="OTHER_BY_EMPLOYEE"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.OtherByEmployee_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OtherByTatweer"
+    PrecisionRule="true"
+    EntityAttrName="OtherByTatweer"
+    EntityUsage="BusinessTripRequest"
+    AliasName="OTHER_BY_TATWEER"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.OtherByTatweer_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TrainingByEmployee"
+    PrecisionRule="true"
+    EntityAttrName="TrainingByEmployee"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRAINING_BY_EMPLOYEE"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.TrainingByEmployee_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TravelCostByEmployee"
+    PrecisionRule="true"
+    EntityAttrName="TravelCostByEmployee"
+    EntityUsage="BusinessTripRequest"
+    AliasName="TRAVEL_COST_BY_EMPLOYEE"
+    DefaultValue="0">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="com.sbm.selfServices.model.views.up.BusinessTripRequestView.TravelCostByEmployee_LABEL"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Declaration"
+    PrecisionRule="true"
+    EntityAttrName="Declaration"
+    EntityUsage="BusinessTripRequest"
+    AliasName="DECLARATION"/>
+  <ViewCriteria
+    Name="BusinessTripRequestViewCriteriaByAssignee"
+    ViewObjectName="com.sbm.selfServices.model.views.up.BusinessTripRequestView"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow2"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="TripType"
+        ViewAttribute="TripType"
+        Operator="="
+        Conjunction="AND"
+        Value=":bind_tripType"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+    <ViewCriteriaRow
+      Name="vcrow154"
+      Conjunction="AND"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="PersoneId"
+        ViewAttribute="PersoneId"
+        Operator="="
+        Conjunction="OR"
+        Value=":bind_PersonNumber"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItemCompound
+        ViewAttribute="Assignee">
+        <ViewCriteria
+          Name="BusinessTripRequestViewCriteriaByAssignee_vcrow154_Assignee_itemHolder"
+          ViewObjectName="com.sbm.selfServices.model.views.up.BusinessTripRequestView"
+          Conjunction="OR">
+          <ViewCriteriaRow
+            Name="vcrow155"
+            Conjunction="OR">
+            <ViewCriteriaItem
+              Name="Assignee"
+              ViewAttribute="Assignee"
+              Operator="="
+              Conjunction="OR"
+              Value=":bind_assignee"
+              IsBindVarValue="true"
+              Required="Optional"/>
+          </ViewCriteriaRow>
+          <ViewCriteriaRow
+            Name="vcrow156"
+            Conjunction="OR">
+            <ViewCriteriaItem
+              Name="BusinessTripRequestViewCriteriaByAssignee_vcrow154_Assignee_BusinessTripRequestViewCriteriaByAssignee_vcrow154_Assignee_itemHolder_vcrow156_Assignee"
+              ViewAttribute="Assignee"
+              Operator="="
+              Conjunction="OR"
+              Value=":bind_assignee2"
+              IsBindVarValue="true"
+              Required="Optional"/>
+          </ViewCriteriaRow>
+        </ViewCriteria>
+      </ViewCriteriaItemCompound>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <ViewLinkAccessor
+    Name="RequestAttachmentsView"
+    ViewLink="com.sbm.selfServices.model.views.vl.RequestAttachmentsFK1VL"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ViewLinkAccessor
+    Name="ApprovalHistoryVO"
+    ViewLink="com.sbm.selfServices.model.views.vl.BusinessTripApprovalVL"
+    Type="oracle.jbo.RowIterator"
+    IsUpdateable="false"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

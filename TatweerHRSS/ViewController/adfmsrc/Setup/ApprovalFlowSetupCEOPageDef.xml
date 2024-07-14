@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.9.14" id="ApprovalFlowSetupCEOPageDef"
+                Package="Setup">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ApproverStepsCEO_VO1" RangeSize="25" DataControl="SBMModuleDataControl"
+              id="ApproverStepsCEO_VO1Iterator"/>
+    <searchRegion Criteria="FindByRequestType" Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="ApproverStepsCEO_VO1Iterator" id="FindByRequestTypeQuery"/>
+    <searchRegion Criteria="FindByRequestType" Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="ApproverStepsCEO_VO1Iterator" id="FindByRequestTypeQuery1"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ApproverStepsCEO_VO1Iterator" id="ApproverStepsCEO_VO1">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO" Name="ApproverStepsCEO_VO10">
+        <AttrNames>
+          <Item Value="StepId"/>
+          <Item Value="StepType"/>
+          <Item Value="StepName"/>
+          <Item Value="NextStepId"/>
+          <Item Value="RequestTypeId"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="CreatedOn"/>
+          <Item Value="LastUpdatedBy"/>
+          <Item Value="LastUpdatedOn"/>
+          <Item Value="SpecialEditFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="ApproverStepsCEO_VO1Iterator" id="SpecialEditFlag" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="SpecialEditFlag"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="true"/>
+        <Item Value="false"/>
+      </ValueList>
+    </button>
+    <action id="Commit" DataControl="SBMModuleDataControl" RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="SBMModuleDataControl" RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="ApproverStepsCEO_VO1Iterator" id="Delete"
+            InstanceName="SBMModuleDataControl.ApproverStepsCEO_VO1" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="ApproverStepsCEO_VO1Iterator" id="RequestTypeId">
+      <AttrNames>
+        <Item Value="RequestTypeId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ApproverStepsCEO_VO1Iterator" id="ApproverStepsCEO_VO11">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.RequestStepsCEO_VO" Name="ApproverStepsCEO_VO110">
+        <AttrNames>
+          <Item Value="BudgetValidation"/>
+          <Item Value="CreatedBy"/>
+          <Item Value="RequestTypeId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

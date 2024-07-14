@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <display-name>cloudTemplate</display-name>
+ <facet>
+          <description>center</description>
+          <facet-name>center</facet-name>
+        </facet>
+      </component>
+    </af:xmlContent>
+    <af:panelGridLayout id="pt_pgl2">
+      <af:gridRow marginTop="0px" height="auto" id="pt_gr3">
+        <af:gridCell marginStart="50px" marginEnd="50px" width="100%"
+                     id="pt_gc1" halign="stretch" valign="middle">
+          <af:panelGridLayout id="pt_pgl3" dimensionsFrom="children">
+            <af:gridRow marginTop="10px" marginBottom="0px" height="auto"
+                        id="pt_gr4">
+              <af:gridCell marginStart="0px" width="50%" id="pt_gc5"
+                           marginEnd="0px">
+                <af:panelGroupLayout id="pt_pgl10" layout="horizontal">
+                  <af:image source="/Skins/images/Tatweer Logo.png"
+                            shortDesc="logo" id="pt_i1" styleClass="logo_"/>
+                  <af:spacer width="10" height="10" id="pt_s3"/>
+                  <af:goLink id="pt_gl1"
+                             destination="https://egwo-dev1.fa.em2.oraclecloud.com/fscmUI/faces/FuseWelcome">
+                    <af:panelGroupLayout id="pt_pgl11">
+                      <af:image source="/Skins/images/home.png" id="pt_i8"/>
+                    </af:panelGroupLayout>
+                  </af:goLink>
+                </af:panelGroupLayout>
+              </af:gridCell>
+              <af:gridCell marginStart="0px" marginEnd="0px" width="50%"
+                           id="pt_gc6" halign="end" valign="middle"
+                           styleClass="top_menu">
+                <af:menuBar id="menuBar1">
+                  <af:spacer width="350" height="0" id="pt_s2"/>
+                  <af:commandMenuItem text="Home" id="commandMenuItem3"
+                                      visible="false"/>
+                  <af:commandMenuItem text="link example" id="commandMenuItem2"
+                                      visible="false"/>
+                  <af:commandMenuItem text="link example" id="commandMenuItem1"
+                                      visible="false"/>
+                  <af:menu text="#{PersonInfo.fullName}" id="menu6">
+                    <af:goMenuItem text="Sign Out" id="pt_gmi1"
+                                   destination="https://egwo-dev1.fa.em2.oraclecloud.com/fscmUI/faces/FuseWelcome"/>
+                    <af:commandMenuItem text="Logout" id="pt_cmi2"
+                                        rendered="false"/>
+                    <af:commandMenuItem text="Submenu link" id="pt_cmi3"
+                                        rendered="false"/>
+                  </af:menu>
+                  <af:spacer width="10" height="10" id="pt_s1"/>
+                </af:menuBar>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow marginTop="0px" height="auto" id="pt_gr2">
+        <af:gridCell marginStart="50px" marginEnd="50px" width="100%"
+                     id="pt_gc2" halign="stretch">
+          <af:panelGroupLayout id="pt_pgl4" layout="horizontal" halign="center"
+                               styleClass="nav_container">
+            <af:commandLink id="pt_cl1" action="businessTrip">
+              <af:panelGroupLayout id="pt_pgl5" styleClass="nav_item item_1"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/01.png" id="pt_i2"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Business Trip" id="pt_ot1"/>
+            </af:commandLink>
+            <af:commandLink id="commandLink1" action="mobileRequest">
+              <af:panelGroupLayout id="panelGroupLayout1"
+                                   styleClass="nav_item item_2"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/02.png" id="image1"
+                          styleClass="nav_img item_2"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Mobile Allowance" id="outputText1"/>
+            </af:commandLink>
+            <af:commandLink id="pt_cl2" action="LoanRequest">
+              <af:panelGroupLayout id="pt_pgl6" 
+              styleClass="nav_item item_3"
+              layout="vertical" halign="center">
+                <af:image source="/Skins/images/05.png" id="pt_i3"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Loan" id="pt_ot2"/>
+            </af:commandLink>
+            <af:commandLink id="pt_cl3" action="ManpowerPage">
+              <af:panelGroupLayout id="pt_pgl7" layout="vertical"
+                                   styleClass="nav_item item_1" halign="center">
+                <af:image source="/Skins/images/04.png" id="pt_i4"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Manpower Requisition" id="pt_ot3"/>
+            </af:commandLink>
+            <af:commandLink id="commandLink5" action="overtime">
+              <af:panelGroupLayout id="panelGroupLayout5"
+                                   styleClass="nav_item item_4"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/over.PNG" id="image5"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Overtime" id="outputText5"/>
+            </af:commandLink>
+            
+            <af:commandLink id="pt_cl5" action="educationAllowance">
+              <af:panelGroupLayout id="pt_pgl9" layout="vertical"
+                                   styleClass="nav_item item_1">
+                <af:image source="/Skins/images/01.png" id="pt_i6"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Education Allowance" id="pt_ot5"/>
+            </af:commandLink>
+            <af:commandLink id="pt_cl4" action="exitReEntry">
+              <af:panelGroupLayout id="pt_pgl8" layout="vertical"
+                                   styleClass="nav_item item_4">
+                <af:image source="/Skins/images/02.png" id="pt_i5"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Exit Re-Entry" id="pt_ot4"/>
+            </af:commandLink>
+            <af:commandLink id="pt_cl6" action="ExceptionalReward">
+              <af:panelGroupLayout id="pt_pg20" layout="vertical"
+                                   styleClass="nav_item item_2">
+                <af:image source="/Skins/images/04.png" id="pt_i7"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Exceptional Reward" id="pt_ot6"/>
+            </af:commandLink>
+            
+            <af:commandLink id="commandLink8" action="changePosition">
+              <af:panelGroupLayout id="panelGroupLayout8"
+                                   styleClass="nav_item item_3"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/03.png" id="image8"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Change Position" id="outputText8"/>
+            </af:commandLink>
+            
+            
+            <af:commandLink id="pt_cl9" action="repaymentTicket">
+              <af:panelGroupLayout id="pt_pg23" layout="vertical"
+                                   styleClass="nav_item item_1">
+                <af:image source="/Skins/images/01.png" id="pt_i9"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Repayment Ticket" id="pt_ot9"/>
+            </af:commandLink>
+            
+            <af:commandLink id="commandLink7" action="specialNeed">
+              <af:panelGroupLayout id="panelGroupLayout7"
+                                   styleClass="nav_item item_2"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/02.png" id="image7"
+                          styleClass="nav_img item_2"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Special Need" id="outputText7"/>
+            </af:commandLink>
+            
+            <af:commandLink id="commandLink2" action="goReports"
+                            visible="#{PersonInfo.perosnNumber eq '1181'|| PersonInfo.perosnNumber eq '1620' || PersonInfo.perosnNumber eq '1064' || PersonInfo.perosnNumber eq 'T001'|| PersonInfo.perosnNumber eq '1234'|| PersonInfo.perosnNumber eq '1441'|| PersonInfo.perosnNumber eq '1197'|| PersonInfo.perosnNumber eq '1471' || PersonInfo.perosnNumber eq '2046' || PersonInfo.perosnNumber eq '1134' || PersonInfo.userName eq 'PaaS.Self Service@tatweer.sa'}">
+              <af:panelGroupLayout id="panelGroupLayout2"
+                                   styleClass="nav_item item_3"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/03.png" id="image2"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Reports" id="outputText2"/>
+            </af:commandLink>
+            <af:commandLink id="commandLink3" rendered="false">
+              <af:panelGroupLayout id="panelGroupLayout3"
+                                   styleClass="nav_item item_4"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/04.png" id="image3"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Setup 4" id="outputText3"/>
+            </af:commandLink>
+            <af:commandLink id="commandLink4" action="setUp"
+                            visible="#{PersonInfo.position eq 'HR Payroll and benefits Supervisor' || PersonInfo.position eq 'HR Coordinator' || PersonInfo.position eq 'Senior People Affairs Specialist'}">
+              <af:panelGroupLayout id="panelGroupLayout4"
+                                   styleClass="nav_item item_4"
+                                   layout="vertical" halign="center">
+                <af:image source="/Skins/images/setup-folder-icon.png" id="image4"
+                          styleClass="nav_img"/>
+              </af:panelGroupLayout>
+              <af:outputText value="Setup" id="outputText4"/>
+            </af:commandLink>
+          </af:panelGroupLayout>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow marginTop="0px" marginBottom="5px" height="auto" id="pt_gr1">
+        <af:gridCell marginStart="5px" marginEnd="5px" width="auto"
+                     id="pt_gc3" halign="stretch" styleClass="AFStretchWidth">
+          <af:panelGroupLayout layout="vertical" id="pt_pgl1">
+            <af:facetRef facetName="center"/>
+          </af:panelGroupLayout>
+        </af:gridCell>
+      </af:gridRow>
+    </af:panelGridLayout>
+    <af:panelStretchLayout topHeight="50px" id="pt_psl1" rendered="false">
+      <f:facet name="top">
+        <af:menuBar id="pt_mb1">
+          <af:menu text="menu 1" id="pt_m1">
+            <af:commandMenuItem text="commandMenuItem 1" id="pt_cmi1"/>
+          </af:menu>
+        </af:menuBar>
+      </f:facet>
+      <f:facet name="center">
+        <!-- id="af_one_column_header_scroll"   -->
+        <af:decorativeBox theme="dark" id="pt_db2">
+          <f:facet name="center">
+            <af:decorativeBox theme="medium" id="pt_db1">
+              <f:facet name="center"/>
+            </af:decorativeBox>
+          </f:facet>
+        </af:decorativeBox>
+      </f:facet>
+    </af:panelStretchLayout>
+  </af:pageTemplateDef>
+</jsp:root>

@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Approval Flow" id="pb1" showDisclosure="false"
+               inlineStyle="height:12.0cm;background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t3">
+        <af:commandButton text="Save" id="cb1"
+                          actionListener="#{backingBeanScope.ApproverSetupBB.onClickSave}"/>
+        <af:commandButton text="Cancel" id="cb2"
+                          actionListener="#{backingBeanScope.ApproverSetupBB.onClickRevert}"/>
+        <af:spacer width="10" height="10" id="s1"/>
+      </af:toolbar>
+    </f:facet>
+    <af:panelGroupLayout layout="vertical" id="pgl1" rendered="true"> 
+          <af:query id="qryId1" headerText="Search" disclosed="true"
+                    value="#{bindings.FindByRequestTypeQuery.queryDescriptor}"
+                    model="#{bindings.FindByRequestTypeQuery.queryModel}"
+                    modeChangeVisible="false" saveQueryMode="hidden" displayMode="default"
+                    queryListener="#{bindings.FindByRequestTypeQuery.processQuery}"
+                    queryOperationListener="#{bindings.FindByRequestTypeQuery.processQueryOperation}"/>
+    </af:panelGroupLayout> 
+    <af:spacer width="10" height="10" id="s2"/>
+    <af:panelBox text="Result" id="pb2" showDisclosure="false">
+      <f:facet name="toolbar"/>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                          inlineStyle="background-color:#ffffff;height:12.0cm;">
+        <af:table value="#{bindings.ApproverSteps_VO1.collectionModel}"
+                  var="row" rows="#{bindings.ApproverSteps_VO1.rangeSize}"
+                  emptyText="#{bindings.ApproverSteps_VO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.ApproverSteps_VO1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.ApproverSteps_VO1Query.queryDescriptor}"
+                  queryListener="#{bindings.ApproverSteps_VO1Query.processQuery}"
+                  filterVisible="false" varStatus="vs"
+                  selectedRowKeys="#{bindings.ApproverSteps_VO1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.ApproverSteps_VO1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1"
+                  partialTriggers=":::qryId1 ::cb4 cl1">
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.StepId.name}"
+                     filterable="true" sortable="true" headerText="Step ID"
+                     id="c7">
+            <af:inputNumberSpinbox value="#{row.bindings.StepId.inputValue}"
+                                   label="#{bindings.ApproverSteps_VO1.hints.StepId.label}"
+                                   required="#{bindings.ApproverSteps_VO1.hints.StepId.mandatory}"
+                                   columns="#{bindings.ApproverSteps_VO1.hints.StepId.displayWidth}"
+                                   shortDesc="#{bindings.ApproverSteps_VO1.hints.StepId.tooltip}"
+                                   id="it1" autoSubmit="true"
+                                   valueChangeListener="#{backingBeanScope.ApproverSetupBB.onChangeIds}">
+              <f:validator binding="#{row.bindings.StepId.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.ApproverSteps_VO1.hints.StepId.format}"/>
+            </af:inputNumberSpinbox>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.StepType.name}"
+                     filterable="true" sortable="true" headerText="Step Type"
+                     id="c5" width="200">
+            <af:selectOneChoice value="#{row.bindings.StepType.inputValue}"
+                                disabled="#{row.bindings.StepId.inputValue eq '1' || row.bindings.NextStepId.inputValue eq '-1'}"
+                                required="#{bindings.ApproverSteps_VO1.hints.StepType.mandatory}"
+                                shortDesc="#{bindings.ApproverSteps_VO1.hints.StepType.tooltip}"
+                                id="soc2" autoSubmit="true"
+                                valueChangeListener="#{backingBeanScope.ApproverSetupBB.onChangeStepType}">
+              <f:selectItems value="#{row.bindings.StepType.items}" id="si1"/>
+            </af:selectOneChoice>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.StepName.name}"
+                     filterable="true" sortable="true" headerText="Step Name"
+                     id="c9" width="400">
+            <af:inputText value="#{row.bindings.StepName.inputValue}"
+                          partialTriggers="soc2"
+                          disabled="#{row.bindings.StepId.inputValue eq '1' || row.bindings.NextStepId.inputValue eq '-1' || (row.bindings.StepType.attributeValue eq 'LINE_MANAGER' ||  row.bindings.StepType.attributeValue eq 'DEPT_MANAGER' ||  row.bindings.StepType.attributeValue eq 'COST_CENTER_MANAGER')}"
+                          required="#{bindings.ApproverSteps_VO1.hints.StepName.mandatory}"
+                          columns="#{bindings.ApproverSteps_VO1.hints.StepName.displayWidth}"
+                          maximumLength="#{bindings.ApproverSteps_VO1.hints.StepName.precision}"
+                          shortDesc="#{bindings.ApproverSteps_VO1.hints.StepName.tooltip}"
+                          id="it5" autoSubmit="true">
+              <f:validator binding="#{row.bindings.StepName.validator}"/>
+            </af:inputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.NextStepId.name}"
+                     filterable="true" sortable="true" headerText="Next Step ID"
+                     id="c2">
+            <af:inputNumberSpinbox value="#{row.bindings.NextStepId.inputValue}"
+                                   label="#{bindings.ApproverSteps_VO1.hints.NextStepId.label}"
+                                   required="#{bindings.ApproverSteps_VO1.hints.NextStepId.mandatory}"
+                                   columns="#{bindings.ApproverSteps_VO1.hints.NextStepId.displayWidth}"
+                                   shortDesc="#{bindings.ApproverSteps_VO1.hints.NextStepId.tooltip}"
+                                   id="it2" autoSubmit="true"
+                                   valueChangeListener="#{backingBeanScope.ApproverSetupBB.onChangeIds}">
+              <f:validator binding="#{row.bindings.NextStepId.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.ApproverSteps_VO1.hints.NextStepId.format}"/>
+            </af:inputNumberSpinbox>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.RequestTypeId.name}"
+                     filterable="true" sortable="true" visible="false"
+                     headerText="Request Type"
+                     id="c8">
+            <af:selectOneChoice value="#{row.bindings.RequestTypeId.inputValue}"
+                                label="#{row.bindings.RequestTypeId.label}"
+                                required="#{bindings.ApproverSteps_VO1.hints.RequestTypeId.mandatory}"
+                                shortDesc="#{bindings.ApproverSteps_VO1.hints.RequestTypeId.tooltip}"
+                                id="soc1" autoSubmit="true" readOnly="true">
+              <f:selectItems value="#{row.bindings.RequestTypeId.items}"
+                             id="si2"/>
+            </af:selectOneChoice>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.CreatedBy.name}"
+                     filterable="false" sortable="true" visible="false"
+                     headerText="Created By"
+                     id="c4">
+            <af:inputText value="#{row.bindings.CreatedBy.inputValue}"
+                          label="#{bindings.ApproverSteps_VO1.hints.CreatedBy.label}"
+                          required="#{bindings.ApproverSteps_VO1.hints.CreatedBy.mandatory}"
+                          columns="#{bindings.ApproverSteps_VO1.hints.CreatedBy.displayWidth}"
+                          maximumLength="#{bindings.ApproverSteps_VO1.hints.CreatedBy.precision}"
+                          shortDesc="#{bindings.ApproverSteps_VO1.hints.CreatedBy.tooltip}"
+                          id="it3" readOnly="true">
+              <f:validator binding="#{row.bindings.CreatedBy.validator}"/>
+            </af:inputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.CreatedOn.name}"
+                     filterable="false" sortable="true" visible="false"
+                     headerText="Created On"
+                     id="c6">
+            <af:inputDate value="#{row.bindings.CreatedOn.inputValue}"
+                          label="#{bindings.ApproverSteps_VO1.hints.CreatedOn.label}"
+                          required="#{bindings.ApproverSteps_VO1.hints.CreatedOn.mandatory}"
+                          shortDesc="#{bindings.ApproverSteps_VO1.hints.CreatedOn.tooltip}"
+                          id="id3" readOnly="true">
+              <f:validator binding="#{row.bindings.CreatedOn.validator}"/>
+              <af:convertDateTime pattern="#{bindings.ApproverSteps_VO1.hints.CreatedOn.format}"/>
+            </af:inputDate>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.LastUpdatedBy.name}"
+                     filterable="false" sortable="true" visible="false"
+                     headerText="Last Updated By"
+                     id="c3">
+            <af:inputText value="#{row.bindings.LastUpdatedBy.inputValue}"
+                          label="#{bindings.ApproverSteps_VO1.hints.LastUpdatedBy.label}"
+                          required="#{bindings.ApproverSteps_VO1.hints.LastUpdatedBy.mandatory}"
+                          columns="#{bindings.ApproverSteps_VO1.hints.LastUpdatedBy.displayWidth}"
+                          maximumLength="#{bindings.ApproverSteps_VO1.hints.LastUpdatedBy.precision}"
+                          shortDesc="#{bindings.ApproverSteps_VO1.hints.LastUpdatedBy.tooltip}"
+                          id="it4" readOnly="true">
+              <f:validator binding="#{row.bindings.LastUpdatedBy.validator}"/>
+            </af:inputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.ApproverSteps_VO1.hints.LastUpdatedOn.name}"
+                     filterable="false" sortable="true" visible="false"
+                     headerText="Last Updated On"
+                     id="c1">
+            <af:inputDate value="#{row.bindings.LastUpdatedOn.inputValue}"
+                          label="#{bindings.ApproverSteps_VO1.hints.LastUpdatedOn.label}"
+                          required="#{bindings.ApproverSteps_VO1.hints.LastUpdatedOn.mandatory}"
+                          shortDesc="#{bindings.ApproverSteps_VO1.hints.LastUpdatedOn.tooltip}"
+                          id="id1" readOnly="true">
+              <f:validator binding="#{row.bindings.LastUpdatedOn.validator}"/>
+              <af:convertDateTime pattern="#{bindings.ApproverSteps_VO1.hints.LastUpdatedOn.format}"/>
+            </af:inputDate>
+          </af:column>
+          <af:column headerText="Request Edit" align="center"
+                     id="c11">
+            <af:selectBooleanCheckbox value="#{row.bindings.SpecialEditFlag.inputValue}"
+                                      label="#{row.bindings.SpecialEditFlag.label}"
+                                      shortDesc="#{bindings.ApproverSteps_VO1.hints.SpecialEditFlag.tooltip}"
+                                      rendered="#{row.bindings.StepId.inputValue ne '1' and row.bindings.NextStepId.inputValue ne '-1'}"
+                                      id="sbc1" autoSubmit="true"/>
+          </af:column>
+          <af:column headerText="Delete" id="c10" align="center">
+            <af:commandLink actionListener="#{bindings.Delete.execute}"
+                            text="Delete"
+                            rendered="#{row.bindings.StepId.inputValue ne '1' and row.bindings.NextStepId.inputValue ne '-1'}" id="cl1"/>
+          </af:column>
+        </af:table>
+        <f:facet name="toolbar">
+          <af:toolbar id="t2" flex="10">
+            <af:commandButton actionListener="#{backingBeanScope.ApproverSetupBB.onCreateStep}"
+                              text="Add" id="cb4"/>
+          </af:toolbar>
+        </f:facet>
+      </af:panelCollection>
+    </af:panelBox>
+    <af:popup id="p1" contentDelivery="lazyUncached">
+                <af:dialog closeIconVisible="true" type="ok" id="d2" title="Information" >
+                <af:spacer height="5" id="s3"/>
+                <af:outputText value="#{pageFlowScope.message}"
+                               id="ot2" inlineStyle="border-width:thin;"/>
+                <af:spacer height="5" id="s4" width="200"/>
+                </af:dialog>
+     </af:popup>
+  </af:panelBox>
+</jsp:root>

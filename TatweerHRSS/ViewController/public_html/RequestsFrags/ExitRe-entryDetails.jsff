@@ -1,0 +1,466 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+  <af:panelBox text="Exit Re Entry Request Details - #{bindings.RequestStatus.inputValue}" id="pb1" inlineStyle="background-color:#ffffff;">
+    <f:facet name="toolbar">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton text="Save" id="ctb1"
+                                 action="#{pageFlowScope.ExitReEntryMB.saveRequest}"
+                                 rendered="#{(bindings.StepId.inputValue eq null || bindings.AssigneeName.inputValue eq null) and !(bindings.RequestStatus.inputValue eq 'SAVED') }"/>
+        <af:commandToolbarButton text="Submit" id="ctb2"
+                                 action="#{pageFlowScope.ExitReEntryMB.submitRequest}"
+                                 rendered="#{bindings.StepId.inputValue eq 1 || bindings.RequestStatus.inputValue eq 'SAVED'}"/>
+        <af:commandToolbarButton text="Approve" id="ctb3"
+                                 action="#{pageFlowScope.ExitReEntryMB.approveRequest}"
+                                 rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"/>
+        <af:commandToolbarButton text="Reject" id="ctb4"
+                                 rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}">
+          <af:showPopupBehavior popupId="p1" triggerType="action"
+                                align="afterEnd"/>
+        </af:commandToolbarButton>
+          <af:commandToolbarButton text="Approve Withdraw" id="ctb7a"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"
+                                   action="#{pageFlowScope.ExitReEntryMB.approve_withdraw}"/>
+            <af:commandToolbarButton text="Reject Withdraw" id="ctb8r"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"
+                                   action="#{pageFlowScope.ExitReEntryMB.reject_withdraw}"/>
+        <af:commandToolbarButton text="Cancel" id="ctb5"
+                                 actionListener="#{bindings.Rollback.execute}"
+                                 action="backToRequests">
+            <af:resetActionListener/>                         
+        </af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+    <af:spacer width="10" height="20" id="s1"/>
+     <af:panelBox  id="pb24"  text="Person Details" inlineStyle="background-color:#ffffff;"  rendered="#{(bindings.PersonNumber.inputValue ne null or bindings.PersonPosition.inputValue ne null or bindings.PersonJob.inputValue ne null or bindings.PersonDepartment.inputValue ne null or bindings.PersonLocation.inputValue ne null) and (bindings.StepId.inputValue gt 1 )}"
+                  partialTriggers="pb24 ctb1 ctb2 ctb3 ctb4 ctb5">
+     <af:panelFormLayout id="pf21" rows="2" maxColumns="2">
+        <af:inputText value="#{bindings.PersonNumber.inputValue}"
+                      label="Number" columns="50" visible="#{bindings.StepId.inputValue ne 1}"
+                      required="#{bindings.PersonNumber.hints.mandatory}"
+                      maximumLength="#{bindings.PersonNumber.hints.precision}"
+                      shortDesc="#{bindings.PersonNumber.hints.tooltip}"
+                      id="it7" disabled="true">
+          <f:validator binding="#{bindings.PersonNumber.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonName.inputValue}"
+                    label="Name"    rendered="#{bindings.PersonName.inputValue ne null}"
+                    required="#{bindings.PersonNumber.hints.mandatory}"
+                  columns="50" visible="#{bindings.StepId.inputValue ne 1}"
+                    maximumLength="#{bindings.PersonNumber.hints.precision}"
+                    shortDesc="#{bindings.PersonNumber.hints.tooltip}"
+                    id="it142"  disabled="true">
+        <f:validator binding="#{bindings.PersonNumber.validator}"/>
+      </af:inputText>
+          <af:inputText value="#{bindings.PersonPosition.inputValue}"
+                    label="Position" rendered="#{bindings.PersonPosition.inputValue ne null}"
+                    required="#{bindings.PersonPosition.hints.mandatory}"
+                    columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonPosition.hints.precision}"
+                    shortDesc="#{bindings.PersonPosition.hints.tooltip}"
+                    id="it113" visible="#{bindings.StepId.inputValue ne 1}">
+        <f:validator binding="#{bindings.PersonPosition.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonJob.inputValue}" rendered="#{bindings.PersonJob.inputValue ne null}"
+                    label="Job"
+                    required="#{bindings.PersonJob.hints.mandatory}"
+                   columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonJob.hints.precision}"
+                    shortDesc="#{bindings.PersonJob.hints.tooltip}" id="it124"
+                  visible="#{bindings.StepId.inputValue ne 1}">
+        <f:validator binding="#{bindings.PersonJob.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonDepartment.inputValue}"  rendered="#{bindings.PersonDepartment.inputValue ne null}"
+                    label="Department"
+                    required="#{bindings.PersonDepartment.hints.mandatory}"
+                     columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonDepartment.hints.precision}"
+                    shortDesc="#{bindings.PersonDepartment.hints.tooltip}"
+                    id="it65"  visible="#{bindings.StepId.inputValue ne 1}">>
+        <f:validator binding="#{bindings.PersonDepartment.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonLocation.inputValue}"  rendered="#{bindings.PersonLocation.inputValue ne null}"
+                    label="Location"
+                    required="#{bindings.PersonLocation.hints.mandatory}"
+                    columns="50" disabled="true"
+                    maximumLength="#{bindings.PersonLocation.hints.precision}"
+                    shortDesc="#{bindings.PersonLocation.hints.tooltip}"
+                    id="it93"  visible="#{bindings.StepId.inputValue ne 1}">>
+        <f:validator binding="#{bindings.PersonLocation.validator}"/>
+      </af:inputText>
+     </af:panelFormLayout>
+     </af:panelBox>
+     <af:spacer height="10" id="s4"/>
+    <af:panelFormLayout id="pfl1">
+      <af:inputText value="#{bindings.PersonNumber.inputValue}"
+                    label="#{bindings.PersonNumber.hints.label}"
+                    required="#{bindings.PersonNumber.hints.mandatory}"
+                    columns="#{bindings.PersonNumber.hints.displayWidth}"
+                    maximumLength="#{bindings.PersonNumber.hints.precision}"
+                    shortDesc="#{bindings.PersonNumber.hints.tooltip}" id="it1"
+                    visible="false">
+        <f:validator binding="#{bindings.PersonNumber.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonName.inputValue}"
+                    label="#{bindings.PersonName.hints.label}"
+                    required="#{bindings.PersonName.hints.mandatory}"
+                    columns="#{bindings.PersonName.hints.displayWidth}"
+                    maximumLength="#{bindings.PersonName.hints.precision}"
+                    shortDesc="#{bindings.PersonName.hints.tooltip}" id="it3"
+                    visible="false">
+        <f:validator binding="#{bindings.PersonName.validator}"/>
+      </af:inputText>
+      
+    
+      <!--<af:selectOneChoice value="#{bindings.VisaInformation.inputValue}"
+                          label="#{bindings.VisaInformation.label}"
+                          required="#{bindings.VisaInformation.hints.mandatory}"
+                          shortDesc="#{bindings.VisaInformation.hints.tooltip}"
+                          id="soc3"
+                          disabled="#{bindings.StepId.inputValue gt 1}"
+                          autoSubmit="true"
+                          rendered="true">
+        <f:selectItems value="#{bindings.VisaInformation.items}" id="si1"/>
+      </af:selectOneChoice>-->
+      <af:inputDate value="#{bindings.TravelDate.inputValue}"
+                    label="#{bindings.TravelDate.hints.label}"
+                    disabled="#{bindings.StepId.inputValue gt 1}"
+                    required="#{bindings.TravelDate.hints.mandatory}"
+                    shortDesc="#{bindings.TravelDate.hints.tooltip}" id="id1">
+        <f:validator binding="#{bindings.TravelDate.validator}"/>
+        <af:convertDateTime pattern="#{bindings.TravelDate.format}"/>
+      </af:inputDate>
+      <af:selectOneChoice label="Visa Information" id="soc6"
+                          value="#{bindings.VisaInformation1.inputValue}"
+                          autoSubmit="true"
+                          disabled="#{bindings.StepId.inputValue gt 1}"
+                          valueChangeListener="#{pageFlowScope.ExitReEntryMB.showHidePersonsFlags}">
+        <af:selectItem label="Individual Exit Re-Entry"
+                       value="Individual Exit Re-Entry" id="si10"/>
+        <af:selectItem label="Multi Exit Re-Entry" value="Multi Exit Re-Entry"
+                       id="si9"/>
+        <af:selectItem rendered="#{bindings.MaritalStatus.inputValue ne 'S'}"
+                       label="Individual Exit Re-Entry or Multi for Family"
+                       value="Individual Exit Re-Entry or Multi for Family"
+                       id="si6"/>
+      </af:selectOneChoice>
+      <!--<af:outputText value="#{bindings.VisaInformation1.inputValue}" id="ot1"
+      partialTriggers="soc6 si6 si9 si10"
+                     />-->
+      <af:selectOneChoice label="Type Of Exit Re-Entry"
+                          value="#{bindings.TypeOfExitReEntry.inputValue}"
+                          id="soc7"
+                          disabled="#{bindings.StepId.inputValue gt 1}"
+                          visible="#{bindings.VisaInformation1.inputValue ne 'Individual Exit Re-Entry or Multi for Family'}"
+                          partialTriggers="soc6"
+                          binding="#{pageFlowScope.ExitReEntryMB.exitType}"
+                          valueChangeListener="#{pageFlowScope.ExitReEntryMB.showHideIfWorkNeed}"
+                          autoSubmit="true">
+        <af:selectItem label="Personal" value="Personal" id="si8"/>
+        <af:selectItem label="Work Need" value="Work Need" id="si7"/>
+      </af:selectOneChoice>
+      <af:panelLabelAndMessage label="Determine Persons" id="plam1"
+                               partialTriggers="soc6">
+        <af:panelGroupLayout id="pgl1" layout="horizontal">
+          <af:selectBooleanCheckbox value="#{bindings.SelfFlag.inputValue}"
+                                    label="#{bindings.SelfFlag.label}"
+                                    shortDesc="#{bindings.SelfFlag.hints.tooltip}"
+                                    id="sbc2"
+                                    disabled="#{bindings.StepId.inputValue gt 1}"
+                                    binding="#{pageFlowScope.ExitReEntryMB.selfFlag}"
+                                    partialTriggers="soc6 soc7"/>
+          <af:selectBooleanCheckbox value="#{bindings.SpouseFlag.inputValue}"
+                                    label="#{bindings.SpouseFlag.label}"
+                                    visible="#{bindings.VisaInformation1.inputValue ne 'Individual Exit Re-Entry'}"
+                                    partialTriggers="soc6 soc7"
+                                    shortDesc="#{bindings.SpouseFlag.hints.tooltip}"
+                                    id="sbc3"
+                                    disabled="#{bindings.StepId.inputValue gt 1}"
+                                    binding="#{pageFlowScope.ExitReEntryMB.spouseFlag}"/>
+          <af:selectBooleanCheckbox value="#{bindings.ChildsFlag.inputValue}"
+                                    label="#{bindings.ChildsFlag.label}"
+                                    visible="#{bindings.VisaInformation1.inputValue ne 'Individual Exit Re-Entry'}"
+                                    partialTriggers="soc6 soc7"
+                                    shortDesc="#{bindings.ChildsFlag.hints.tooltip}"
+                                    id="sbc1"
+                                    disabled="#{bindings.StepId.inputValue gt 1}"
+                                    autoSubmit="true"
+                                    binding="#{pageFlowScope.ExitReEntryMB.childrenFlag}"/>
+          <af:inputNumberSpinbox value="#{bindings.NoOfChilds.inputValue}"
+                                 label="#{bindings.NoOfChilds.hints.label}"
+                                 required="#{bindings.NoOfChilds.hints.mandatory}"
+                                 visible="#{bindings.ChildsFlag.inputValue eq true}"
+                                 columns="#{bindings.NoOfChilds.hints.displayWidth}"
+                                 shortDesc="#{bindings.NoOfChilds.hints.tooltip}"
+                                 id="it4"
+                                 disabled="#{bindings.StepId.inputValue gt 1}"
+                                 partialTriggers="soc6 sbc1 soc7"
+                                 binding="#{pageFlowScope.ExitReEntryMB.noOfChildren}">
+            <f:validator binding="#{bindings.NoOfChilds.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.NoOfChilds.format}"/>
+          </af:inputNumberSpinbox>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:selectOneChoice value="#{bindings.FamilyPeriod.inputValue}"
+                          label="#{bindings.FamilyPeriod.label}"
+                          required="#{bindings.FamilyPeriod.hints.mandatory}"
+                          shortDesc="#{bindings.FamilyPeriod.hints.tooltip}"
+                          id="soc5"
+                          disabled="#{bindings.StepId.inputValue gt 1}">
+        <f:selectItems value="#{bindings.FamilyPeriod.items}" id="si3"/>
+      </af:selectOneChoice>
+      <af:selectOneChoice value="#{bindings.OnlinPayment.inputValue}"
+                          label="#{bindings.OnlinPayment.label}"
+                          required="#{bindings.OnlinPayment.hints.mandatory}"
+                          shortDesc="#{bindings.OnlinPayment.hints.tooltip}"
+                          id="soc4"
+                          disabled="#{bindings.StepId.inputValue gt 1}">
+        <f:selectItems value="#{bindings.OnlinPayment.items}" id="si5"/>
+      </af:selectOneChoice>
+      <af:selectOneChoice value="#{bindings.PaymentRequest.inputValue}"
+                          label="#{bindings.PaymentRequest.label}"
+                          required="#{bindings.PaymentRequest.hints.mandatory}"
+                          shortDesc="#{bindings.PaymentRequest.hints.tooltip}"
+                          id="soc1"
+                          disabled="#{bindings.StepId.inputValue gt 1}"
+                          visible="false">
+        <f:selectItems value="#{bindings.PaymentRequest.items}" id="si4"/>
+      </af:selectOneChoice>
+      <af:selectOneChoice value="#{bindings.RequestReason.inputValue}"
+                          label="#{bindings.RequestReason.label}"
+                          required="#{bindings.RequestReason.hints.mandatory}"
+                          shortDesc="#{bindings.RequestReason.hints.tooltip}"
+                          id="soc2"
+                          disabled="#{bindings.StepId.inputValue gt 1}"
+                          autoSubmit="true">
+        <f:selectItems value="#{bindings.RequestReason.items}" id="si2"/>
+      </af:selectOneChoice>
+      <af:inputText value="#{bindings.OtherRequestReason.inputValue}"
+                    label="#{bindings.OtherRequestReason.hints.label}"
+                    required="#{bindings.OtherRequestReason.hints.mandatory}"
+                    columns="#{bindings.OtherRequestReason.hints.displayWidth}"
+                    maximumLength="#{bindings.OtherRequestReason.hints.precision}"
+                    shortDesc="#{bindings.OtherRequestReason.hints.tooltip}"
+                    id="it2" disabled="#{bindings.StepId.inputValue gt 1}"
+                    visible="#{bindings.RequestReason.inputValue eq 'Other'}"
+                    partialTriggers="soc2" rows="5" contentStyle="height: 60px;"
+                    inlineStyle="font-size:30.0px;">
+        <f:validator binding="#{bindings.OtherRequestReason.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{PersonInfo.maritalStatus}"
+                    label="#{bindings.MaritalStatus.hints.label}"
+                    required="#{bindings.MaritalStatus.hints.mandatory}"
+                    columns="#{bindings.MaritalStatus.hints.displayWidth}"
+                    maximumLength="#{bindings.MaritalStatus.hints.precision}"
+                    shortDesc="#{bindings.MaritalStatus.hints.tooltip}" id="it5"
+                    visible="false">
+        <f:validator binding="#{bindings.MaritalStatus.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{PersonInfo.nationality}"
+                    label="#{bindings.Nationality.hints.label}"
+                    required="#{bindings.Nationality.hints.mandatory}"
+                    columns="#{bindings.Nationality.hints.displayWidth}"
+                    maximumLength="#{bindings.Nationality.hints.precision}"
+                    shortDesc="#{bindings.Nationality.hints.tooltip}" id="it6"
+                    visible="false">
+        <f:validator binding="#{bindings.Nationality.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.Comments.inputValue}"
+                    label="#{bindings.Comments.hints.label}"
+                    required="#{bindings.Comments.hints.mandatory}"
+                    columns="#{bindings.Comments.hints.displayWidth}"
+                    maximumLength="#{bindings.Comments.hints.precision}"
+                    shortDesc="#{bindings.Comments.hints.tooltip}" id="it71"
+                    contentStyle="height: 60px;" inlineStyle="font-size:30.0px;"
+                    rows="5" disabled="#{bindings.StepId.inputValue gt 1}">
+        <f:validator binding="#{bindings.Comments.validator}"/>
+      </af:inputText>
+      <af:popup id="p1">
+        <af:dialog id="d1" type="cancel" title="Please Enter Rejection Comment">
+          <f:facet name="buttonBar">
+            <af:commandButton text="Reject" id="cb1"
+                              action="#{pageFlowScope.ExitReEntryMB.rejectRequest}"/>
+          </f:facet>
+          <af:inputText value="#{bindings.RejectionReason.inputValue}"
+                        simple="true"
+                        required="#{bindings.RejectionReason.hints.mandatory}"
+                        columns="50"
+                        maximumLength="#{bindings.RejectionReason.hints.precision}"
+                        shortDesc="#{bindings.RejectionReason.hints.tooltip}"
+                        id="it8" rows="5">
+            <f:validator binding="#{bindings.RejectionReason.validator}"/>
+          </af:inputText>
+        </af:dialog>
+      </af:popup>
+    </af:panelFormLayout>
+    <af:spacer width="10" height="10" id="s2"/>
+    <af:panelBox text="Attachments" id="pb2" inlineStyle="background-color:#ffffff;">
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="t3">
+            <af:commandToolbarButton text="Add Attachment" id="ctb6"
+                                     action="#{pageFlowScope.ExitReEntryMB.showAttachmentPopup}"
+                                     disabled="#{pageFlowScope.SpecialEdit ne 'Y' || PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:table value="#{bindings.ExitReEntryAttachView1.collectionModel}"
+                  var="row" rows="#{bindings.ExitReEntryAttachView1.rangeSize}"
+                  emptyText="#{bindings.ExitReEntryAttachView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                  fetchSize="#{bindings.ExitReEntryAttachView1.rangeSize}"
+                  rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.ExitReEntryAttachView1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.ExitReEntryAttachView1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t2">
+          <af:column sortProperty="#{bindings.ExitReEntryAttachView1.hints.AttachId.name}"
+                     sortable="false"
+                     headerText="#{bindings.ExitReEntryAttachView1.hints.AttachId.label}"
+                     id="c4" rendered="false">
+            <af:outputText value="#{row.AttachId}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.ExitReEntryAttachView1.hints.FileName.name}"
+                     sortable="false"
+                     headerText="#{bindings.ExitReEntryAttachView1.hints.FileName.label}"
+                     id="c6">
+            <!--<af:outputText value="#{row.FileName}" id="ot1"/>-->
+            <af:commandLink text="#{row.FileName}" id="cl1">
+              <af:fileDownloadActionListener
+                                             contentType="#{row.FileType}"
+                                             filename="#{row.FileName}"
+                                             method="#{pageFlowScope.ExitReEntryMB.downloadFile}"/>
+            </af:commandLink>
+          </af:column>
+          <af:column sortProperty="#{bindings.ExitReEntryAttachView1.hints.FileType.name}"
+                     sortable="false"
+                     headerText="#{bindings.ExitReEntryAttachView1.hints.FileType.label}"
+                     id="c5" rendered="false">
+            <af:outputText value="#{row.FileType}" id="ot3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.ExitReEntryAttachView1.hints.AttachmentFile.name}"
+                     sortable="false"
+                     headerText="#{bindings.ExitReEntryAttachView1.hints.AttachmentFile.label}"
+                     id="c2" rendered="false">
+            <af:outputText value="#{row.AttachmentFile}" id="ot4"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.ExitReEntryAttachView1.hints.ExitReEntryId.name}"
+                     sortable="false"
+                     headerText="#{bindings.ExitReEntryAttachView1.hints.ExitReEntryId.label}"
+                     id="c1" rendered="false">
+            <af:outputText value="#{row.ExitReEntryId}" id="ot5">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.ExitReEntryAttachView1.hints.ExitReEntryId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.ExitReEntryAttachView1.hints.UploadedBy.name}"
+                     sortable="false"
+                     headerText="#{bindings.ExitReEntryAttachView1.hints.UploadedBy.label}"
+                     id="c3" rendered="false">
+            <af:outputText value="#{row.UploadedBy}" id="ot2"/>
+          </af:column>
+         <af:column id="c7" headerText="Delete"
+                     rendered="#{(bindings.StepId.inputValue eq null || bindings.StepId.inputValue eq 1 || bindings.AssigneeName.inputValue eq null)}">
+            <af:commandLink id="cl2"
+                            actionListener="#{bindings.Delete.execute}"
+                            disabled="#{!(bindings.StepId.inputValue eq null || bindings.StepId.inputValue eq 1 || bindings.AssigneeName.inputValue eq null)}">
+              <af:image source="/Skins/images/delete_ena.png" id="i1"/>
+            </af:commandLink>
+          </af:column> 
+        </af:table>
+      </af:panelCollection>
+      <af:popup id="p2"
+                binding="#{pageFlowScope.ExitReEntryMB.attachmentPopup}">
+        <af:dialog id="d2" type="none" title="Add Attachments">
+          <af:panelFormLayout id="pfl2">
+            <af:inputText value="#{pageFlowScope.ExceptionalRewardMB.attachmentFileName}"
+                          label="#{bindings.FileName.hints.label}"
+                          required="#{bindings.FileName.hints.mandatory}"
+                          columns="#{bindings.FileName.hints.displayWidth}"
+                          maximumLength="#{bindings.FileName.hints.precision}"
+                          shortDesc="#{bindings.FileName.hints.tooltip}"
+                          id="it9" rendered="false">
+              <f:validator binding="#{bindings.FileName.validator}"/>
+            </af:inputText>
+            <af:inputFile label="#{bindings.AttachmentFile.hints.label}" id="if1"
+                          required="true"
+                          binding="#{pageFlowScope.ExitReEntryMB.inputFile}"/>
+            <af:spacer width="10" height="10" id="s3"/>
+            <af:toolbar id="t4">
+              <af:commandToolbarButton text="Save" id="ctb7"
+                                       action="#{pageFlowScope.ExitReEntryMB.saveBtnAction}"/>
+              <af:commandToolbarButton text="Cancel" id="ctb8"
+                                       action="#{pageFlowScope.ExitReEntryMB.cancelBtnAction}"/>
+            </af:toolbar>
+          </af:panelFormLayout>
+        </af:dialog>
+      </af:popup>
+    </af:panelBox>
+        <af:panelBox text="Approval History" id="pb3" inlineStyle="background-color:#ffffff;" rendered="#{bindings.RequestStatus.inputValue ne null &amp;&amp;  bindings.RequestStatus.inputValue ne 'SAVED'}">
+          <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+            <af:table value="#{bindings.ApprovalHistoryExit.collectionModel}"
+                      var="row" rows="#{bindings.ApprovalHistoryExit.rangeSize}"
+                      emptyText="#{bindings.ApprovalHistoryExit.viewable ? 'No data to display.' : 'Access Denied.'}"
+                      fetchSize="#{bindings.ApprovalHistoryExit.rangeSize}"
+                      rowBandingInterval="0"
+                      selectedRowKeys="#{bindings.ApprovalHistoryExit.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.ApprovalHistoryExit.collectionModel.makeCurrent}"
+                      rowSelection="single" id="t5">
+               <af:column sortProperty="#{bindings.ApprovalHistoryExit.hints.ApprovalType.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Type"
+                         id="c8">
+                <af:outputText value="#{row.ApprovalType}" id="ot9"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryExit.hints.AssigneeName.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Assignee Name"
+                         id="c12">
+                <af:outputText value="#{row.AssigneeName}" id="ot10"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryExit.hints.ActionTaken.name}"
+                         sortable="false"
+                          width="150" align="center"
+                         headerText="Status"
+                         id="c11">
+                <af:outputText value="#{row.ActionTaken}"   inlineStyle="color:#{row.ActionTaken eq 'PENDING' ? 'Blue' : row.ActionTaken eq 'APPROVED' ? 'Green' : 'Red'};" id="ot8"/>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryExit.hints.SubmitttedOn.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Assigned On"
+                         id="c9">
+                <af:outputText value="#{row.SubmitttedOn}" id="ot1">
+                     <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/> 
+                </af:outputText>
+              </af:column>
+              <af:column sortProperty="#{bindings.ApprovalHistoryExit.hints.ApprovalOn.name}"
+                         sortable="false"
+                         width="150" align="center"
+                         headerText="Assigned On"
+                         id="c10">
+                <af:outputText value="#{row.ApprovalOn}" inlineStyle="color:Blue;" id="ot7">
+                  <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/> 
+                </af:outputText>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:panelBox>
+      </af:panelBox>
+  </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:ExitReEntryMB-->
+</jsp:root>

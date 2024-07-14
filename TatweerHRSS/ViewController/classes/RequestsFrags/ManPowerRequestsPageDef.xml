@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="ManPowerRequestsPageDef" ControllerClass="com.view.beans.filmStrip.RegionPhaseListener"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ManPowerRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="ManPowerRequestViewIterator"/>
+    <searchRegion Binds="ManPowerRequestViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="ManPowerRequestViewQuery"/>
+    <iterator id="DepartmentsVO1Iterator" Binds="DepartmentsVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="GradesVO1Iterator" Binds="GradesVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="JobsVO1Iterator" Binds="JobsVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="DeptEmployeesVO1Iterator" Binds="DeptEmployeesVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="ApprovalHistoryVOIterator" Binds="ApprovalHistoryVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_ManPower_ROVOIterator"
+              Binds="StatusCount_ManPower_ROVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="ManPowerRequestViewIterator" id="ManPowerRequestView">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.ManPowerRequestView"
+                      Name="ManPowerRequestView0">
+        <AttrNames>
+          <Item Value="ManPowerReqId"/>
+          <Item Value="PersonNumber"/>
+          <Item Value="PersonName"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="CreationDate"/>
+          <Item Value="RequisitionTitle"/>
+          <Item Value="NumberOfOpening"/>
+          <Item Value="PersonDepartment"/>
+          <Item Value="Job"/>
+          <Item Value="Grade"/>
+          <Item Value="RequestStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="ManPowerRequestViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.ManPowerRequestView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <methodAction id="deleteGradesTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteGradesTableRows"
+                  IsViewObjectMethod="false"/>
+    <methodAction id="deleteJobsTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteJobsTableRows"
+                  IsViewObjectMethod="false"/>
+    <methodAction id="deleteDeptTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteDeptTableRows"
+                  IsViewObjectMethod="false"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="deleteDeptEmployeesTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="deleteDeptEmployeesTableRows"
+                  IsViewObjectMethod="false"/>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName"
+                 NDValue="#{pageFlowScope.ManPowerTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ManPowerRequestViewIterator" id="Type">
+      <AttrNames>
+        <Item Value="Type"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ManPowerRequestViewIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="ManPowerRequestViewIterator"
+                     id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ManPowerRequestViewIterator"
+                     id="ManPowerReqId">
+      <AttrNames>
+        <Item Value="ManPowerReqId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ManPower_ROVOIterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ManPower_ROVOIterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_ManPower_ROVOIterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

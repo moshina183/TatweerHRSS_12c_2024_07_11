@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ExceptionalRewardTF">
+    <default-activity id="__5">checkSession</default-activity>
+    <input-parameter-definition id="__1">
+      <name id="__2">eRPersonNummber</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__4">
+      <name id="__3">eRPersonName</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__33">
+      <managed-bean-name id="__34">ExceptionalRewardMB</managed-bean-name>
+      <managed-bean-class id="__32">com.sbm.selfServices.view.mb.ExceptionalRewardMB</managed-bean-class>
+      <managed-bean-scope id="__31">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__57">
+      <managed-bean-name id="__56">FilmStripUI</managed-bean-name>
+      <managed-bean-class id="__59">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__58">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="ExceptionalRewardRequests">
+      <page>/RequestsFrags/ExceptionalRewardRequests.jsff</page>
+    </view>
+    <view id="ExceptionalRewardDetails">
+      <page>/RequestsFrags/ExceptionalRewardDetails.jsff</page>
+    </view>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__22">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__35">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="checkSession">
+      <method id="__63">#{pageFlowScope.ExceptionalRewardMB.checkSession}</method>
+      <outcome id="__61">
+        <fixed-outcome id="__62">success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case id="__9">
+        <expression id="__6">#{PersonInfo.perosnNumber ne null or
+                             PersonInfo.assignee ne null}</expression>
+        <outcome id="__7">success</outcome>
+      </case>
+      <case id="__44">
+        <expression id="__45">#{PersonInfo.perosnNumber eq null or
+                              PersonInfo.assignee eq null}</expression>
+        <outcome id="__43">expired</outcome>
+      </case>
+      <default-outcome id="__8">expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page id="__42">/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="Hide_Strip_E">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__60">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Hide_Strip_C">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__64">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Show_Strip_B">
+      <method>#{backingBeanScope.FilmStripUI._showFilmStrip}</method>
+      <outcome id="__65">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__14">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__12">
+      <from-activity-id id="__13">ExceptionalRewardRequests</from-activity-id>
+      <control-flow-case id="__72">
+        <from-outcome id="__73">edit</from-outcome>
+        <to-activity-id id="__71">Hide_Strip_E</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__80">
+        <from-outcome id="__81">newExceptionalReward</from-outcome>
+        <to-activity-id id="__79">Hide_Strip_C</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__17">
+      <from-activity-id id="__18">ExceptionalRewardDetails</from-activity-id>
+      <control-flow-case id="__82">
+        <from-outcome id="__84">back</from-outcome>
+        <to-activity-id id="__83">Show_Strip_B</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__26">
+      <from-activity-id id="__27">CreateInsert</from-activity-id>
+      <control-flow-case id="__28">
+        <from-outcome id="__29">CreateInsert</from-outcome>
+        <to-activity-id id="__30">ExceptionalRewardDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__36">
+      <from-activity-id id="__37">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__40">
+        <from-outcome id="__39">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__38">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__10">
+      <from-activity-id id="__11">checkSession</from-activity-id>
+      <control-flow-case id="__47">
+        <from-outcome id="__46">success</from-outcome>
+        <to-activity-id id="__41">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__48">
+      <from-activity-id id="__49">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__51">
+        <from-outcome id="__52">expired</from-outcome>
+        <to-activity-id id="__50">SessionExpired</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__53">
+        <from-outcome id="__55">success</from-outcome>
+        <to-activity-id id="__54">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__66">
+      <from-activity-id id="__67">Hide_Strip_E</from-activity-id>
+      <control-flow-case id="__69">
+        <from-outcome id="__70">next</from-outcome>
+        <to-activity-id id="__68">ExceptionalRewardDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__74">
+      <from-activity-id id="__75">Hide_Strip_C</from-activity-id>
+      <control-flow-case id="__77">
+        <from-outcome id="__78">next</from-outcome>
+        <to-activity-id id="__76">CreateInsert</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__85">
+      <from-activity-id id="__86">Show_Strip_B</from-activity-id>
+      <control-flow-case id="__87">
+        <from-outcome id="__88">next</from-outcome>
+        <to-activity-id id="__89">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__16">Execute</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__21">Execute</from-outcome>
+        <to-activity-id id="__19">ExceptionalRewardRequests</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

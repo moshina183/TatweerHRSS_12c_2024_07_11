@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="BudgetValidationROVO"
+  Version="11.1.1.66.73"
+  InheritPersonalization="merge"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.ro.BudgetValidationROVO_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="LOCAL_BUSINESS_TRIP_ID"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_lob"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_div"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_cost"
+    Kind="where"
+    Type="java.lang.String"/>
+  <Variable
+    Name="p_budget_year"
+    Kind="where"
+    Type="java.lang.String"/>
+  <SQLQuery>
+    <![CDATA[select sum(other_cost) as other_cost ,sum(travel_cost) as travel_cost from (
+select sum(nvl(other_cost +PER_DIEM_AMOUNT,0)) as other_cost, SUM(travel_cost) travel_cost  from BUSINESS_TRIP_REQUEST
+ WHERE REQUEST_STATUS          ='PENDING'
+AND (:LOCAL_BUSINESS_TRIP_ID IS NULL
+OR LOCAL_BUSINESS_TRIP_ID!    =:LOCAL_BUSINESS_TRIP_ID)
+AND LOB                       =:p_lob
+AND DIVISION                  =:p_div
+AND cost_center_number        =:p_cost
+AND EXTRACT( year  from creation_date)=:p_budget_year
+and MEANS_TRAVEL IN ('Car (Employee)','Train (Employee)','Plane (Employee)')
+and BENEFIT_TYPE ='P'
+union
+select sum(nvl(other_cost +PER_DIEM_AMOUNT,0)) as other_cost, 0 travel_cost  from BUSINESS_TRIP_REQUEST
+  WHERE REQUEST_STATUS          ='PENDING'
+AND (:LOCAL_BUSINESS_TRIP_ID IS NULL
+OR LOCAL_BUSINESS_TRIP_ID!    =:LOCAL_BUSINESS_TRIP_ID)
+AND LOB                       =:p_lob
+AND DIVISION                  =:p_div
+AND cost_center_number        =:p_cost
+AND EXTRACT( year  from creation_date)=:p_budget_year
+and MEANS_TRAVEL IN('Car (Company)','Train (Company)','Plane (Company)')
+and BENEFIT_TYPE ='P'
+union
+select sum(nvl(other_cost,0)) as other_cost, SUM(nvl(travel_cost,0)) travel_cost  from BUSINESS_TRIP_REQUEST
+  WHERE REQUEST_STATUS          ='PENDING'
+AND (:LOCAL_BUSINESS_TRIP_ID IS NULL
+OR LOCAL_BUSINESS_TRIP_ID!    =:LOCAL_BUSINESS_TRIP_ID)
+AND LOB                       =:p_lob
+AND DIVISION                  =:p_div
+AND cost_center_number        =:p_cost
+AND EXTRACT( year  from creation_date)=:p_budget_year
+and MEANS_TRAVEL IN ('Car (Employee)','Train (Employee)','Plane (Employee)')
+and BENEFIT_TYPE ='A'
+union
+select sum(other_cost) as other_cost, 0 as travel_cost  from BUSINESS_TRIP_REQUEST
+WHERE REQUEST_STATUS          ='PENDING'
+AND (:LOCAL_BUSINESS_TRIP_ID IS NULL
+OR LOCAL_BUSINESS_TRIP_ID!    =:LOCAL_BUSINESS_TRIP_ID)
+AND LOB                       =:p_lob
+AND DIVISION                  =:p_div
+AND cost_center_number        =:p_cost
+AND EXTRACT( year  from creation_date)=:p_budget_year
+and MEANS_TRAVEL IN('Car (Company)','Train (Company)','Plane (Company)')
+and BENEFIT_TYPE ='A')]]>
+  </SQLQuery>
+  <ViewAttribute
+    Name="OtherCost"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="OTHER_COST"
+    Expression="OTHER_COST"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="TravelCost"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="oracle.jbo.domain.Number"
+    ColumnType="NUMBER"
+    AliasName="TRAVEL_COST"
+    Expression="TRAVEL_COST"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+</ViewObject>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="BudgetValidationSetup">
+    <default-activity id="__1">BudgetValidationFrag</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name id="__5">BudgetBean</managed-bean-name>
+      <managed-bean-class id="__4">com.sbm.selfServices.view.mb.BudgetValidation</managed-bean-class>
+      <managed-bean-scope id="__2">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="BudgetValidationFrag">
+      <page>/Setup/BudgetValidationFrag.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

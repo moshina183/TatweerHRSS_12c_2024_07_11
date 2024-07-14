@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57"
+                id="Overtime_TF_Overtime_TF_CreateWithParametersPageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="OvertimeRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="OvertimeRequestViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="OvertimeRequestViewIterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+       <NamedData NDName="PersoneId"
+                        NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="PersoneName"
+                 NDValue="#{PersonInfo.personName}" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

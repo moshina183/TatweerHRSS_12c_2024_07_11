@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="ChangePositionTF">
+    <default-activity id="__41">checkSession</default-activity>
+    <input-parameter-definition id="__11">
+      <name id="__12">cPPersonNummber</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__14">
+      <name id="__13">cPPersonName</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__4">
+      <name id="__1">currentPosition</name>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <managed-bean id="__3">
+      <managed-bean-name id="__9">ChangePositionMB</managed-bean-name>
+      <managed-bean-class id="__34">com.sbm.selfServices.view.mb.ChangePositionMB</managed-bean-class>
+      <managed-bean-scope id="__33">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__60">
+      <managed-bean-name id="__65">FilmStripUI</managed-bean-name>
+      <managed-bean-class id="__59">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__64">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="ChangePositionRequests">
+      <page>/RequestsFrags/ChangePositionRequests.jsff</page>
+    </view>
+    <view id="ChangePositionDetails">
+      <page>/RequestsFrags/ChangePositionDetails.jsff</page>
+    </view>
+    <method-call id="ExecuteWithParams1">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__10">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__35">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="checkSession">
+      <method id="__63">#{pageFlowScope.ChangePositionMB.checkSession}</method>
+      <outcome id="__61">
+        <fixed-outcome id="__62">success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case id="__5">
+        <expression id="__7">#{PersonInfo.perosnNumber ne null or
+                             PersonInfo.assignee ne null}</expression>
+        <outcome id="__8">success</outcome>
+      </case>
+      <case id="__44">
+        <expression id="__45">#{PersonInfo.perosnNumber eq null or
+                              PersonInfo.assignee eq null}</expression>
+        <outcome id="__43">expired</outcome>
+      </case>
+      <default-outcome id="__6">expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page id="__42">/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="Hide_TS_C">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__66">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Hide_TS_E">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__67">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Show_TS_B">
+      <method>#{backingBeanScope.FilmStripUI._showFilmStrip}</method>
+      <outcome id="__68">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__17">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__16">ChangePositionRequests</from-activity-id>
+      <control-flow-case id="__75">
+        <from-outcome id="__76">edit</from-outcome>
+        <to-activity-id id="__74">Hide_TS_E</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__83">
+        <from-outcome id="__84">newChangePosition</from-outcome>
+        <to-activity-id id="__82">Hide_TS_C</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__20">
+      <from-activity-id id="__21">CreateInsert</from-activity-id>
+      <control-flow-case id="__24">
+        <from-outcome id="__22">CreateInsert</from-outcome>
+        <to-activity-id id="__23">ChangePositionDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__25">
+      <from-activity-id id="__26">ChangePositionDetails</from-activity-id>
+      <control-flow-case id="__90">
+        <from-outcome id="__92">back</from-outcome>
+        <to-activity-id id="__91">Show_TS_B</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__36">
+      <from-activity-id id="__37">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__38">
+        <from-outcome id="__39">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__40">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__46">
+      <from-activity-id id="__47">checkSession</from-activity-id>
+      <control-flow-case id="__49">
+        <from-outcome id="__48">success</from-outcome>
+        <to-activity-id id="__50">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__51">
+      <from-activity-id id="__52">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__54">
+        <from-outcome id="__55">expired</from-outcome>
+        <to-activity-id id="__53">SessionExpired</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__58">
+        <from-outcome id="__57">success</from-outcome>
+        <to-activity-id id="__56">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__69">
+      <from-activity-id id="__70">Hide_TS_E</from-activity-id>
+      <control-flow-case id="__73">
+        <from-outcome id="__72">next</from-outcome>
+        <to-activity-id id="__71">ChangePositionDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__77">
+      <from-activity-id id="__78">Hide_TS_C</from-activity-id>
+      <control-flow-case id="__81">
+        <from-outcome id="__80">next</from-outcome>
+        <to-activity-id id="__79">CreateInsert</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__85">
+      <from-activity-id id="__86">Show_TS_B</from-activity-id>
+      <control-flow-case id="__88">
+        <from-outcome id="__87">next</from-outcome>
+        <to-activity-id id="__89">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__18">
+      <from-activity-id id="__19">Execute</from-activity-id>
+      <control-flow-case id="__27">
+        <from-outcome id="__28">Execute</from-outcome>
+        <to-activity-id id="__29">ChangePositionRequests</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

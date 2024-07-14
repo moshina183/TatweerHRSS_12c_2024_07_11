@@ -1,0 +1,4 @@
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <system systemId="https://egwo-test.fa.em2.oraclecloud.com/hcmCommonDataLoader/HCMDataLoader?wsdl"
+          uri="../com/oracle/xmlns/apps/hcm/common/dataloader/core/dataloaderintegrationservice/HCMDataLoader.wsdl"/>
+</catalog>

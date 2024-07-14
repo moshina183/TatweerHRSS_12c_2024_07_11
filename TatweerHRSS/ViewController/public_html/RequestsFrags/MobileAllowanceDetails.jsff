@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx" id="pt1">
+        <f:facet name="pageContents">
+  <af:panelBox text="Mobile Allowance Request Data" id="pb2" inlineStyle="background-color:#ffffff;">
+      <f:facet name="toolbar">
+        <af:toolbar id="t1">
+          <af:commandToolbarButton text="Save" id="ctb5"
+                                   action="#{pageFlowScope.MobileBean.save_action}"
+                                   rendered="#{bindings.StepId.inputValue eq 1 and !(bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED')}"/>
+          <af:commandToolbarButton text="Submit" id="ctb1"
+                                   action="#{pageFlowScope.MobileBean.submit_action}"
+                                   rendered="#{bindings.StepId.inputValue eq 1 || (bindings.RequestStatus.inputValue eq 'SAVED' and bindings.RequestStatus.inputValue ne 'EDIT')}"/>
+          <af:commandToolbarButton text="Approve" id="ctb3"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"
+                                   action="#{pageFlowScope.MobileBean.approve_action}"/>
+          <af:commandToolbarButton text="Reject" id="ctb4"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}">
+            <af:showPopupBehavior popupId="p1" triggerType="action"
+                                  align="afterEnd"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton text="Approve Withdraw" id="ctb7"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"
+                                   action="#{pageFlowScope.MobileBean.approve_withdraw}"/>
+          <af:commandToolbarButton text="Reject Withdraw" id="ctb8"
+                                   rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'Waiting Withdraw Approval'}"
+                                   action="#{pageFlowScope.MobileBean.reject_withdraw}"/>
+                                   
+          <af:commandToolbarButton text="Cancel" id="ctb2"
+                                   actionListener="#{bindings.Rollback.execute}"
+                                   immediate="true" action="back">
+            <af:resetActionListener/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton text="OK" id="ctb6" action="back"
+                                   rendered="#{bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED'}"/>
+        </af:toolbar>
+      </f:facet>
+      <af:panelBox text="Person Details" id="pb1" inlineStyle="background-color:#ffffff;" rendered="#{(bindings.PersoneNumber.inputValue ne null or bindings.PersonPosition.inputValue ne null or bindings.PersonJob.inputValue ne null or bindings.PersonDepartment.inputValue ne null or bindings.PersonLocation.inputValue ne null) and (bindings.StepId.inputValue gt 1 )}"
+                   partialTriggers="ctb5 ctb1 ctb3 ctb4 ctb2 ctb6">
+      <af:panelFormLayout id="pfl3" rows="2" maxColumns="2">
+         <af:inputText value="#{bindings.PersoneNumber.inputValue}"
+                    label="Number" rendered="#{bindings.PersoneNumber.inputValue ne null}"
+                    required="#{bindings.PersoneNumber.hints.mandatory}"
+                    columns="#{bindings.PersoneNumber.hints.displayWidth}"
+                    maximumLength="#{bindings.PersoneNumber.hints.precision}"
+                    shortDesc="#{bindings.PersoneNumber.hints.tooltip}"
+                    id="it3" disabled="true" contentStyle="width:350px">
+        <f:validator binding="#{bindings.PersoneNumber.validator}"/>
+        <af:convertNumber groupingUsed="false"
+                          pattern="#{bindings.PersoneNumber.format}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersoneName.inputValue}"
+                    label=" Name" rendered="#{bindings.PersoneName.inputValue ne null}"
+                    required="#{bindings.PersoneName.hints.mandatory}"
+                    columns="#{bindings.PersoneName.hints.displayWidth}"
+                    maximumLength="#{bindings.PersoneName.hints.precision}"
+                    shortDesc="#{bindings.PersoneName.hints.tooltip}" id="it1"
+                    disabled="true">
+        <f:validator binding="#{bindings.PersoneName.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.PersonPosition.inputValue}"
+                      label="Position" rendered="#{bindings.PersonPosition.inputValue ne null}"
+                      required="#{bindings.PersonPosition.hints.mandatory}"
+                columns="50" disabled="true"
+                      maximumLength="#{bindings.PersonPosition.hints.precision}"
+                      shortDesc="#{bindings.PersonPosition.hints.tooltip}"
+                      id="it181" visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonPosition.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonJob.inputValue}"
+                      label="Job" rendered="#{bindings.PersonJob.inputValue ne null}"
+                      required="#{bindings.PersonJob.hints.mandatory}"
+                     columns="50" disabled="true"
+                      maximumLength="#{bindings.PersonJob.hints.precision}"
+                      shortDesc="#{bindings.PersonJob.hints.tooltip}" id="it73"
+                      visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonJob.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonDepartment.inputValue}"
+                      label="Department" rendered="#{bindings.PersonDepartment.inputValue ne null}"
+                      required="#{bindings.PersonDepartment.hints.mandatory}"
+                      columns="50" disabled="true"
+                      maximumLength="#{bindings.PersonDepartment.hints.precision}"
+                      shortDesc="#{bindings.PersonDepartment.hints.tooltip}"
+                      id="it82" visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonDepartment.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PersonLocation.inputValue}"
+                      label=" Location"  rendered="#{bindings.PersonLocation.inputValue ne null}"
+                      required="#{bindings.PersonLocation.hints.mandatory}"
+                      columns="50" disabled="true"
+                      maximumLength="#{bindings.PersonLocation.hints.precision}"
+                      shortDesc="#{bindings.PersonLocation.hints.tooltip}"
+                      id="it15" visible="#{bindings.StepId.inputValue ne 1}">
+          <f:validator binding="#{bindings.PersonLocation.validator}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </af:panelBox>
+        <af:spacer height="10" id="s2"/>
+        <af:panelGroupLayout id="pgl1" halign="center" layout="horizontal">
+            <af:outputText value="Mobile Allowance Amount = #{pageFlowScope.mobAllowance} SAR per month" 
+          rendered="#{bindings.StepId.inputValue eq 1 and (bindings.RequestStatus.inputValue eq null)}" id="ot6" inlineStyle="color:Red; font-weight:bold;"/>
+       <af:outputText value="Mobile Allowance Amount = #{bindings.Amount.inputValue} SAR per month" 
+          rendered="#{bindings.StepId.inputValue gt 1 || (bindings.RequestStatus.inputValue eq 'SAVED') || (bindings.RequestStatus.inputValue eq 'EDIT')}" id="ot9" inlineStyle="color:Red; font-weight:bold;"/>
+        
+        </af:panelGroupLayout>
+        <af:panelFormLayout id="pfl1" rows="3" maxColumns="2">
+          <af:panelLabelAndMessage label="Number of Months" id="plam1">
+            <af:panelGroupLayout id="pgl2" layout="horizontal">
+              <af:selectOneChoice value="#{bindings.NumberOfMonths.inputValue}"
+                                  shortDesc="#{bindings.NumberOfMonths.hints.tooltip}" id="soc1"
+                                  disabled="#{!(bindings.StepId.inputValue eq 1 || pageFlowScope.SpecialEdit eq 'Y')}"
+                                  required="true">
+                <f:selectItems value="#{bindings.NumberOfMonths.items}" id="si1"/>
+              </af:selectOneChoice>
+              <af:outputText value="(Selection of number of months should be from current month of submission onwards.)"
+                             id="ot7" inlineStyle="color:Red;"/>
+            </af:panelGroupLayout>
+          </af:panelLabelAndMessage>
+          <af:spacer height="10" id="s3"/>
+      <af:inputText value="#{bindings.RequestReason.inputValue}"
+                    label="#{bindings.RequestReason.hints.label}"
+                    columns="60" autoSubmit="true" 
+                    id="it2" contentStyle="height: 60px;" rows="6"
+                    disabled="#{!(bindings.StepId.inputValue eq 1 || pageFlowScope.SpecialEdit eq 'Y')}"
+                    required="true">
+       
+          </af:inputText>
+          <af:inputText value="#{bindings.RequestStatus.inputValue}"
+                    label="Request Status" readOnly="true"
+                    id="it6" contentStyle="height: 60px;">
+       
+          </af:inputText>
+    </af:panelFormLayout>
+     <af:popup id="p1">
+        <af:dialog id="d1" title="Please Enter the Rejection comment"
+                   type="cancel">
+          <af:inputText value="#{bindings.RejectComments.inputValue}"
+                        simple="true" columns="50"
+                        maximumLength="#{bindings.RejectComments.hints.precision}"
+                        shortDesc="#{bindings.RejectComments.hints.tooltip}"
+                        id="it11" rows="5" required="true">
+            <f:validator binding="#{bindings.RejectComments.validator}"/>
+          </af:inputText>
+          <f:facet name="buttonBar">
+            <af:commandButton text="Reject" id="cb1"
+                              action="#{pageFlowScope.MobileBean.reject_action}"/>
+          </f:facet>
+        </af:dialog>
+      </af:popup>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelFormLayout id="pfl2"
+                        visible="#{bindings.RequestStatus.inputValue eq 'REJECTED'}">
+      <af:inputText value="#{bindings.RequestStatus.inputValue}"
+                    label="#{bindings.RequestStatus.hints.label}"
+                    required="#{bindings.RequestStatus.hints.mandatory}"
+                    columns="#{bindings.RequestStatus.hints.displayWidth}"
+                    maximumLength="#{bindings.RequestStatus.hints.precision}"
+                    shortDesc="#{bindings.RequestStatus.hints.tooltip}"
+                    id="it4" disabled="true">
+        <f:validator binding="#{bindings.RequestStatus.validator}"/>
+      </af:inputText>
+      <af:inputText value="#{bindings.RejectComments.inputValue}"
+                    label="#{bindings.RejectComments.hints.label}"
+                    required="#{bindings.RejectComments.hints.mandatory}"
+                    columns="#{bindings.RejectComments.hints.displayWidth}"
+                    maximumLength="#{bindings.RejectComments.hints.precision}"
+                    shortDesc="#{bindings.RejectComments.hints.tooltip}"
+                    id="it5" disabled="true" rows="5"
+                    contentStyle="height: 60px;">
+        <f:validator binding="#{bindings.RejectComments.validator}"/>
+      </af:inputText>
+    </af:panelFormLayout>
+    <af:panelBox text="Approval History" id="pb3" inlineStyle="background-color:#ffffff;"
+                 rendered="#{bindings.RequestStatus.inputValue ne null &amp;&amp;  (bindings.RequestStatus.inputValue ne 'SAVED' and bindings.RequestStatus.inputValue ne 'EDIT')}"
+                partialTriggers="it4">
+          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+          <af:table value="#{bindings.ApprovalHistoryMobile.collectionModel}"
+                    var="row" rows="#{bindings.ApprovalHistoryMobile.rangeSize}"
+                    emptyText="#{bindings.ApprovalHistoryMobile.viewable ? 'No data to display.' : 'Access Denied.'}"
+                    fetchSize="#{bindings.ApprovalHistoryMobile.rangeSize}"
+                    rowBandingInterval="0"
+                    selectedRowKeys="#{bindings.ApprovalHistoryMobile.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.ApprovalHistoryMobile.collectionModel.makeCurrent}"
+                    rowSelection="single" id="t2">
+             <af:column sortProperty="#{bindings.ApprovalHistoryMobile.hints.AssigneeName.name}"
+                       sortable="false"
+                     width="150" align="center"
+                         headerText="Type"
+                       id="c1">
+              <af:outputText value="#{row.ApprovalType}" id="ot2"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ApprovalHistoryMobile.hints.AssigneeName.name}"
+                       sortable="false"
+                     width="150" align="center"
+                         headerText="Assignee Name"
+                       id="c5">
+              <af:outputText value="#{row.AssigneeName}" id="ot5"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ApprovalHistoryMobile.hints.ActionTaken.name}"
+                       sortable="false"
+                        width="150" align="center"
+                         headerText="Status"
+                       id="c2">
+              <af:outputText value="#{row.ActionTaken}" inlineStyle="color:#{row.ActionTaken eq 'PENDING' ? 'Blue' : row.ActionTaken eq 'APPROVED' ? 'Green' : 'Red'};" id="ot4"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.ApprovalHistoryMobile.hints.SubmitttedOn.name}"
+                       sortable="false"
+                        width="150" align="center"
+                         headerText="Assigned On"
+                       id="c4">
+              <af:outputText value="#{row.SubmitttedOn}" id="ot3">
+                <af:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.ApprovalHistoryMobile.hints.ApprovalOn.name}"
+                       sortable="false"
+                      align="center"
+                         headerText="Action On" width="150"
+                       id="c3">
+              <af:outputText value="#{row.ApprovalOn}"  inlineStyle="color:Blue;" id="ot1">
+                  <af:convertDateTime  pattern="dd/MM/yyyy hh:mm:ss a"/>
+              </af:outputText>
+            </af:column>
+          </af:table>
+         </af:panelCollection>
+        </af:panelBox>
+  </af:panelBox>
+  </f:facet>
+        <f:facet name="footerStart"/>
+        <f:facet name="footer"/>
+        <f:facet name="footerEnd"/>
+        <f:facet name="startPanel"/>
+        <f:facet name="endPanel"/>
+        <f:facet name="headerStart"/>
+        <f:facet name="header"/>
+        <f:facet name="headerEnd"/>
+    </af:pageTemplate>
+</jsp:root>

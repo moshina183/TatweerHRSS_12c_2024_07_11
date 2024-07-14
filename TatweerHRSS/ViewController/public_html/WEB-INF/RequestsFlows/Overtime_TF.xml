@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="Overtime_TF">
+    <default-activity id="__1">checkSession</default-activity>
+    <managed-bean id="__19">
+      <managed-bean-name id="__17">OvertimeBean</managed-bean-name>
+      <managed-bean-class id="__12">com.sbm.selfServices.view.mb.OvertimeBean</managed-bean-class>
+      <managed-bean-scope id="__18">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__47">
+      <managed-bean-name id="__46">FilmStripUI</managed-bean-name>
+      <managed-bean-class id="__37">com.view.beans.filmStrip.UtilsBean</managed-bean-class>
+      <managed-bean-scope id="__38">backingBean</managed-bean-scope>
+    </managed-bean>
+    <view id="OvertimeFrag">
+      <page>/RequestsFrags/OvertimeFrag.jsff</page>
+    </view>
+    <view id="OvertimeDetails">
+      <page>/RequestsFrags/OvertimeDetails.jsff</page>
+    </view>
+    <method-call id="CreateWithParameters">
+      <method>#{bindings.CreateWithParams.execute}</method>
+      <outcome id="__26">
+        <fixed-outcome>CreateWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="dummyPersonData">
+      <method>#{pageFlowScope.OvertimeBean.dummyLoadPersonData}</method>
+      <outcome id="__35">
+        <fixed-outcome>filter</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="ExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__75">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="checkSession">
+      <method id="__3">#{pageFlowScope.OvertimeBean.checkSession}</method>
+      <outcome id="__2">
+        <fixed-outcome id="__4">success</fixed-outcome>
+      </outcome>
+    </method-call>
+    <router id="PersonInfoCheck">
+      <case id="__39">
+        <expression id="__41">#{PersonInfo.perosnNumber ne null or
+                              PersonInfo.assignee ne null}</expression>
+        <outcome id="__40">success</outcome>
+      </case>
+      <case id="__44">
+        <expression id="__45">#{PersonInfo.perosnNumber eq null or
+                              PersonInfo.assignee eq null}</expression>
+        <outcome id="__43">expired</outcome>
+      </case>
+      <default-outcome id="__42">expired</default-outcome>
+    </router>
+    <view id="SessionExpired">
+      <page id="__4122">/RequestsFrags/SessionExpired.jsff</page>
+    </view>
+    <method-call id="Hide_Strip_E">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__48">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Hide_Strip_C">
+      <method>#{backingBeanScope.FilmStripUI._hideFilmStrip}</method>
+      <outcome id="__49">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Show_Strip_B">
+      <method>#{backingBeanScope.FilmStripUI._showFilmStrip}</method>
+      <outcome id="__50">
+        <fixed-outcome>next</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.Execute.execute}</method>
+      <outcome id="__15">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__13">
+      <from-activity-id id="__14">OvertimeFrag</from-activity-id>
+      <control-flow-case id="__95">
+        <from-outcome id="__97">edit</from-outcome>
+        <to-activity-id id="__96">Hide_Strip_E</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__98">
+        <from-outcome id="__100">addNew</from-outcome>
+        <to-activity-id id="__99">Hide_Strip_C</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__27">
+      <from-activity-id id="__28">CreateWithParameters</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome id="__30">CreateWithParams</from-outcome>
+        <to-activity-id id="__31">OvertimeDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__59">
+      <from-activity-id id="__60">dummyPersonData</from-activity-id>
+      <control-flow-case id="__62">
+        <from-outcome id="__63">filter</from-outcome>
+        <to-activity-id id="__61">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__64">
+      <from-activity-id id="__65">OvertimeDetails</from-activity-id>
+      <control-flow-case id="__82">
+        <from-outcome id="__84">back</from-outcome>
+        <to-activity-id id="__83">Show_Strip_B</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__76">
+      <from-activity-id id="__77">ExecuteWithParams</from-activity-id>
+      <control-flow-case id="__78">
+        <from-outcome id="__79">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__80">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__5">
+      <from-activity-id id="__6">checkSession</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome id="__9">success</from-outcome>
+        <to-activity-id id="__7">PersonInfoCheck</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__10">
+      <from-activity-id id="__11">PersonInfoCheck</from-activity-id>
+      <control-flow-case id="__20">
+        <from-outcome id="__21">success</from-outcome>
+        <to-activity-id id="__32">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__33">
+        <from-outcome id="__36">expired</from-outcome>
+        <to-activity-id id="__34">SessionExpired</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__85">
+      <from-activity-id id="__86">Show_Strip_B</from-activity-id>
+      <control-flow-case id="__88">
+        <from-outcome id="__87">next</from-outcome>
+        <to-activity-id id="__89">ExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__90">
+      <from-activity-id id="__91">Hide_Strip_E</from-activity-id>
+      <control-flow-case id="__92">
+        <from-outcome id="__94">next</from-outcome>
+        <to-activity-id id="__93">OvertimeDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__101">
+      <from-activity-id id="__102">Hide_Strip_C</from-activity-id>
+      <control-flow-case id="__103">
+        <from-outcome id="__105">next</from-outcome>
+        <to-activity-id id="__104">CreateWithParameters</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__22">Execute</from-activity-id>
+      <control-flow-case id="__23">
+        <from-outcome id="__24">Execute</from-outcome>
+        <to-activity-id id="__25">OvertimeFrag</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

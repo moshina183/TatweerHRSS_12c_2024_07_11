@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="FilmStripPageDef" Package="pages"
+                ControllerClass="com.view.beans.filmStripApp.FilmStripPhaseListener">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="dynamicRegion1"
+              taskFlowId="${backingBeanScope.FilmStripBean.dynamicTaskFlowId}"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding" Refresh="ifNeeded"/>
+	<iterator id="PendingForApprovalROVO1Iterator"
+              Binds="PendingForApprovalROVO1" DataControl="SBMModuleDataControl"
+              RangeSize="25"/>
+    <iterator id="DifferenceDateDepartmentIterator"
+              Binds="DifferenceDateDepartment"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="DepartmentsVO1Iterator" Binds="DepartmentsVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator Binds="RequestVisibleROVO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="RequestVisibleROVOIterator"/>
+    <iterator id="LocationsVOIterator" Binds="LocationsVO"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="DifferenceDateLocationIterator" Binds="DifferenceDateLocation"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="WithdrawEditVisible_ROVO1Iterator"
+              Binds="WithdrawEditVisible_ROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator Binds="UserLoginROVO1" RangeSize="10"
+              DataControl="SBMModuleDataControl" id="UserLoginROVO1Iterator"/>
+    <iterator Binds="LocationTranslationROVO1" RangeSize="10"
+              DataControl="SBMModuleDataControl"
+              id="LocationTranslationROVO1Iterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="deleteDeptTableRows"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteDeptTableRows"
+                  IsViewObjectMethod="false"/>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+	<attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="MobileAllowance">
+      <AttrNames>
+        <Item Value="MobileAllowance"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator" id="Loan">
+      <AttrNames>
+        <Item Value="Loan"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="ManpowerRequisition">
+      <AttrNames>
+        <Item Value="ManpowerRequisition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="Overtime">
+      <AttrNames>
+        <Item Value="Overtime"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="EducationAllowance">
+      <AttrNames>
+        <Item Value="EducationAllowance"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="ExitReEntry">
+      <AttrNames>
+        <Item Value="ExitReEntry"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="ExceptionalReward">
+      <AttrNames>
+        <Item Value="ExceptionalReward"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="ChangePosition">
+      <AttrNames>
+        <Item Value="ChangePosition"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="RepaymentTicket">
+      <AttrNames>
+        <Item Value="RepaymentTicket"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="SpecialNeed">
+      <AttrNames>
+        <Item Value="SpecialNeed"/>
+      </AttrNames>
+    </attributeValues>
+	<attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="LocalTrip">
+      <AttrNames>
+        <Item Value="LocalTrip"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="InternationalTrip">
+      <AttrNames>
+        <Item Value="InternationalTrip"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator" id="Event">
+      <AttrNames>
+        <Item Value="Event"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="Training">
+      <AttrNames>
+        <Item Value="Training"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator" id="Expense">
+      <AttrNames>
+        <Item Value="Expense"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator" id="LocalVisible">
+      <AttrNames>
+        <Item Value="LocalVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator" id="InterVisible">
+      <AttrNames>
+        <Item Value="InterVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator" id="EventVisible">
+      <AttrNames>
+        <Item Value="EventVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="TrainingVisible">
+      <AttrNames>
+        <Item Value="TrainingVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="MobileVisible">
+      <AttrNames>
+        <Item Value="MobileVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="LoanReqVisible">
+      <AttrNames>
+        <Item Value="LoanReqVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="OvertimeVisible">
+      <AttrNames>
+        <Item Value="OvertimeVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="ManpowerVisible">
+      <AttrNames>
+        <Item Value="ManpowerVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="ExitReentryVisible">
+      <AttrNames>
+        <Item Value="ExitReentryVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="ChangePositionVisible">
+      <AttrNames>
+        <Item Value="ChangePositionVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="EducationAllowVisible">
+      <AttrNames>
+        <Item Value="EducationAllowVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="ExceptionalRewardVisible">
+      <AttrNames>
+        <Item Value="ExceptionalRewardVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="SpecialNeedVisible">
+      <AttrNames>
+        <Item Value="SpecialNeedVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="RepaymentTicketVisible">
+      <AttrNames>
+        <Item Value="RepaymentTicketVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="deleteAllLocations"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteAllLocations"
+                  IsViewObjectMethod="false"/>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="LoanSettlement">
+      <AttrNames>
+        <Item Value="LoanSettlement"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="LoanSettlementVisible">
+      <AttrNames>
+        <Item Value="LoanSettlementVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="Exitclearnace">
+      <AttrNames>
+        <Item Value="Exitclearnace"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="ExitClearanceVisible">
+      <AttrNames>
+        <Item Value="ExitClearanceVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PendingForApprovalROVO1Iterator"
+                     id="Traineeexitform">
+      <AttrNames>
+        <Item Value="Traineeexitform"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestVisibleROVOIterator"
+                     id="TraineesExitVisible">
+      <AttrNames>
+        <Item Value="TraineesExitVisible"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserLoginROVO1Iterator" id="Role">
+      <AttrNames>
+        <Item Value="Role"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="LocationTranslationROVO1Iterator"
+                     id="LocationNameEn">
+      <AttrNames>
+        <Item Value="LocationNameEn"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

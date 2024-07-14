@@ -1,0 +1,2055 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/oracle/apps/uikit/common/pageTemplates/MainPageTemplate.jspx"
+                   id="pt1">
+    <f:facet name="pageContents">
+      <af:group id="g1">
+        <af:panelBox text="Exit and Clearance Form [ #{bindings.RequestId.inputValue} ]"
+                     id="pb1" showDisclosure="false">
+          <f:facet name="toolbar">
+            <af:toolbar id="t1">
+              <af:outputLabel value="#{bindings.RequestStatus.inputValue}"
+                             id="ot15"
+                             inlineStyle="font-size:4mm;color:#{bindings.RequestStatus.inputValue eq 'APPROVED' ? 'Green' : bindings.RequestStatus.inputValue eq 'PENDING' ? 'Orange' : bindings.RequestStatus.inputValue eq 'REJECTED' ? 'Red' : 'Blue'};"/>
+              <af:spacer width="500" height="10" id="s10"/>
+              <af:commandButton text="Next" id="cb1"
+                                rendered="#{pageFlowScope.formName ne 'Clearance' and bindings.StepId.inputValue ne '1'}">
+                <af:setPropertyListener from="Clearance"
+                                        to="#{pageFlowScope.formName}"
+                                        type="action"/>
+              </af:commandButton>
+              <af:commandButton text="Back" id="cb3"
+                                rendered="#{pageFlowScope.formName eq 'Clearance' and pageFlowScope.AssigneeIsHR eq 'TRUE'}">
+                <af:setPropertyListener from="Exit"
+                                        to="#{pageFlowScope.formName}"
+                                        type="action"/>
+              </af:commandButton>
+              <af:commandButton text="Submit" id="cb5"
+                                rendered="#{bindings.StepId.inputValue eq '1'}"
+                                action="#{backingBeanScope.ExitClearanceMB.onClickSumbit}"/>
+              <af:commandButton text="Approve" id="cb6"
+                                rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"
+                                action="#{backingBeanScope.ExitClearanceMB.onClickApprove}"
+                                visible="#{pageFlowScope.formName eq 'Clearance'}"/>
+              <af:commandButton text="Reject" id="cb7"
+                                rendered="#{PersonInfo.fullName eq bindings.AssigneeName.inputValue and bindings.RequestStatus.inputValue eq 'PENDING'}"
+                                visible="#{pageFlowScope.formName eq 'Clearance'}">
+                <af:showPopupBehavior popupId="p1" triggerType="action"
+                                      align="afterEnd"/>
+              </af:commandButton>
+              <af:commandButton text="Save" id="cb4"
+                                rendered="#{bindings.StepId.inputValue eq '1'}"
+                                action="#{backingBeanScope.ExitClearanceMB.onSave}"/>
+              <af:commandButton text="Cancel" id="cb2" immediate="true"
+                                actionListener="#{bindings.Rollback.execute}"
+                                action="back">
+                <af:resetActionListener/>
+              </af:commandButton>
+              <af:commandButton text="Download" id="cb9" rendered="false">
+                <af:fileDownloadActionListener filename="ExpCertificate.pdf"
+                                               method="#{backingBeanScope.ExitClearanceMB.downloadExpCertificate}"/>
+              </af:commandButton>
+              <af:popup id="p1">
+                <af:dialog id="d1" type="cancel"
+                           title="Please Enter the Rejection comment">
+                  <af:inputText id="it3"
+                                value="#{bindings.RejectComment.inputValue}"
+                                columns="50" rows="5" label=" "/>
+                  <f:facet name="buttonBar">
+                    <af:commandButton text="Reject" id="cb8"
+                                      action="#{backingBeanScope.ExitClearanceMB.onClickReject}"/>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
+            </af:toolbar>
+          </f:facet>
+          <af:panelBox text="Exit Interview Form" id="pb2"
+                       showDisclosure="false"
+                       rendered="#{pageFlowScope.formName ne 'Clearance'}">
+            <f:facet name="toolbar">
+              <af:toolbar id="t2">
+                <af:outputLabel value="نموذج مقابلة الخروج" id="ol1"/>
+              </af:toolbar>
+            </f:facet>
+            <af:panelGridLayout id="pgl2">
+              <af:gridRow marginTop="5px" height="auto" id="gr1">
+                <af:gridCell marginStart="5px" width="40%" id="gc1"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc11"
+                             halign="end">
+                  <af:inputText simple="true" id="it6" label=" " disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.PersonNumber.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" id="gc4"
+                             halign="end">
+                  <af:outputLabel value="الرقم الوظيفي" id="ol9"
+                                  shortDesc="Person Number"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc3"
+                             halign="end">
+                  <af:inputText simple="true" id="it7" label=" " disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.PersonNameArabic.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc2" halign="end">
+                  <af:outputLabel shortDesc="Person Name" id="ol2"
+                                  value="الإسم"/>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr2">
+                <af:gridCell marginStart="5px" width="40%" id="gc15"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc12"
+                             halign="end">
+                  <af:inputText simple="true" id="it8" label=" " disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.Administration.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" id="gc5"
+                             halign="end">
+                  <af:outputLabel shortDesc="Administration" id="ol4"
+                                  value="الإدارة"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc10"
+                             halign="end">
+                  <af:inputText simple="true" id="it9" label=" " disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.ManagerName.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc7" halign="end">
+                  <af:outputLabel shortDesc="Manager Name" id="ol3"
+                                  value="إسم الرئيس المباشر"/>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr3">
+                <af:gridCell marginStart="5px" width="40%" id="gc13"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc14"
+                             halign="end">
+                  <af:inputText simple="true" id="it11" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.HireDate.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" id="gc9"
+                             halign="end">
+                  <af:outputLabel shortDesc="Date Of Hiring" id="ol6"
+                                  value="تاريخ التعيين"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc8"
+                             halign="end">
+                  <af:inputText simple="true" id="it10" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.LastWorkingDate.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc6" halign="end">
+                  <af:outputLabel shortDesc="Last Working Day" id="ol5"
+                                  value="اخر يوم عمل"/>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr4">
+                <af:gridCell marginStart="5px" width="40%" id="gc17"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc18"
+                             halign="end">
+                  <af:inputText value="#{bindings.ReasonForExit.inputValue}"
+                                simple="true" disabled="true"
+                                required="#{bindings.ReasonForExit.hints.mandatory}"
+                                columns="#{bindings.ReasonForExit.hints.displayWidth}"
+                                maximumLength="#{bindings.ReasonForExit.hints.precision}"
+                                shortDesc="#{bindings.ReasonForExit.hints.tooltip}"
+                                id="it5"
+                                contentStyle="width:300px;text-align:right;"
+                                rows="2" autoSubmit="true">
+                    <f:validator binding="#{bindings.ReasonForExit.validator}"/>
+                  </af:inputText>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc16" halign="end">
+                  <af:outputLabel value="أسباب إنتهاء فترة الخدمة " id="ol7"
+                                  shortDesc="Reason for Exit"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc19"
+                             halign="end">
+                  <af:inputText simple="true" id="it1" label=" " disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.LengthOfService.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc20" halign="end">
+                  <af:outputLabel shortDesc="Length Of Service" id="ol8"
+                                  value="مدة الخدمة"/>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout>
+            <af:spacer width="10" height="10" id="s1"/>
+            <af:panelBox text=" " showDisclosure="false" id="pb4">
+              <f:facet name="toolbar">
+                <af:toolbar id="t3">
+                  <af:outputLabel value=" بيانات المقابلة" id="ol10"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl1">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr5">
+                  <af:gridCell marginStart="5px" width="100%" marginEnd="5px"
+                               id="gc21" halign="end">
+                    <af:outputLabel value="تؤكد وتلتزم الشركة لجميع الموظفين الذين يقومون بتعبئة هذا النموذج بأنة لن يضار أحد مهما كانت المعلومات التي يتم ذكرها وأن الشركة تنظر بتقدير عالي لأبناؤها الذين إنتهت خدماتهم بالشركة وقاموا بتعبئة هذا النموذج بموضوعية، المرجو تعبئة رمز التقييم أدناة بالإجابة التي تعتقد أنها مناسبة"
+                                   id="ot1" inlineStyle="text-align:right;"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:spacer width="10" height="10" id="s2"/>
+            <af:panelBox text=" " showDisclosure="false" id="pb5">
+              <af:listView id="lv1" value="17">
+                <af:listItem id="li1" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl3">
+                    <af:gridRow marginTop="2px" id="gr8">
+                      <af:gridCell marginStart="5px" width="40%" id="gc57"
+                                   halign="center">
+                        <af:outputLabel value='درجات التقييم – "10 التقييم الاعلى "'
+                                        id="ot3"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc40"
+                                   halign="end">
+                        <af:outputLabel value="Topics" id="ol26"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc64" halign="end">
+                        <af:outputLabel value="S.No" id="ol13"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li18" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl12">
+                    <af:gridRow marginTop="2px" id="gr18">
+                      <af:gridCell marginStart="5px" width="40%" id="gc52"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating1.inputValue}"
+                                            label="#{bindings.Rating1.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating1.hints.tooltip}"
+                                            id="soc1" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating1.items}"
+                                         id="si16"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc51"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك العام للشركة كمكان ومحل عمل ؟"
+                                       id="ot9"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc53" halign="end">
+                        <af:outputLabel value="1" id="ol19"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li2" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl5">
+                    <af:gridRow marginTop="2px" id="gr7">
+                      <af:gridCell marginStart="5px" width="40%" id="gc27"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating2.inputValue}"
+                                            label="#{bindings.Rating2.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating2.hints.tooltip}"
+                                            id="soc19" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating2.items}"
+                                         id="si18"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc26"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك العام لسياسات وإجراءات الشركة ؟"
+                                       id="ot4"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc25" halign="end">
+                        <af:outputLabel value="2" id="ol14"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li3" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl4">
+                    <af:gridRow marginTop="2px" id="gr6">
+                      <af:gridCell marginStart="5px" width="40%" id="gc24"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating3.inputValue}"
+                                            label="#{bindings.Rating3.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating3.hints.tooltip}"
+                                            id="soc2" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating3.items}"
+                                         id="si1"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc22"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لمكان العمل وللمرافق  ولظروف العمل الصحية ؟"
+                                       id="ot2"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc23" halign="end">
+                        <af:outputLabel value="3" id="ol12"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li4" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl6">
+                    <af:gridRow marginTop="2px" id="gr9">
+                      <af:gridCell marginStart="5px" width="40%" id="gc28"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating4.inputValue}"
+                                            label="#{bindings.Rating4.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating4.hints.tooltip}"
+                                            id="soc3" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating4.items}"
+                                         id="si2"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc29"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك للمزايا التي تمنحها الشركة لموظفيها مقارنةً بالشركات المماثلة ؟"
+                                       id="ot5"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc30" halign="end">
+                        <af:outputLabel value="4" id="ol15"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li5" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl7">
+                    <af:gridRow marginTop="5px" id="gr10">
+                      <af:gridCell marginStart="5px" width="40%" id="gc33"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating5.inputValue}"
+                                            label="#{bindings.Rating5.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating5.hints.tooltip}"
+                                            id="soc4" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating5.items}"
+                                         id="si3"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc32"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لمستوى الرواتب بالشركة بشكل عام مقارنةً بالشركات المماثلة ؟"
+                                       id="ot6"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc31" halign="end">
+                        <af:outputLabel value="5" id="ol16"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li6" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl8">
+                    <af:gridRow marginTop="2px" id="gr11">
+                      <af:gridCell marginStart="5px" width="40%" id="gc35"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating6.inputValue}"
+                                            label="#{bindings.Rating6.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating6.hints.tooltip}"
+                                            id="soc5" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating6.items}"
+                                         id="si4"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc36"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لمستوى إهتمام الشركة بموظفيها ؟"
+                                       id="ot7"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc34" halign="end">
+                        <af:outputLabel value="6" id="ol17"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li7" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl9">
+                    <af:gridRow marginTop="2px" id="gr12">
+                      <af:gridCell marginStart="5px" width="40%" id="gc37"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating7.inputValue}"
+                                            label="#{bindings.Rating7.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating7.hints.tooltip}"
+                                            id="soc6" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating7.items}"
+                                         id="si5"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc38"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لرغبة الإدارة في التغيير والتصحيح والتعديل ؟"
+                                       id="ot8"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc39" halign="end">
+                        <af:outputLabel value="7" id="ol18"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li8" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl58">
+                    <af:gridRow marginTop="2px" id="gr78">
+                      <af:gridCell marginStart="5px" width="40%" id="gc278"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating8.inputValue}"
+                                            label="#{bindings.Rating8.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating8.hints.tooltip}"
+                                            id="soc198" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating8.items}"
+                                         id="si188"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc268"
+                                   halign="end">
+                        <af:outputLabel value="ما هو مقدار التدريب الذي تم توفيرة لك عند التوظيف ؟"
+                                       id="ot48"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc258" halign="end">
+                        <af:outputLabel value="8" id="ol148"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li9" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl59">
+                    <af:gridRow marginTop="2px" id="gr79">
+                      <af:gridCell marginStart="5px" width="40%" id="gc279"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating9.inputValue}"
+                                            label="#{bindings.Rating9.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating9.hints.tooltip}"
+                                            id="soc199" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating9.items}"
+                                         id="si199"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc269"
+                                   halign="end">
+                        <af:outputLabel value="ما هو المدى الذي كان من الممكن للتدريب أن يؤهلك للقيام بوظيفة أعلى وزيادة في الأجر ؟"
+                                       id="ot49"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc259" halign="end">
+                        <af:outputLabel value="9" id="ol149"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li10" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl510">
+                    <af:gridRow marginTop="2px" id="gr710">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2710"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating10.inputValue}"
+                                            label="#{bindings.Rating10.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating10.hints.tooltip}"
+                                            id="soc11010" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating10.items}"
+                                         id="si11010"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2610"
+                                   halign="end">
+                        <af:outputLabel value="ما هو فهمك خلال فترة خدمتك بالشركة لواجبات ومسؤوليات وظيفتك ؟"
+                                       id="ot410"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2510" halign="end">
+                        <af:outputLabel value="10" id="ol1410"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li11" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl511">
+                    <af:gridRow marginTop="2px" id="gr711">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2711"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating11.inputValue}"
+                                            label="#{bindings.Rating11.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating11.hints.tooltip}"
+                                            id="soc11111" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating11.items}"
+                                         id="si11111"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2611"
+                                   halign="end">
+                        <af:outputLabel value="ما هو فهمك خلال فترة خدمتك بالشركة لمعايير وأهداف الأداء المطلوب منك تحقيقها ؟"
+                                       id="ot411"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2511" halign="end">
+                        <af:outputLabel value="11" id="ol1411"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li12" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl512">
+                    <af:gridRow marginTop="2px" id="gr712">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2712"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating12.inputValue}"
+                                            label="#{bindings.Rating12.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating12.hints.tooltip}"
+                                            id="soc12121" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating12.items}"
+                                         id="si12121"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2612"
+                                   halign="end">
+                        <af:outputLabel value="ما هو فهمك خلال فترة خدمتك بالشركة لما يجري بالشركة ككل ؟"
+                                       id="ot412"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2512" halign="end">
+                        <af:outputLabel value="12" id="ol1412"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li13" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl513">
+                    <af:gridRow marginTop="2px" id="gr713">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2713"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating13.inputValue}"
+                                            label="#{bindings.Rating13.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating13.hints.tooltip}"
+                                            id="soc13131" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating13.items}"
+                                         id="si13131"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2613"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك للتقدير الذي كنت تتلقاة من الشركة عندما كنت تؤدي عملاً بشكل جيد ؟"
+                                       id="ot413"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2513" halign="end">
+                        <af:outputLabel value="13" id="ol1413"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li14" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl514">
+                    <af:gridRow marginTop="2px" id="gr714">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2714"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating14.inputValue}"
+                                            label="#{bindings.Rating14.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating14.hints.tooltip}"
+                                            id="soc14141" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating14.items}"
+                                         id="si14141"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2614"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لرغبة الرئيس المباشر في الإستماع والإصغاء والرغبة في المساعدة ؟"
+                                       id="ot414"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2514" halign="end">
+                        <af:outputLabel value="14" id="ol1414"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li15" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl515">
+                    <af:gridRow marginTop="2px" id="gr715">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2715"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating15.inputValue}"
+                                            label="#{bindings.Rating15.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating15.hints.tooltip}"
+                                            id="soc15151" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating15.items}"
+                                         id="si15151"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2615"
+                                   halign="end">
+                        <af:outputLabel value="ما هو مدى تشجيع رئيسك المباشر لك في تقديم الإقتراحات والتحسينات في أساليب العمل ؟"
+                                       id="ot415"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2515" halign="end">
+                        <af:outputLabel value="15" id="ol1515"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li16" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl516">
+                    <af:gridRow marginTop="2px" id="gr716">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2716"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating16.inputValue}"
+                                            label="#{bindings.Rating16.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating16.hints.tooltip}"
+                                            id="soc16161" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating16.items}"
+                                         id="si16161"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2616"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لفرص الترقية وزيادة الأجر والتطور الوظيفي في الشركة ؟"
+                                       id="ot416"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2516" halign="end">
+                        <af:outputLabel value="16" id="ol1616"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+                <af:listItem id="li17" inlineStyle="height:25px;">
+                  <af:panelGridLayout id="pgl517">
+                    <af:gridRow marginTop="2px" id="gr717">
+                      <af:gridCell marginStart="5px" width="40%" id="gc2717"
+                                   halign="center">
+                        <af:selectOneChoice value="#{bindings.Rating17.inputValue}"
+                                            label="#{bindings.Rating17.label}"
+                                            simple="true"
+                                            disabled="#{bindings.StepId.inputValue ne '1'}"
+                                            required="true"
+                                            shortDesc="#{bindings.Rating17.hints.tooltip}"
+                                            id="soc17171" autoSubmit="true">
+                          <f:selectItems value="#{bindings.Rating17.items}"
+                                         id="si17171"/>
+                        </af:selectOneChoice>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="45%" id="gc2617"
+                                   halign="end">
+                        <af:outputLabel value="ما هو تقييمك لمستوى التعاون بين الزملاء في الإدارة التي كنت تعمل بها ؟"
+                                       id="ot417"/>
+                      </af:gridCell>
+                      <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                                   id="gc2517" halign="end">
+                        <af:outputLabel value="17" id="ol1717"/>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+              </af:listView>
+            </af:panelBox>
+            <af:spacer width="10" height="10" id="s4"/>
+            <af:panelBox text=" " showDisclosure="false" id="pb6">
+              <af:panelGridLayout id="pgl10">
+                <af:gridRow marginTop="5px" height="auto" id="gr13">
+                  <af:gridCell marginStart="5px" width="70%" id="gc50"
+                               halign="end">
+                    <af:inputText value="#{bindings.LikeInCompany.inputValue}"
+                                  label="#{bindings.LikeInCompany.hints.label}"
+                                  contentStyle="width:800px;text-align:right;"
+                                  disabled="#{bindings.StepId.inputValue ne '1'}"
+                                  required="true"
+                                  columns="#{bindings.LikeInCompany.hints.displayWidth}"
+                                  maximumLength="#{bindings.LikeInCompany.hints.precision}"
+                                  shortDesc="#{bindings.LikeInCompany.hints.tooltip}"
+                                  id="it13" simple="true" autoSubmit="true">
+                      <f:validator binding="#{bindings.LikeInCompany.validator}"/>
+                    </af:inputText>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="25%" marginEnd="5px"
+                               id="gc48" halign="end">
+                    <af:outputLabel value="ما الذي أعجبك أكثر في العمل في الشركة؟"
+                                    id="ol20"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                               id="gc54" halign="end">
+                    <af:outputLabel value="1" id="ol27"/>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" id="gr16">
+                  <af:gridCell marginStart="5px" width="70%" id="gc42"
+                               halign="end">
+                    <af:inputText value="#{bindings.DislikeInCompany.inputValue}"
+                                  label="#{bindings.DislikeInCompany.hints.label}"
+                                  contentStyle="width:800px;text-align:right;"
+                                  disabled="#{bindings.StepId.inputValue ne '1'}"
+                                  required="true"
+                                  columns="#{bindings.DislikeInCompany.hints.displayWidth}"
+                                  maximumLength="#{bindings.DislikeInCompany.hints.precision}"
+                                  shortDesc="#{bindings.DislikeInCompany.hints.tooltip}"
+                                  id="it14" simple="true" autoSubmit="true">
+                      <f:validator binding="#{bindings.DislikeInCompany.validator}"/>
+                    </af:inputText>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="25%" marginEnd="5px"
+                               id="gc46" halign="end">
+                    <af:outputLabel value="ما الذي لم يعجبك في العمل في الشركة؟"
+                                    id="ol21"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                               id="gc55" halign="end">
+                    <af:outputLabel value="2" id="ol28"/>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" id="gr17">
+                  <af:gridCell marginStart="5px" width="70%" id="gc49"
+                               halign="end">
+                    <af:inputText value="#{bindings.SuggestionsToDepart.inputValue}"
+                                  label="#{bindings.SuggestionsToDepart.hints.label}"
+                                  contentStyle="width:800px;text-align:right;"
+                                  disabled="#{bindings.StepId.inputValue ne '1'}"
+                                  required="true"
+                                  columns="#{bindings.SuggestionsToDepart.hints.displayWidth}"
+                                  maximumLength="#{bindings.SuggestionsToDepart.hints.precision}"
+                                  shortDesc="#{bindings.SuggestionsToDepart.hints.tooltip}"
+                                  id="it36" simple="true" autoSubmit="true">
+                      <f:validator binding="#{bindings.SuggestionsToDepart.validator}"/>
+                    </af:inputText>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="25%" marginEnd="5px"
+                               id="gc45" halign="end">
+                    <af:outputLabel value="ما هي إقتراحاتك لتحسين العمل في الإدارة التي كنت تعمل فيها؟"
+                                    id="ol22"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                               id="gc56" halign="end">
+                    <af:outputLabel value="3" id="ol29"/>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" id="gr14">
+                  <af:gridCell marginStart="5px" width="70%" id="gc47"
+                               halign="end">
+                    <af:inputText value="#{bindings.SuggestionsToCompany.inputValue}"
+                                  label="#{bindings.SuggestionsToCompany.hints.label}"
+                                  contentStyle="width:800px;text-align:right;"
+                                  disabled="#{bindings.StepId.inputValue ne '1'}"
+                                  required="true"
+                                  columns="#{bindings.SuggestionsToCompany.hints.displayWidth}"
+                                  maximumLength="#{bindings.SuggestionsToCompany.hints.precision}"
+                                  shortDesc="#{bindings.SuggestionsToCompany.hints.tooltip}"
+                                  id="it4" simple="true" autoSubmit="true">
+                      <f:validator binding="#{bindings.SuggestionsToCompany.validator}"/>
+                    </af:inputText>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="25%" marginEnd="5px"
+                               id="gc43" halign="end">
+                    <af:outputLabel value="ما هي إقتراحاتك لتحسين العمل في الشركة ككل؟"
+                                    id="ol23"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                               id="gc58" halign="end">
+                    <af:outputLabel value="4" id="ol30"/>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr15">
+                  <af:gridCell marginStart="5px" width="70%" id="gc41"
+                               halign="end">
+                    <af:inputText value="#{bindings.RealReasonForEnd.inputValue}"
+                                  label="#{bindings.RealReasonForEnd.hints.label}"
+                                  contentStyle="width:800px;text-align:right;"
+                                  disabled="#{bindings.StepId.inputValue ne '1'}"
+                                  required="true"
+                                  columns="#{bindings.RealReasonForEnd.hints.displayWidth}"
+                                  maximumLength="#{bindings.RealReasonForEnd.hints.precision}"
+                                  shortDesc="#{bindings.RealReasonForEnd.hints.tooltip}"
+                                  id="it2" simple="true" autoSubmit="true">
+                      <f:validator binding="#{bindings.RealReasonForEnd.validator}"/>
+                    </af:inputText>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="25%" marginEnd="5px"
+                               id="gc44" halign="end">
+                    <af:outputLabel value="برأيك ما هو السبب الحقيقي لإنتهاء خدماتك بالشركة؟"
+                                    id="ol24"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="5%" marginEnd="5px"
+                               id="gc59" halign="end">
+                    <af:outputLabel value="5" id="ol31"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:spacer width="10" height="10" id="s3"/>
+            <af:panelBox text=" " id="pb3" showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t4">
+                  <af:outputLabel id="ol11"
+                                  value=" ما هي الإقتراحات والملاحظات التي تعتقد أن من شأنها العودة بالنفع على الشركة "/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGroupLayout id="pgl11" layout="horizontal" halign="end">
+                <af:inputText value="#{bindings.SuggObservInCompany.inputValue}"
+                              label="#{bindings.SuggObservInCompany.hints.label}"
+                              contentStyle="width:800px;text-align:right;"
+                              rows="4"
+                              disabled="#{bindings.StepId.inputValue ne '1'}"
+                              required="true"
+                              columns="#{bindings.SuggObservInCompany.hints.displayWidth}"
+                              maximumLength="#{bindings.SuggObservInCompany.hints.precision}"
+                              shortDesc="#{bindings.SuggObservInCompany.hints.tooltip}"
+                              id="it12" simple="true" autoSubmit="true">
+                  <f:validator binding="#{bindings.SuggObservInCompany.validator}"/>
+                </af:inputText>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox text=" " id="pb20" showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t18">
+                  <af:outputLabel id="ol62" value="تفاصيل البريد الألكتروني الخاص لأرسال شهادة الخبرة"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl28">
+                <af:gridRow marginTop="5px" height="auto" id="gr46">
+                  <af:gridCell marginStart="5px" width="50%" id="gc128"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc126" halign="end">
+                    <af:panelFormLayout id="pfl23" rows="1" maxColumns="1">
+                      <af:selectBooleanCheckbox value="#{bindings.ExpCertificationFlag.inputValue}"
+                                                label=" ارساال شهادة الخبرة الى الموظف "
+                                                rendered="#{bindings.PersonType.inputValue eq 'EMP' and (bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.AssigneePosition.inputValue eq 'THC_HR_OPER')}"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'THC_HR_OPER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                                shortDesc="#{bindings.ExpCertificationFlag.hints.tooltip}"
+                                                id="sbc23" autoSubmit="true"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr45">
+                  <af:gridCell marginStart="5px" width="50%" id="gc127"
+                               halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc125" halign="end">
+                    <af:commandButton text="Update"
+                                rendered="#{bindings.RequestStatus.inputValue ne 'APPROVED' and bindings.StepId.inputValue ne '1' and (PersonInfo.fullName eq bindings.PersonName.inputValue || PersonInfo.fullName eq bindings.CreatedBy.inputValue)}"
+                                id="cb10"
+                                      actionListener="#{backingBeanScope.ExitClearanceMB.onUpdatePersonalEmail}"/>
+                    <af:spacer width="10" height="10" id="s22"/>
+                    <af:inputText value="#{bindings.PersonalEmail.inputValue}"
+                                  label="#{bindings.PersonalEmail.hints.label}"
+                                  contentStyle="width:400px;text-align:right;"
+                                  disabled="#{(bindings.RequestStatus.inputValue eq 'APPROVED' || bindings.RequestStatus.inputValue eq 'REJECTED') || (PersonInfo.fullName ne bindings.PersonName.inputValue and PersonInfo.fullName ne bindings.CreatedBy.inputValue)}"
+                                  required="true" simple="true"
+                                  columns="#{bindings.PersonalEmail.hints.displayWidth}"
+                                  maximumLength="#{bindings.PersonalEmail.hints.precision}"
+                                  shortDesc="#{bindings.PersonalEmail.hints.tooltip}"
+                                  id="it46" autoSubmit="true">
+                      <f:validator binding="#{bindings.PersonalEmail.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s19"/>
+                    <af:spacer width="10" height="10" id="s20"/>
+                    <af:outputLabel value="البريد الألكتروني الخاص" id="ol63"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+          </af:panelBox>
+          <af:panelBox text="Clearance Form" id="pb7" showDisclosure="false"
+                       rendered="#{pageFlowScope.formName eq 'Clearance'}">
+            <f:facet name="toolbar">
+              <af:toolbar id="t6">
+                <af:outputLabel id="ol25" value="نموذج إخلاء طرف موظف"/>
+              </af:toolbar>
+            </f:facet>
+            <af:spacer width="10" height="10" id="s8"/>
+            <af:panelGridLayout id="pgl23">
+              <af:gridRow marginTop="5px" height="auto" id="gr32">
+                <af:gridCell marginStart="5px" width="40%" id="gc87"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc89"
+                             halign="end">
+                  <af:inputText simple="true" id="it28" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.PersonNumber.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" id="gc88"
+                             halign="end">
+                  <af:outputLabel value="الرقم الوظيفي" id="ol45"
+                                  shortDesc="Person Number"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc90"
+                             halign="end">
+                  <af:inputText simple="true" id="it29" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.PersonNameArabic.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc91" halign="end">
+                  <af:outputLabel shortDesc="Person Name" id="ol46"
+                                  value="الإسم"/>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr33">
+                <af:gridCell marginStart="5px" width="40%" id="gc92"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc106"
+                             halign="end">
+                  <af:inputText simple="true" id="it30" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.Administration.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" id="gc93"
+                             halign="end">
+                  <af:outputLabel shortDesc="Administration" id="ol47"
+                                  value="الإدارة"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc94"
+                             halign="end">
+                  <af:inputText simple="true" id="it31" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.ManagerName.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc95" halign="end">
+                  <af:outputLabel shortDesc="Manager Name" id="ol48"
+                                  value="إسم الرئيس المباشر"/>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr34">
+                <af:gridCell marginStart="5px" width="40%" id="gc96"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc97"
+                             halign="end">
+                  <af:inputText simple="true" id="it32" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.HireDate.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" id="gc98"
+                             halign="end">
+                  <af:outputLabel shortDesc="Date Of Hiring" id="ol50"
+                                  value="تاريخ التعيين"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc99"
+                             halign="end">
+                  <af:inputText simple="true" id="it33" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.LastWorkingDate.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc100" halign="end">
+                  <af:outputLabel shortDesc="Last Working Day" id="ol49"
+                                  value="اخر يوم عمل"/>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="auto" id="gr35">
+                <af:gridCell marginStart="5px" width="40%" id="gc101"/>
+                <af:gridCell marginStart="5px" width="20%" id="gc102"
+                             halign="end">
+                  <af:inputText value="#{bindings.ReasonForExit.inputValue}"
+                                simple="true" disabled="true"
+                                required="#{bindings.ReasonForExit.hints.mandatory}"
+                                columns="#{bindings.ReasonForExit.hints.displayWidth}"
+                                maximumLength="#{bindings.ReasonForExit.hints.precision}"
+                                shortDesc="#{bindings.ReasonForExit.hints.tooltip}"
+                                id="it34"
+                                contentStyle="width:300px;text-align:right;"
+                                rows="2" autoSubmit="true">
+                    <f:validator binding="#{bindings.ReasonForExit.validator}"/>
+                  </af:inputText>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc103" halign="end">
+                  <af:outputLabel value="أسباب إنتهاء فترة الخدمة " id="ol51"
+                                  shortDesc="Reason for Exit"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="20%" id="gc104"
+                             halign="end">
+                  <af:inputText simple="true" id="it35" label=" "
+                                disabled="true"
+                                contentStyle="width:200px;text-align:right;"
+                                value="#{bindings.LengthOfService.inputValue}"/>
+                </af:gridCell>
+                <af:gridCell marginStart="5px" width="10%" marginEnd="5px"
+                             id="gc105" halign="end">
+                  <af:outputLabel shortDesc="Length Of Service" id="ol52"
+                                  value="مدة الخدمة"/>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout>
+            <af:spacer width="10" height="10" id="s9"/>
+            <af:panelBox text="Department Head Use" id="pb8"
+                         rendered="#{bindings.DhName.inputValue ne null}"
+                         showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t5">
+                  <af:outputLabel id="ol32" value="لاستخدام مدير إدارة الموظف"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl15">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr19">
+                  <af:gridCell marginStart="5px" width="50%" id="gc61">
+                    <af:panelFormLayout id="pfl1" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.DhDate.inputValue}"
+                                    required="#{bindings.DhDate.hints.mandatory}"
+                                    shortDesc="#{bindings.DhDate.hints.tooltip}"
+                                    id="id2" label="Date" disabled="true">
+                        <f:validator binding="#{bindings.DhDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.DhDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.DhName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.DhName.hints.mandatory}"
+                                    columns="#{bindings.DhName.hints.displayWidth}"
+                                    maximumLength="#{bindings.DhName.hints.precision}"
+                                    shortDesc="#{bindings.DhName.hints.tooltip}"
+                                    id="it16" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.DhName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc60" halign="end">
+                    <af:panelFormLayout id="pfl12" maxColumns="1">
+                      <af:selectBooleanCheckbox value="#{bindings.DhQues1.inputValue}"
+                                                label=" نؤكد على صحة آخر يوم عمل ولن يتمكن الموظف من المباشرة بعد ذلك اليوم"
+                                                shortDesc="#{bindings.DhQues1.hints.tooltip}"
+                                                id="sbc5"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'LINE_MANAGER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.DhQues2.inputValue}"
+                                                label="تم تسليم المهام الموكلة للموظف وتغيير كلمة السر للحسابات الإلكترونية"
+                                                shortDesc="#{bindings.DhQues2.hints.tooltip}"
+                                                id="sbc2"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'LINE_MANAGER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.DhQues3.inputValue}"
+                                                label="تم نقل واستلام الملفات والبريد الالكتروني من جهاز الموظف"
+                                                shortDesc="#{bindings.DhQues3.hints.tooltip}"
+                                                id="sbc3"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'LINE_MANAGER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr29">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc81" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc82" halign="end">
+                    <af:inputText value="#{bindings.DhComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.DhComments.hints.mandatory}"
+                                  columns="#{bindings.DhComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.DhComments.hints.precision}"
+                                  shortDesc="#{bindings.DhComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'LINE_MANAGER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it39"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.DhComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s6"/>
+                    <af:outputLabel value="أخرى" id="ol41"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="Facility Management Use" id="pb9"
+                         rendered="#{bindings.FmuName.inputValue ne null}"
+                         showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t7">
+                  <af:outputLabel id="ol33" value="لاستخدام إدارة المرافق"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl13">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr20">
+                  <af:gridCell marginStart="5px" width="50%" id="gc62">
+                    <af:panelFormLayout id="pfl2" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.FmuDate.inputValue}"
+                                    required="#{bindings.FmuDate.hints.mandatory}"
+                                    shortDesc="#{bindings.FmuDate.hints.tooltip}"
+                                    id="id1" label="Date" disabled="true">
+                        <f:validator binding="#{bindings.FmuDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.FmuDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.FmuName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.FmuName.hints.mandatory}"
+                                    columns="#{bindings.FmuName.hints.displayWidth}"
+                                    maximumLength="#{bindings.FmuName.hints.precision}"
+                                    shortDesc="#{bindings.FmuName.hints.tooltip}"
+                                    id="it15" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.FmuName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc63" halign="end">
+                    <af:panelFormLayout id="pfl13">
+                      <af:selectBooleanCheckbox value="#{bindings.FmuQues1.inputValue}"
+                                                label=" تم استلام المفاتيح الخاصة بالمكتب والادراج "
+                                                shortDesc="#{bindings.FmuQues1.hints.tooltip}"
+                                                id="sbc4"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'FACILITY_MNG' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.FmuQues2.inputValue}"
+                                                label=" تم استلام العهد الأخرى مثل الأدوات المكتبية ونحوه"
+                                                shortDesc="#{bindings.FmuQues2.hints.tooltip}"
+                                                rendered="#{pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-THC'}"
+                                                id="sbc6"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'FACILITY_MNG' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.FmuQues3.inputValue}"
+                                                label=" تم الغاء صلاحيات الدخول للمبنى عن طريق البطاقة"
+                                                shortDesc="#{bindings.FmuQues3.hints.tooltip}"
+                                                id="sbc7"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'FACILITY_MNG' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.FmuQues4.inputValue}"
+                                                label=" تم فحص واستلام السيارة"
+                                                rendered="#{pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-THC'}"
+                                                shortDesc="#{bindings.FmuQues4.hints.tooltip}"
+                                                id="sbc22"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'FACILITY_MNG' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr38">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc111" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc112" halign="end">
+                    <af:inputText value="#{bindings.FmuOthers.inputValue}"
+                                  label="#{bindings.FmuOthers.hints.label}"
+                                  required="#{bindings.FmuOthers.hints.mandatory}"
+                                  columns="#{bindings.FmuOthers.hints.displayWidth}"
+                                  maximumLength="#{bindings.FmuOthers.hints.precision}"
+                                  shortDesc="#{bindings.FmuOthers.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'FACILITY_MNG' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it17"
+                                  contentStyle="width:500px;text-align:right;"
+                                  simple="true">
+                      <f:validator binding="#{bindings.FmuOthers.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s12"/>
+                    <af:outputLabel value="أخرى" id="ol55"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="THC ITC Use" id="pb10" showDisclosure="false"
+                         rendered="#{bindings.ItcName.inputValue ne null}">
+              <f:facet name="toolbar">
+                <af:toolbar id="t8">
+                  <af:outputLabel id="ol34"
+                                  value="لاستخدام إدارة تقنية المعلومات والاتصالات"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl14">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr21">
+                  <af:gridCell marginStart="5px" width="50%" id="gc66">
+                    <af:panelFormLayout id="pfl3" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.ItcDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.ItcDate.hints.mandatory}"
+                                    shortDesc="#{bindings.ItcDate.hints.tooltip}"
+                                    id="id3" disabled="true">
+                        <f:validator binding="#{bindings.ItcDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.ItcDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.ItcName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.ItcName.hints.mandatory}"
+                                    columns="#{bindings.ItcName.hints.displayWidth}"
+                                    maximumLength="#{bindings.ItcName.hints.precision}"
+                                    shortDesc="#{bindings.ItcName.hints.tooltip}"
+                                    id="it18" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.ItcName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc67" halign="end">
+                    <af:panelFormLayout id="pfl14">
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues1.inputValue}"
+                                                label="إيقاف اسم المستخدم والبريد الالكتروني بتاريخ آخر يوم عمل"
+                                                shortDesc="#{bindings.ItcQues1.hints.tooltip}"
+                                                id="sbc8"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'THC_ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues2.inputValue}"
+                                                label="استلام جهاز الحاسب المكتبي/ المحمول وملحقاته"
+                                                shortDesc="#{bindings.ItcQues2.hints.tooltip}"
+                                                rendered="#{pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-Alkhobar' and pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-Qassim'}"
+                                                id="sbc9"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'THC_ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues3.inputValue}"
+                                                label="استلام جهاز الهاتف المكتبي / الجوال"
+                                                shortDesc="#{bindings.ItcQues3.hints.tooltip}"
+                                                rendered="#{pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-Alkhobar' and pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-Qassim'}"
+                                                id="sbc10"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'THC_ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues4.inputValue}"
+                                                label="إيقاف اسم المستخدم الخاص بالتطبيقات الأخرى"
+                                                shortDesc="#{bindings.ItcQues4.hints.tooltip}"
+                                                rendered="#{pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-Alkhobar' and pageFlowScope.ExitClearanceTypeName ne 'ExitClearnace-Qassim'}"
+                                                id="sbc11"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'THC_ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr30">
+                  <af:gridCell marginStart="5px" width="50%" id="gc83"/>
+                  <af:gridCell marginStart="5px" width="50%" id="gc84"
+                               halign="end">
+                    <af:inputText value="#{bindings.ItcOthers.inputValue}"
+                                  label="#{bindings.ItcOthers.hints.label}"
+                                  required="#{bindings.ItcOthers.hints.mandatory}"
+                                  columns="#{bindings.ItcOthers.hints.displayWidth}"
+                                  maximumLength="#{bindings.ItcOthers.hints.precision}"
+                                  shortDesc="#{bindings.ItcOthers.hints.tooltip}"
+                                  contentStyle="width:500px;text-align:right;"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'THC_ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it19" simple="true">
+                      <f:validator binding="#{bindings.ItcOthers.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s5"/>
+                    <af:outputLabel value="أخرى" id="ol43"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="ITC Use" id="pb19"
+                         visible="#{pageFlowScope.ExitClearanceTypeName eq 'ExitClearnace-Alkhobar' || pageFlowScope.ExitClearanceTypeName eq 'ExitClearnace-Qassim'}"
+                         showDisclosure="false"
+                         rendered="#{bindings.ItcName2.inputValue ne null}">
+              <f:facet name="toolbar">
+                <af:toolbar id="t17">
+                  <af:outputLabel id="ol53"
+                                  value="لاستخدام إدارة تقنية المعلومات والاتصالات"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl25">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr36">
+                  <af:gridCell marginStart="5px" width="50%" id="gc108">
+                    <af:panelFormLayout id="pfl22" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.ItcDate2.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.ItcDate2.hints.mandatory}"
+                                    shortDesc="#{bindings.ItcDate2.hints.tooltip}"
+                                    id="id11" disabled="true">
+                        <f:validator binding="#{bindings.ItcDate2.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.ItcDate2.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.ItcName2.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.ItcName2.hints.mandatory}"
+                                    columns="#{bindings.ItcName2.hints.displayWidth}"
+                                    maximumLength="#{bindings.ItcName2.hints.precision}"
+                                    shortDesc="#{bindings.ItcName2.hints.tooltip}"
+                                    id="it37" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.ItcName2.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc107" halign="end">
+                    <af:panelFormLayout id="pfl21">
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues2.inputValue}"
+                                                label="استلام جهاز الحاسب المكتبي/ المحمول وملحقاته"
+                                                shortDesc="#{bindings.ItcQues2.hints.tooltip}"
+                                                id="sbc24"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues3.inputValue}"
+                                                label="استلام جهاز الهاتف المكتبي / الجوال"
+                                                shortDesc="#{bindings.ItcQues3.hints.tooltip}"
+                                                id="sbc25"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.ItcQues4.inputValue}"
+                                                label="إيقاف اسم المستخدم الخاص بالتطبيقات الأخرى"
+                                                shortDesc="#{bindings.ItcQues4.hints.tooltip}"
+                                                id="sbc26"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr37">
+                  <af:gridCell marginStart="5px" width="50%" id="gc109"/>
+                  <af:gridCell marginStart="5px" width="50%" id="gc110"
+                               halign="end">
+                    <af:inputText value="#{bindings.ItcComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.ItcComments.hints.mandatory}"
+                                  columns="#{bindings.ItcComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.ItcComments.hints.precision}"
+                                  shortDesc="#{bindings.ItcComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'ITC' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it38"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.ItcComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s11"/>
+                    <af:outputLabel value="أخرى" id="ol54"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="HR Operation Use" id="pb16"
+                         rendered="#{bindings.ChrName.inputValue ne null}"
+                         showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t14">
+                  <af:outputLabel id="ol40"
+                                  value="قسم الموارد البشرية بالمركز"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl21">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr27">
+                  <af:gridCell marginStart="5px" width="50%" id="gc77">
+                    <af:panelFormLayout id="pfl9" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.ChrDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.ChrDate.hints.mandatory}"
+                                    shortDesc="#{bindings.ChrDate.hints.tooltip}"
+                                    id="id9" disabled="true">
+                        <f:validator binding="#{bindings.ChrDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.ChrDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.ChrName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.ChrName.hints.mandatory}"
+                                    columns="#{bindings.ChrName.hints.displayWidth}"
+                                    maximumLength="#{bindings.ChrName.hints.precision}"
+                                    shortDesc="#{bindings.ChrName.hints.tooltip}"
+                                    id="it26" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.ChrName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc78" halign="end">
+                    <af:panelFormLayout id="pfl19">
+                      <af:selectBooleanCheckbox value="#{bindings.ChrQues1.inputValue}"
+                                                label="	تم استلام البطاقة الوظيفية من الموظف"
+                                                shortDesc="#{bindings.ChrQues1.hints.tooltip}"
+                                                id="sbc20"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'HR_OPER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr39">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc113" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc114" halign="end">
+                    <af:inputText value="#{bindings.ChrComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.ChrComments.hints.mandatory}"
+                                  columns="#{bindings.ChrComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.ChrComments.hints.precision}"
+                                  shortDesc="#{bindings.ChrComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'HR_OPER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it40"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.ChrComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s13"/>
+                    <af:outputLabel value="أخرى" id="ol56"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="General Manager" id="pb17"
+                         rendered="#{bindings.GdName.inputValue ne null}"
+                         showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t15">
+                  <af:outputLabel id="ol42" value="المدير العام  للمركز"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl22">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr28">
+                  <af:gridCell marginStart="5px" width="50%" id="gc79">
+                    <af:panelFormLayout id="pfl10" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.GdDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.GdDate.hints.mandatory}"
+                                    shortDesc="#{bindings.GdDate.hints.tooltip}"
+                                    id="id10" disabled="true">
+                        <f:validator binding="#{bindings.GdDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.GdDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.GdName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.GdName.hints.mandatory}"
+                                    columns="#{bindings.GdName.hints.displayWidth}"
+                                    maximumLength="#{bindings.GdName.hints.precision}"
+                                    shortDesc="#{bindings.GdName.hints.tooltip}"
+                                    id="it27" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.GdName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc80" halign="end">
+                    <af:panelFormLayout id="pfl20">
+                      <af:selectBooleanCheckbox value="#{bindings.GdQues1.inputValue}"
+                                                label="	تم التحقق من صحة التواقيع أعلاه وإنهاء جميع متطلبات إخلاء الطرف"
+                                                shortDesc="#{bindings.GdQues1.hints.tooltip}"
+                                                id="sbc21"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'GEN_MNGR' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr41">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc120" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc121" halign="end">
+                    <af:inputText value="#{bindings.GdComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.GdComments.hints.mandatory}"
+                                  columns="#{bindings.GdComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.GdComments.hints.precision}"
+                                  shortDesc="#{bindings.GdComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'GEN_MNGR' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it41"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.GdComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s15"/>
+                    <af:outputLabel value="أخرى" id="ol60"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="Admin Services" id="pb11" showDisclosure="false"
+                         rendered="#{bindings.AdsName.inputValue ne null}">
+              <f:facet name="toolbar">
+                <af:toolbar id="t9">
+                  <af:outputLabel id="ol35"
+                                  value="لاستخدام قسم الشوؤن الإدارية"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl16">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr22">
+                  <af:gridCell marginStart="5px" width="50%" id="gc65">
+                    <af:panelFormLayout id="pfl4" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.AdsDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.AdsDate.hints.mandatory}"
+                                    shortDesc="#{bindings.AdsDate.hints.tooltip}"
+                                    id="id4" disabled="true">
+                        <f:validator binding="#{bindings.AdsDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.AdsDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.AdsName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.AdsName.hints.mandatory}"
+                                    columns="#{bindings.AdsName.hints.displayWidth}"
+                                    maximumLength="#{bindings.AdsName.hints.precision}"
+                                    shortDesc="#{bindings.AdsName.hints.tooltip}"
+                                    id="it20" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.AdsName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc68" halign="end">
+                    <af:panelFormLayout id="pfl15">
+                      <af:selectBooleanCheckbox value="#{bindings.AdsQues1.inputValue}"
+                                                label="تم استلام العهد الأخرى مثل الأدوات المكتبية ونحوه"
+                                                shortDesc="#{bindings.AdsQues1.hints.tooltip}"
+                                                id="sbc12"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ADMIN_SER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.AdsQues2.inputValue}"
+                                                label=" تم الغاء التأمين الطبي للموظف وعائلته اعتباراً من آخر يوم عمل"
+                                                shortDesc="#{bindings.AdsQues2.hints.tooltip}"
+                                                id="sbc13"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ADMIN_SER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.AdsQues3.inputValue}"
+                                                label=" تم حذف الموظف من التأمينات الاجتماعية"
+                                                shortDesc="#{bindings.AdsQues3.hints.tooltip}"
+                                                id="sbc14"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ADMIN_SER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.AdsQues4.inputValue}"
+                                                label=" تم ارسال خطاب اخطار بالاستقالة للبنك (في حال تثبيت الراتب)"
+                                                shortDesc="#{bindings.AdsQues4.hints.tooltip}"
+                                                id="sbc15"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'ADMIN_SER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr40">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc115" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc117" halign="end">
+                    <af:inputText value="#{bindings.AdsComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.AdsComments.hints.mandatory}"
+                                  columns="#{bindings.AdsComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.AdsComments.hints.precision}"
+                                  shortDesc="#{bindings.AdsComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'ADMIN_SER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it42"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.AdsComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s14"/>
+                    <af:outputLabel value="أخرى" id="ol57"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="THC HR Operation Use" id="pb13"
+                         showDisclosure="false"
+                         rendered="#{bindings.HroName.inputValue ne null}">
+              <f:facet name="toolbar">
+                <af:toolbar id="t10">
+                  <af:outputLabel id="ol36"
+                                  value="لاستخدام قسم عمليات الموارد البشرية"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl17">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr23">
+                  <af:gridCell marginStart="5px" width="50%" id="gc69">
+                    <af:panelFormLayout id="pfl5" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.HroDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.HroDate.hints.mandatory}"
+                                    shortDesc="#{bindings.HroDate.hints.tooltip}"
+                                    id="id5" disabled="true">
+                        <f:validator binding="#{bindings.HroDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.HroDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.HroName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.HroName.hints.mandatory}"
+                                    columns="#{bindings.HroName.hints.displayWidth}"
+                                    maximumLength="#{bindings.HroName.hints.precision}"
+                                    shortDesc="#{bindings.HroName.hints.tooltip}"
+                                    id="it21"
+                                    contentStyle="width:250px;text-align:right;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.HroName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc70" halign="end">
+                    <af:panelFormLayout id="pfl16">
+                      <af:selectBooleanCheckbox value="#{bindings.HroQues1.inputValue}"
+                                                label="تم التحقق من الحسومات المقرّة على الموظف واضافتها لقرار طي القيد  وإضافتها لقرار إنهاء التعاقد مع تصفية العهد المالية"
+                                                shortDesc="#{bindings.HroQues1.hints.tooltip}"
+                                                id="sbc17"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'THC_HR_OPER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr31">
+                  <af:gridCell marginStart="5px" width="50%" id="gc86"
+                               halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" id="gc85"
+                               halign="end">
+                    <af:inputText value="#{bindings.HroOthers.inputValue}"
+                                  label="#{bindings.HroOthers.hints.label}"
+                                  required="#{bindings.HroOthers.hints.mandatory}"
+                                  columns="#{bindings.HroOthers.hints.displayWidth}"
+                                  maximumLength="#{bindings.HroOthers.hints.precision}"
+                                  shortDesc="#{bindings.HroOthers.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'THC_HR_OPER' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it22"
+                                  contentStyle="width:500px;text-align:right;"
+                                  simple="true">
+                      <f:validator binding="#{bindings.HroOthers.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s7"/>
+                    <af:outputLabel value="أخرى" id="ol44"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="Legal Affairs Use" id="pb12"
+                         rendered="#{bindings.LauName.inputValue ne null}"
+                         showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t11">
+                  <af:outputLabel id="ol37" value="لاستخدام الإدارة القانونية"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl18">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr24">
+                  <af:gridCell marginStart="5px" width="50%" id="gc71">
+                    <af:panelFormLayout id="pfl6" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.LauDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.LauDate.hints.mandatory}"
+                                    shortDesc="#{bindings.LauDate.hints.tooltip}"
+                                    id="id6" disabled="true">
+                        <f:validator binding="#{bindings.LauDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.LauDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.LauName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.LauName.hints.mandatory}"
+                                    columns="#{bindings.LauName.hints.displayWidth}"
+                                    maximumLength="#{bindings.LauName.hints.precision}"
+                                    shortDesc="#{bindings.LauName.hints.tooltip}"
+                                    id="it23" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.LauName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc72" halign="end">
+                    <af:panelFormLayout id="pfl17">
+                      <af:selectBooleanCheckbox value="#{bindings.LauQues1.inputValue}"
+                                                label="تم احاطتنا بانتهاء خدمات الموظف المذكور بعاليه"
+                                                shortDesc="#{bindings.LauQues1.hints.tooltip}"
+                                                id="sbc18"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'LEGAL_AFF' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr42">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc116" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc119" halign="end">
+                    <af:inputText value="#{bindings.LauComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'LEGAL_AFF' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  required="#{bindings.LauComments.hints.mandatory}"
+                                  columns="#{bindings.LauComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.LauComments.hints.precision}"
+                                  shortDesc="#{bindings.LauComments.hints.tooltip}"
+                                  id="it43"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.LauComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s16"/>
+                    <af:outputLabel value="أخرى" id="ol58"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="Finance Department Use" id="pb14"
+                         rendered="#{bindings.FinName.inputValue ne null}"
+                         showDisclosure="false">
+              <f:facet name="toolbar">
+                <af:toolbar id="t12">
+                  <af:outputLabel id="ol38" value="لاستخدام الإدارة المالية"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl19">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr25">
+                  <af:gridCell marginStart="5px" width="30%" id="gc73">
+                    <af:panelFormLayout id="pfl7" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.FinDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.FinDate.hints.mandatory}"
+                                    shortDesc="#{bindings.FinDate.hints.tooltip}"
+                                    id="id7" disabled="true">
+                        <f:validator binding="#{bindings.FinDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.FinDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.FinName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.FinName.hints.mandatory}"
+                                    columns="#{bindings.FinName.hints.displayWidth}"
+                                    maximumLength="#{bindings.FinName.hints.precision}"
+                                    shortDesc="#{bindings.FinName.hints.tooltip}"
+                                    id="it24" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.FinName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="70%" marginEnd="5px"
+                               id="gc74" halign="end">
+                    <af:panelFormLayout id="pfl11" rows="2" maxColumns="1">
+                      <af:selectBooleanCheckbox value="#{bindings.FinQues1.inputValue}"
+                                                label="لن يتم صرف المستحقات الا بعد إنهاء جميع إجراءات اخلاء الطرف"
+                                                shortDesc="#{bindings.FinQues1.hints.tooltip}"
+                                                id="sbc1"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'FIN_DEPART' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                      <af:selectBooleanCheckbox value="#{bindings.FinQues2.inputValue}"
+                                                label="تصفية العهد النقدية المستحقة على الموظف"
+                                                shortDesc="#{bindings.FinQues2.hints.tooltip}"
+                                                id="sbc19"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'FIN_DEPART' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr44">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc123" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc118" halign="end">
+                    <af:inputText value="#{bindings.FinComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.FinComments.hints.mandatory}"
+                                  columns="#{bindings.FinComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.FinComments.hints.precision}"
+                                  shortDesc="#{bindings.FinComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'FIN_DEPART' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it44"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.FinComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s17"/>
+                    <af:outputLabel value="أخرى" id="ol59"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+            <af:panelBox text="HR Department Use" id="pb15"
+                         showDisclosure="false"
+                         rendered="#{bindings.HrdName.inputValue ne null}">
+              <f:facet name="toolbar">
+                <af:toolbar id="t13">
+                  <af:outputLabel id="ol39"
+                                  value="استخدام مدير إدارة الموارد البشرية "/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGridLayout id="pgl20">
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr26">
+                  <af:gridCell marginStart="5px" width="50%" id="gc75">
+                    <af:panelFormLayout id="pfl8" labelAlignment="top"
+                                        maxColumns="2" rows="1">
+                      <af:inputDate value="#{bindings.HrdDate.inputValue}"
+                                    label="Date"
+                                    required="#{bindings.HrdDate.hints.mandatory}"
+                                    shortDesc="#{bindings.HrdDate.hints.tooltip}"
+                                    id="id8" disabled="true">
+                        <f:validator binding="#{bindings.HrdDate.validator}"/>
+                        <af:convertDateTime pattern="#{bindings.HrdDate.format}"/>
+                      </af:inputDate>
+                      <af:inputText value="#{bindings.HrdName.inputValue}"
+                                    label="Name"
+                                    required="#{bindings.HrdName.hints.mandatory}"
+                                    columns="#{bindings.HrdName.hints.displayWidth}"
+                                    maximumLength="#{bindings.HrdName.hints.precision}"
+                                    shortDesc="#{bindings.HrdName.hints.tooltip}"
+                                    id="it25" contentStyle="width:250px;"
+                                    disabled="true">
+                        <f:validator binding="#{bindings.HrdName.validator}"/>
+                      </af:inputText>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc76" halign="end">
+                    <af:panelFormLayout id="pfl18">
+                      <af:selectBooleanCheckbox value="#{bindings.HrdQues1.inputValue}"
+                                                label="تم التحقق من صحة التواقيع أعلاه وإنهاء جميع متطلبات إخلاء الطرف"
+                                                shortDesc="#{bindings.HrdQues1.hints.tooltip}"
+                                                id="sbc16"
+                                                disabled="#{bindings.AssigneePosition.inputValue ne 'HR_DEPART' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"/>
+                    </af:panelFormLayout>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow marginTop="5px" height="auto" marginBottom="5px"
+                            id="gr43">
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc124" halign="end"/>
+                  <af:gridCell marginStart="5px" width="50%" marginEnd="5px"
+                               id="gc122" halign="end">
+                    <af:inputText value="#{bindings.HrdComments.inputValue}"
+                                  simple="true" autoSubmit="true"
+                                  required="#{bindings.HrdComments.hints.mandatory}"
+                                  columns="#{bindings.HrdComments.hints.displayWidth}"
+                                  maximumLength="#{bindings.HrdComments.hints.precision}"
+                                  shortDesc="#{bindings.HrdComments.hints.tooltip}"
+                                  disabled="#{bindings.AssigneePosition.inputValue ne 'HR_DEPART' or PersonInfo.fullName ne bindings.AssigneeName.inputValue}"
+                                  id="it45"
+                                  contentStyle="width:500px;text-align:right;">
+                      <f:validator binding="#{bindings.HrdComments.validator}"/>
+                    </af:inputText>
+                    <af:spacer width="10" height="10" id="s18"/>
+                    <af:outputLabel value="أخرى" id="ol61"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelBox>
+          </af:panelBox>
+          <af:panelBox text="Approval History" id="pb18"
+                       inlineStyle="background-color:#ffffff;"
+                       rendered="#{bindings.RequestStatus.inputValue ne null &amp;&amp;  bindings.RequestStatus.inputValue ne 'SAVED'}">
+            <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+              <f:facet name="menus"/>
+              <f:facet name="toolbar">
+                <af:toolbar id="t19" flex="10">
+                  <af:commandLink text="View All Approvers" id="cl1" rendered="false"
+                                  actionListener="#{backingBeanScope.ExitClearanceMB.onClickAllAssignee}">
+                    </af:commandLink>
+                    <af:popup id="p3"
+                              binding="#{backingBeanScope.ExitClearanceMB.allAssigneePop}">
+                      <af:dialog id="d3" title="Approver History" type="ok"/>
+                    </af:popup>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="statusbar"/>
+              <af:table value="#{bindings.ApprovalHistoryVO2.collectionModel}"
+                        var="row" rendered="false"
+                        rows="#{bindings.ApprovalHistoryVO2.rangeSize}"
+                        emptyText="#{bindings.ApprovalHistoryVO2.viewable ? 'No data to display.' : 'Access Denied.'}"
+                        fetchSize="#{bindings.ApprovalHistoryVO2.rangeSize}"
+                        rowBandingInterval="0"
+                        selectedRowKeys="#{bindings.ApprovalHistoryVO2.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.ApprovalHistoryVO2.collectionModel.makeCurrent}"
+                        rowSelection="single" id="t16">
+                <af:column sortProperty="#{bindings.ApprovalHistoryVO2.hints.ApprovalType.name}"
+                           sortable="false" headerText="Type" id="c5"
+                           width="250">
+                  <af:outputLabel value="#{row.ApprovalType}" id="ot11"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.ApprovalHistoryVO2.hints.AssigneeName.name}"
+                           sortable="false" headerText="Assignee Name" id="c1"
+                           width="250">
+                  <af:outputLabel value="#{row.AssigneeName}" id="ot14"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.ApprovalHistoryVO2.hints.ActionTaken.name}"
+                           sortable="false" headerText="Status" id="c2"
+                           width="150">
+                  <af:outputLabel value="#{row.ActionTaken}" id="ot13"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.ApprovalHistoryVO2.hints.SubmitttedOn.name}"
+                           sortable="false" headerText="Assigned On" id="c3"
+                           width="150">
+                  <af:outputLabel value="#{row.SubmitttedOn}" id="ot10">
+                    <af:convertDateTime pattern="#{bindings.ApprovalHistoryVO2.hints.SubmitttedOn.format}"/>
+                  </af:outputLabel>
+                </af:column>
+                <af:column sortProperty="#{bindings.ApprovalHistoryVO2.hints.ApprovalOn.name}"
+                           sortable="false" headerText="Action On" id="c4"
+                           width="150">
+                  <af:outputLabel value="#{row.ApprovalOn}" id="ot12">
+                    <af:convertDateTime pattern="#{bindings.ApprovalHistoryVO2.hints.ApprovalOn.format}"/>
+                  </af:outputLabel>
+                </af:column>
+              </af:table>
+              <af:table value="#{bindings.AllAssigneesExitForm_ROVO1.collectionModel}"
+                        var="row" styleClass="AFStretchWidth"
+                        rows="#{bindings.AllAssigneesExitForm_ROVO1.rangeSize}"
+                        emptyText="#{bindings.AllAssigneesExitForm_ROVO1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                        fetchSize="#{bindings.AllAssigneesExitForm_ROVO1.rangeSize}"
+                        rowBandingInterval="0" id="t20" varStatus="vs">
+                <af:column id="c12" headerText="S.No">
+                  <af:outputText value="#{vs.index+1}" id="ot19"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.AllAssigneesExitForm_ROVO1.hints.RequestTypeId.name}"
+                           sortable="false" rendered="false"
+                           headerText="#{bindings.AllAssigneesExitForm_ROVO1.hints.RequestTypeId.label}"
+                           id="c10">
+                  <af:outputText value="#{row.RequestTypeId}" id="ot22">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.AllAssigneesExitForm_ROVO1.hints.RequestTypeId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepId.name}"
+                           sortable="false" rendered="false"
+                           headerText="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepId.label}"
+                           id="c11">
+                  <af:outputText value="#{row.StepId}" id="ot20">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepName.name}"
+                           sortable="false" rendered="false"
+                           headerText="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepName.label}"
+                           id="c6">
+                  <af:outputText value="#{row.StepName}" id="ot18"/>
+                </af:column>
+                <af:column headerText="Step Name" width="200" id="c9">
+                  <af:selectOneChoice value="#{row.bindings.StepType.inputValue}"
+                                      label="#{row.bindings.StepType.label}"
+                                      required="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepType.mandatory}"
+                                      shortDesc="#{bindings.AllAssigneesExitForm_ROVO1.hints.StepType.tooltip}"
+                                      id="soc7" readOnly="true">
+                    <f:selectItems value="#{row.bindings.StepType.items}"
+                                   id="si6"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column sortProperty="#{bindings.AllAssigneesExitForm_ROVO1.hints.PersonName.name}"
+                           sortable="false" headerText="Person Name" width="200"
+                           id="c8">
+                  <af:outputText value="#{row.PersonName}" id="ot17" rendered="#{row.bindings.StepType.attributeValue ne 'LINE_MANAGER'}"/>
+                  <af:outputText value="#{row.AssigneeName}" rendered="#{row.bindings.StepType.attributeValue eq 'LINE_MANAGER'}" id="ot23"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.AllAssigneesExitForm_ROVO1.hints.PersonEmail.name}"
+                           sortable="false" headerText="Person Email" rendered="false"
+                           width="200" id="c7">
+                  <af:outputText value="#{row.PersonEmail}" id="ot21"/>
+                </af:column>
+                <af:column headerText="#{bindings.AllAssigneesExitForm_ROVO1.hints.AssigneeName.label}"
+                           id="c13" rendered="false">
+                  <af:outputText value="#{row.AssigneeName}" id="ot27"/>
+                </af:column>
+                <af:column headerText="Status"
+                           id="c14">
+                  <af:outputText value="#{row.ActionTaken ne null ?row.ActionTaken : bindings.RequestStatus.inputValue eq 'PENDING' ?  'PENDING' : '-'}" id="ot24"/>
+                </af:column>
+                <af:column headerText="Assigned On"
+                           id="c15">
+                  <af:outputText value="#{row.SubmitttedOn}" id="ot25">
+                    <af:convertDateTime pattern="#{bindings.AllAssigneesExitForm_ROVO1.hints.SubmitttedOn.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column headerText="Approved On"
+                           id="c16">
+                  <af:outputText value="#{row.ApprovalOn}" id="ot26">
+                    <af:convertDateTime pattern="#{bindings.AllAssigneesExitForm_ROVO1.hints.ApprovalOn.format}"/>
+                  </af:outputText>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelBox>
+          <af:popup id="p2"
+                    binding="#{backingBeanScope.ExitClearanceMB.jsfMsgPop}">
+            <af:dialog id="d2" type="ok" contentWidth="300" contentHeight="50"
+                       title="Error"
+                       titleIconSource="/images/qual_error_16.png">
+              <af:panelGroupLayout id="pgl24" layout="vertical">
+                <af:outputLabel value="You must select a value for below."
+                               id="ot16"/>
+                <af:spacer width="10" height="10" id="s21"/>
+                <af:outputLabel value="نؤكد على صحة آخر يوم عمل ولن يتمكن الموظف من المباشرة بعد ذلك اليوم"
+                               id="DhQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'DhQues1'}"/>
+                <af:outputLabel value="تم نقل واستلام الملفات والبريد الالكتروني من جهاز الموظف"
+                               id="DhQues3"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'DhQues3'}"/>
+                <af:outputLabel value="إيقاف اسم المستخدم والبريد الالكتروني بتاريخ آخر يوم عمل" id="ItcQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'ItcQues1'}"/>
+                <af:outputLabel value="استلام جهاز الحاسب المكتبي/ المحمول وملحقاته" id="ItcQues2"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'ItcQues2'}"/>
+                <af:outputLabel value="استلام جهاز الهاتف المكتبي / الجوال" id="ItcQues3"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'ItcQues3'}"/>
+                <af:outputLabel value="تم التحقق من صحة التواقيع أعلاه وإنهاء جميع متطلبات إخلاء الطرف" id="GdQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'GdQues1'}"/>
+                <af:outputLabel value="تم استلام العهد الأخرى مثل الأدوات المكتبية ونحوه" id="FmuQues2"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'FmuQues2'}"/>
+                <af:outputLabel value="تم الغاء صلاحيات الدخول للمبنى عن طريق البطاقة" id="FmuQues3"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'FmuQues3'}"/>
+                
+                <af:outputLabel value="تم استلام العهد الأخرى مثل الأدوات المكتبية ونحوه" id="AdsQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'AdsQues1'}"/>
+                <af:outputLabel value="تم الغاء التأمين الطبي للموظف وعائلته اعتباراً من آخر يوم عمل" id="AdsQues2"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'AdsQues2'}"/>
+                <af:outputLabel value="تم حذف الموظف من التأمينات الاجتماعية" id="AdsQues3"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'AdsQues3'}"/>
+                <af:outputLabel value="تم ارسال خطاب اخطار بالاستقالة للبنك" id="AdsQues4"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'AdsQues4'}"/>
+                
+                <af:outputLabel value="تم التحقق من الحسومات المقرّة على الموظف واضافتها لقرار طي القيد  وإضافتها لقرار إنهاء التعاقد مع تصفية العهد المالية" id="HroQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'HroQues1'}"/>
+                <af:outputLabel value="تم استلام البطاقة الوظيفية من الموظف" id="ChrQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'ChrQues1'}"/>
+                
+                <af:outputLabel value="تم احاطتنا بانتهاء خدمات الموظف المذكور بعاليه" id="LauQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'LauQues1'}"/>
+                <af:outputLabel value="لن يتم صرف المستحقات الا بعد إنهاء جميع إجراءات اخلاء الطرف" id="FinQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'FinQues1'}"/>
+                <af:outputLabel value="تصفية العهد النقدية المستحقة على الموظف" id="FinQues2"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'FinQues2'}"/>
+                <af:outputLabel value="تم التحقق من صحة التواقيع أعلاه وإنهاء جميع متطلبات إخلاء الطرف" id="HrdQues1"
+                               rendered="#{pageFlowScope.jsfErrorMessage eq 'HrdQues1'}"/>
+              </af:panelGroupLayout>
+            </af:dialog>
+          </af:popup>
+        </af:panelBox>
+      </af:group>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

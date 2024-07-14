@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.65.57" id="LoanRequestPageDef" ControllerClass="com.view.beans.filmStrip.RegionPhaseListener"
+                Package="RequestsFrags">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="LoanRequestView" RangeSize="25"
+              DataControl="SBMModuleDataControl" id="LoanRequestViewIterator"/>
+    <iterator Binds="CsecretaryROView" RangeSize="10"
+              DataControl="SBMModuleDataControl" id="CsecretaryROViewIterator"/>
+    <searchRegion Binds="LoanRequestViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="LoanRequestViewQuery"/>
+    <iterator id="PendingLoanROVO1Iterator" Binds="PendingLoanROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="ApprovalHistoryLoanIterator" Binds="ApprovalHistoryLoan"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+    <iterator id="StatusCount_LoanRequest_ROVO1Iterator"
+              Binds="StatusCount_LoanRequest_ROVO1"
+              DataControl="SBMModuleDataControl" RangeSize="25"/>
+  </executables>
+  <bindings>
+    <action IterBinding="LoanRequestViewIterator" id="Execute"
+            InstanceName="SBMModuleDataControl.LoanRequestView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="CsecretaryROViewIterator" id="ExecuteClevelWithParams"
+            InstanceName="SBMModuleDataControl.CsecretaryROView"
+            DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="person_number" NDValue="#{PersonInfo.perosnNumber}"
+                 NDType="java.lang.String"/>
+    </action>
+    <list IterBinding="CsecretaryROViewIterator" ListOperMode="navigation"
+          ListIter="CsecretaryROViewIterator" id="CsecretaryROView"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="Clevel"/>
+      </AttrNames>
+    </list>
+    <tree IterBinding="LoanRequestViewIterator" id="LoanRequestView">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.up.LoanRequestView"
+                      Name="LoanRequestView0">
+        <AttrNames>
+          <Item Value="LoanId"/>
+          <Item Value="PersonId"/>
+          <Item Value="PersonName"/>
+          <Item Value="Assignee"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="NoOfMonths"/>
+          <Item Value="CreationDate"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="RejectComment"/>
+          <Item Value="CancelReason"/>
+          <Item Value="StepId"/>
+          <Item Value="Division"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="getNextStep"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getNextStep"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.getNextStep_SBMModuleDataControl_dataProvider_getNextStep_result">
+      <NamedData NDName="currentStep" NDValue="#{bindings.StepId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="requestName" NDValue="#{pageFlowScope.LoanTypeName}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="LoanRequestViewIterator" id="StepId">
+      <AttrNames>
+        <Item Value="StepId"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="LoanRequestViewIterator" id="LoanId">
+      <AttrNames>
+        <Item Value="LoanId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="LoanRequestViewIterator" id="AssigneeName">
+      <AttrNames>
+        <Item Value="AssigneeName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callApprovalHistory"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callApprovalHistory"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callApprovalHistory_SBMModuleDataControl_dataProvider_callApprovalHistory_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="req_type" NDType="java.lang.String"/>
+      <NamedData NDName="prev_step_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="assignee_name" NDType="java.lang.String"/>
+      <NamedData NDName="approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="final_approval_flow" NDType="java.lang.String"/>
+      <NamedData NDName="approval_type" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="StatusCount_LoanRequest_ROVO1Iterator"
+                     id="AllTasks">
+      <AttrNames>
+        <Item Value="AllTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_LoanRequest_ROVO1Iterator"
+                     id="MyTasks">
+      <AttrNames>
+        <Item Value="MyTasks"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="StatusCount_LoanRequest_ROVO1Iterator"
+                     id="PendingTasks">
+      <AttrNames>
+        <Item Value="PendingTasks"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

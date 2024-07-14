@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73"
+                id="ExitClearanceForm_BTF_ExitClearanceForm_BTF_Execute1PageDef"
+                Package="RequestsFlows" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="StatusCount_ExitClearance_ROVO1" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="StatusCount_ExitClearance_ROVO1Iterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="StatusCount_ExitClearance_ROVO1Iterator" id="Execute"
+            RequiresUpdateModel="true" Action="iteratorExecute"/>
+  </bindings>
+</pageDefinition>

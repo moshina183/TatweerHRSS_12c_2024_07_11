@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE ViewObject SYSTEM "jbo_03_01.dtd">
+<!---->
+<ViewObject
+  xmlns="http://xmlns.oracle.com/bc4j"
+  Name="DestinationStaticView"
+  Version="11.1.1.66.73"
+  InheritPersonalization="true"
+  BindingStyle="OracleName"
+  CustomQuery="true"
+  PageIterMode="Full"
+  UseGlueCode="false">
+  <DesignTime>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
+    <Attr Name="_isExpertMode" Value="true"/>
+  </DesignTime>
+  <Properties>
+    <SchemaBasedProperties>
+      <LABEL
+        ResId="com.sbm.selfServices.model.views.ro.DestinationStaticView_LABEL"/>
+    </SchemaBasedProperties>
+  </Properties>
+  <Variable
+    Name="b_type"
+    Kind="viewcriteria"
+    Type="java.lang.String"/>
+  <ViewAttribute
+    Name="destination"
+    IsUpdateable="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="255"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="type"
+    IsUpdateable="false"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewCriteria
+    Name="DestinationStaticViewCriteria"
+    ViewObjectName="com.sbm.selfServices.model.views.ro.DestinationStaticView"
+    Conjunction="AND"
+    Mode="2">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow130"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="type"
+        ViewAttribute="type"
+        Operator="="
+        Conjunction="AND"
+        Value=":b_type"
+        GenerateIsNullClauseForBindVars="false"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="destination"/>
+  </AttrArray>
+  <LOVUIHints
+    ListType="105"
+    MRUCount="0"
+    ListRangeSize="-1"
+    NullValueId="LOVUIHints_NullValueId">
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="destination"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </LOVUIHints>
+  <StaticList
+    Rows="6"
+    Columns="2"/>
+  <ResourceBundle>
+    <PropertiesBundle
+      PropertiesFile="com.sbm.selfServices.model.ModelBundle"/>
+  </ResourceBundle>
+  <RowFinders>
+    <AttrValueRowFinder
+      Name="RowFinder">
+      <ViewCriteriaUsage
+        Name="DestinationStaticViewCriteria"
+        FullName="com.sbm.selfServices.model.views.ro.DestinationStaticView.DestinationStaticViewCriteria"/>
+      <VarAttributeMap/>
+    </AttrValueRowFinder>
+  </RowFinders>
+</ViewObject>

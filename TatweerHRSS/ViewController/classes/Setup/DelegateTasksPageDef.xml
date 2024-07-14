@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.66.73" id="DelegateTasksPageDef"
+                Package="Setup">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="WaitingTasksToDelegate_ROVO" RangeSize="7"
+              DataControl="SBMModuleDataControl"
+              id="WaitingTasksToDelegate_ROVOIterator"/>
+    <searchRegion Binds="WaitingTasksToDelegate_ROVOIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="WaitingTasksToDelegate_ROVOQuery"/>
+    <searchRegion Criteria="SearchRequest"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="WaitingTasksToDelegate_ROVOIterator"
+                  id="SearchRequestQuery"/>
+    <iterator Binds="DelegateTaskForm_ROVO" RangeSize="25"
+              DataControl="SBMModuleDataControl"
+              id="DelegateTaskForm_ROVOIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="WaitingTasksToDelegate_ROVOIterator"
+          id="WaitingTasksToDelegate_ROVO">
+      <nodeDefinition DefName="com.sbm.selfServices.model.views.ro.WaitingTasksToDelegate_ROVO"
+                      Name="WaitingTasksToDelegate_ROVO0">
+        <AttrNames>
+          <Item Value="RequestName"/>
+          <Item Value="RequestId"/>
+          <Item Value="PersonNumber"/>
+          <Item Value="PersonName"/>
+          <Item Value="Assignee"/>
+          <Item Value="AssigneeName"/>
+          <Item Value="RequestStatus"/>
+          <Item Value="CreationDate"/>
+          <Item Value="SelectFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" DataControl="SBMModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <listOfValues StaticList="false" IterBinding="DelegateTaskForm_ROVOIterator"
+                  Uses="LOV_PersonName" id="PersonName"/>
+    <attributeValues IterBinding="DelegateTaskForm_ROVOIterator"
+                     id="PersonNumber">
+      <AttrNames>
+        <Item Value="PersonNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="DelegateTaskForm_ROVOIterator" StaticList="false"
+          Uses="LOV_Action" id="Action" DTSupportsMRU="false"
+          SelectItemValueMode="ListObject"/>
+    <methodAction id="callDelegateProcess"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callDelegateProcess"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.SBMModuleDataControl.methodResults.callDelegateProcess_SBMModuleDataControl_dataProvider_callDelegateProcess_result">
+      <NamedData NDName="req_id" NDType="int"/>
+      <NamedData NDName="step_id" NDType="int"/>
+      <NamedData NDName="req_name" NDType="java.lang.String"/>
+      <NamedData NDName="assigneeName" NDType="java.lang.String"/>
+      <NamedData NDName="assignee" NDType="java.lang.String"/>
+      <NamedData NDName="actionType" NDType="java.lang.String"/>
+      <NamedData NDName="approvalType" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callSendEmailStoredPL"
+                  InstanceName="SBMModuleDataControl.dataProvider"
+                  DataControl="SBMModuleDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callSendEmailStoredPL"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="sender" NDType="java.lang.String"/>
+      <NamedData NDName="receiver" NDType="java.lang.String"/>
+      <NamedData NDName="subject" NDType="java.lang.String"/>
+      <NamedData NDName="e_body" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

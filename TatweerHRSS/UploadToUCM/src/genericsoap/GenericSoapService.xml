@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle-webservice-clients xmlns:ns2="http://java.sun.com/xml/ns/javaee">
+   <webservice-client>
+      <service-qname namespaceURI="urn:GenericSoap"
+                     localpart="GenericSoapService"/>
+      <port-info>
+         <wsdl-port namespaceURI="urn:GenericSoap" localpart="GenericSoapPort"/>
+         <runtime/>
+         <policy-references>
+            <policy-reference category="security"
+                              uri="oracle/wss_username_token_over_ssl_client_policy"/>
+         </policy-references>
+         <operations>
+            <operation name="genericSoapOperation"/>
+         </operations>
+      </port-info>
+   </webservice-client>
+</oracle-webservice-clients>

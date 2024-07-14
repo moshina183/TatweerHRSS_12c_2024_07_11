@@ -1,0 +1,67 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1">
+      <property
+         name="linkStyle">Direct</property>
+   </OverallProperties>
+   <View
+      id="View5">
+      <property
+         name="activityId">Login</property>
+      <property
+         name="page">/Login.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Login&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">361.6953</property>
+      <property
+         name="x">582.5</property>
+   </View>
+   <View
+      id="View31">
+      <property
+         name="activityId">FilmStrip</property>
+      <property
+         name="page">/pages/FilmStrip.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>FilmStrip&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-211.90234</property>
+      <property
+         name="x">129.5</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase86"
+      from="WildcardControlFlowRule128"
+      to="View31">
+      <property
+         name="fromOutcome">filmStrip</property>
+      <property
+         name="sdm:polyPoints">L50,374.0,-194.70117,170.5,-212.25293,R50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase87"
+      from="WildcardControlFlowRule128"
+      to="View5">
+      <property
+         name="fromOutcome">login</property>
+      <property
+         name="sdm:polyPoints">B50,410.0,-152.20117,582.5,307.34473,T50</property>
+   </ControlFlowCase>
+   <WildcardControlFlowRule
+      id="WildcardControlFlowRule128">
+      <property
+         name="activityId">*</property>
+      <property
+         name="y">-194.85059</property>
+      <property
+         name="x">410.0</property>
+   </WildcardControlFlowRule>
+</SDM>

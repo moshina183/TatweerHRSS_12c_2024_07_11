@@ -1,0 +1,231 @@
+/* General style */
+af|document:maximized
+{
+  background-color: #1e4a6d;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+h1
+{
+  color: navy;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: x-large;
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+h2
+{
+  color: navy;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+h3
+{
+  color: navy;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+  font-weight: lighter;
+  text-transform: capitalize;
+}
+
+af|button:hover {
+    color: Orange;
+    font-weight:bold;
+}
+
+ af|button:focus {
+    color: maroon;
+    font-weight:bold;
+}
+
+af|button{
+    color:navy;
+    font-weight:bold;
+}
+.logo_ {
+    max-width: 130px;
+}
+.body_con {
+    background-color: #fff;
+    border-radius: 3px;
+    padding: 10px;
+}
+.top_menu af|commandMenuItem::bar-item {
+    padding: 2px 0 0 0;
+}
+.top_menu af|commandMenuItem::bar-item-text, .top_menu af|menu::bar-item-text {
+    color: #fff;
+}
+.top_menu af|commandMenuItem::bar-item:highlighted, .top_menu af|menu::bar-item:highlighted {
+    background-color: transparent;
+    background-image: none;
+    border: 0;
+    cursor: pointer;
+}
+.top_menu af|commandMenuItem::bar-item:depressed, .top_menu af|menu::bar-item:depressed {
+    background-color: transparent;
+    background-image: none;
+    border: 0;
+    cursor: pointer;
+}
+.top_menu af|commandMenuItem::bar-item-text:hover, .top_menu af|menu::bar-item-text:hover {
+    color: #cbcbcb;
+    cursor: pointer;
+}
+.top_menu af|menu::bar-item:highlighted {
+    padding: 3px 1px 1px 1px;
+}
+.top_menu af|menu::bar-item-open-icon-style {
+    background-image: url("images/button_dropdown_ena.png");
+}
+.top_menu af|menu:highlighted af|menu::bar-item-open-icon-style, .top_menu af|menu:depressed af|menu::bar-item-open-icon-style {
+    background-image: url("images/button_dropdown_ovr.png");
+}
+af|panelBox {
+    margin-bottom: 20px;
+    box-shadow: none;
+}
+af|panelFormLayout::label-cell {
+    text-align: left;
+}
+af|selectOneChoice::content,af|inputListOfValues::content, af|inputText::content, af|inputDate::content {
+    height: 25px;
+}
+af|column::banded-data-cell, af|column::data-cell, af_column_data-cell {
+    height: 30px;
+}
+.nav_container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.nav_container af|commandLink {
+    color: rgba(255,255,255,0.70);
+    font-weight: bold;
+}
+.nav_container .item_1 {
+    background-color: #e96b39;
+}
+.nav_container .item_2 {
+    background-color: #5d6cb3;
+}
+.nav_container .item_3 {
+    background-color: #e95e89;
+}
+.nav_container .item_4 {
+    background-color: #46ae63;
+}
+.nav_container .item_5 {
+    background-color: #d93a33;
+}
+.nav_item {
+    margin-right: 25px;
+    margin-left: 25px;
+    padding: 10px 5px 5px 5px;
+    border-radius: 5px;
+    color: #000;
+    font-weight: bold;
+    min-width: 50px;
+    width: 50px;
+    height: 45px;
+    margin-bottom: 10px;
+}
+.nav_container af|commandLink:hover {
+    text-decoration: none;
+    color: #fff;
+}
+.nav_item:hover, .nav_current {
+    cursor: pointer;
+    color: #fff;
+}
+.nav_img {
+    margin-bottom: 10px;
+    max-width: 35px;
+}
+af|panelBox::header-element {
+    font-size: 14px;
+}
+af|toolbar::item {
+    padding-bottom: 3px;
+}
+
+/* Buttons */
+af|commandButton:textOnly {
+    font-size: 12px;
+    color: #000000;
+    text-shadow: 0px 1px 0px #FFFFFF;
+    font-weight: bold;
+    border: 1px solid #c4ced7;
+    border-radius: 3px;
+    background-color: transparent;
+    background-image: -moz-linear-gradient(bottom, #E4E8EA 0%, #E8EBED 50%, #f1f3f4 96.36%, #FFFFFF 100%);
+    min-height: 28px;
+    margin: 0px;
+}
+af|toolbar af|commandButton {
+    margin: 0px 2px !important;
+}
+af|toolbar::item:hover af|commandButton {
+    color: #0572ce;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: none;
+    border-color: #c4ced7;
+    background-color: #f7f8f9;
+    background-image: none;
+}
+af|toolbar::item:hover af|commandButton:disabled:textOnly {
+    color: #6E7587;
+    background-color: transparent;
+    background-image: -moz-linear-gradient(top, #F4F4F4 0%, #E5E5E5 100%);
+}
+
+/* Tabs */
+af|panelTabbed::header, af|panelTabbed::header-center {
+    height: auto !important;
+}
+af|panelTabbed::tab:selected {
+    background-color: #FFFFFF;
+    border-top: 3px solid #0572ce;
+}
+af|panelTabbed::header af|panelTabbed::tab:selected af|panelTabbed::tab-content {
+    color: #145c9e;
+    border-right: 1px solid #c4ced7;
+    border-left: 1px solid #c4ced7;
+    border-radius: 0;
+    padding-bottom: 7px;
+}
+af|panelTabbed::tab:selected af|panelTabbed::tab-content {
+    white-space: nowrap;
+    height: auto;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+}
+af|panelTabbed::body {
+    top: 13px !important;
+}
+af|inputText::content {
+    height: 28px;
+} 
+af|panelTabbed::tab:selected af|panelTabbed::tab-text-link,
+af|panelTabbed::tab af|panelTabbed::tab-text-link {
+    color: #003286;
+}
+af|panelTabbed::tab-content {
+    border: 0;
+    background-color: transparent;
+    padding-top: 7px;
+}
+
+/* Tables */
+af|column::column-filter-cell, af|column::column-header-table {
+    background-color: transparent;
+}
+af|column::column-header-cell {
+    background-color: transparent;
+    padding: 8px;
+    font-weight: bold;
+}

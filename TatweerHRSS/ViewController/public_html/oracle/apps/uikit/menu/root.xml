@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.
+-->
+<menu>
+  <groupNode id="tatweer" idref="tatweer" label="tatweer"
+             icon="briefcasecash.png">
+     <itemNode id="Local" label="Local Business Trip"
+              icon="/images/qual_regions_16.png" cardIcon="regions.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.LocalVisible.inputValue eq 'Y'}"  pendingApproval="#{bindings.LocalTrip.inputValue}"/>
+    <itemNode id="International" label="International Business Trip"
+              icon="/images/qual_airplane_16.png" cardIcon="airplane.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.InterVisible.inputValue eq 'Y'}"  pendingApproval="#{bindings.InternationalTrip.inputValue}"/>
+    <itemNode id="Training" label="Training"
+              icon="/images/qual_ribbon_16.png" cardIcon="ribbon.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.TrainingVisible.inputValue eq 'Y'}"  pendingApproval="#{bindings.Training.inputValue}"/>
+    <itemNode id="Event" label="Event"
+              icon="/images/qual_pushpin_16.png" cardIcon="pushpin.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.EventVisible.inputValue eq 'Y'}"  pendingApproval="#{bindings.Event.inputValue}"/>
+    <itemNode id="Expense" label="Expense"
+              icon="/images/qual_moneygroup_16.png" cardIcon="moneygroup.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Business-Trip-Task-Flow.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="false"  pendingApproval="#{bindings.Expense.inputValue}"/>
+    <itemNode id="Mobile_Allowance" label="Mobile Allowance"
+              icon="/images/qual_phonemobilegraph_16.png" cardIcon="phonemobilegraph.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Mobile-Allowance-TF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Mobile-Allowance-TF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.MobileVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.MobileAllowance.inputValue}"/>
+    <itemNode id="LOAN" label="Loan"
+              icon="/images/qual_moneyanalytics_16.png" cardIcon="moneyanalytics.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Loan-TF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Loan-TF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.LoanReqVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.Loan.inputValue}"/>
+    <itemNode id="LoanSettlement" label="Loan Settlement"
+              icon="/images/qual_moneygroup_16.png" cardIcon="moneygroup.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Loan-Settlement-BTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Loan-Settlement-BTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.LoanSettlementVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.LoanSettlement.inputValue}"/>
+    <itemNode id="Manpower_Requisition" label="Manpower Requisition"
+              icon="/images/qual_group_16.png" cardIcon="group.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/ManPowerTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/ManPowerTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.ManpowerVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.ManpowerRequisition.inputValue}"/>
+    <itemNode id="Overtime" label="Overtime"
+              icon="/images/qual_stopwatch_16.png" cardIcon="stopwatch.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/Overtime_TF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/Overtime_TF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.OvertimeVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.Overtime.inputValue}"/>
+    <itemNode id="Education_Allowance" label="Education Allowance"
+              icon="/images/qual_bank_16.png.png" cardIcon="bank.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/EducationAllowanceTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/EducationAllowanceTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.EducationAllowVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.EducationAllowance.inputValue}"/>
+    <itemNode id="Exit_Re-Entry" label="Exit Re-Entry"
+              icon="/images/qual_migrate_16.png" cardIcon="migrate.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/ExitRe-entry_TF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/ExitRe-entry_TF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.ExitReentryVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.ExitReEntry.inputValue}"/>
+    <itemNode id="Exceptional_Reward" label="Exceptional Reward"
+              icon="/images/qual_checkbook_16.png" cardIcon="checkbook.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/ExceptionalRewardTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/ExceptionalRewardTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.ExceptionalRewardVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.ExceptionalReward.inputValue}"/>
+    <itemNode id="Change_Position" label="Change Position"
+              icon="/images/qual_checklist_16.png" cardIcon="checklist.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/ChangePositionTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/ChangePositionTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              applicationStripe="crm"
+              showOnHomeGrid="true" rendered="#{bindings.ChangePositionVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.ChangePosition.inputValue}"/>
+    <itemNode id="Repayment_Ticket" label="Repayment Ticket"
+              icon="/images/qual_creditcards_16.png"
+              cardIcon="creditcards.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/RepaymentTicketsTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/RepaymentTicketsTF.xml"
+              focusViewId="/mooOpportunityHome" webApp="ORA_CRM_UI"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.RepaymentTicketVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.RepaymentTicket.inputValue}"/>
+    <itemNode id="Special_Need" label="Special Need"
+              icon="/images/qual_handshake_16.png" cardIcon="handshake.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/SpecialNeedTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/SpecialNeedTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              ownerUI="APPCOMPOSER" applicationStripe="crm"
+              showOnHomeGrid="true" rendered="#{bindings.SpecialNeedVisible.inputValue eq 'Y'}" pendingApproval="#{bindings.SpecialNeed.inputValue}"/>
+    <itemNode id="ExitClearance" label="Exit and Clearance Form"
+              icon="/images/qual_migrate_16.png" cardIcon="migrate.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/ExitClearanceForm_BTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/ExitClearanceForm_BTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI" pendingApproval="#{bindings.Exitclearnace.inputValue}"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.ExitClearanceVisible.inputValue eq 'Y'}"/>  
+    <itemNode id="TraineesExit" label="Trainees Exit Form"
+              icon="/images/qual_ribbon_16.png" cardIcon="ribbon.png"
+              taskMenuSource="/WEB-INF/RequestsFlows/TraineesExitForm_BTF.xml"
+              securedResourceName="/WEB-INF/RequestsFlows/TraineesExitForm_BTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI" pendingApproval="#{bindings.Traineeexitform.inputValue}"
+              applicationStripe="crm" showOnHomeGrid="true" rendered="#{bindings.TraineesExitVisible.inputValue eq 'Y'}"/> 
+    <itemNode id="Reports" label="Reports"
+              icon="/images/qual_document_16.png" cardIcon="document.png"
+              taskMenuSource="/WEB-INF/Reports/Reports-Task.xml"
+              securedResourceName="/WEB-INF/Reports/Reports-Task.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              ownerUI="APPCOMPOSER" applicationStripe="crm"
+              showOnHomeGrid="true" rendered="#{PersonInfo.perosnNumber eq '1181'|| PersonInfo.perosnNumber eq '1620' || PersonInfo.perosnNumber eq '1064' || PersonInfo.perosnNumber eq 'T001'|| PersonInfo.perosnNumber eq '1234'|| PersonInfo.perosnNumber eq '1441'|| PersonInfo.perosnNumber eq '1197'|| PersonInfo.perosnNumber eq '1471' || PersonInfo.perosnNumber eq '2046' || PersonInfo.userName eq 'PaaS.Self Service@tatweer.sa'}" pendingApproval="0"/>
+    <itemNode id="Setup" label="Setup"
+              icon="/images/qual_gearswrench_16.png" cardIcon="gearswrench.png"
+              taskMenuSource="/WEB-INF/Setup/Setup-Task.xml"
+              securedResourceName="/WEB-INF/Setup/Setup-Task.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              ownerUI="APPCOMPOSER" applicationStripe="crm" pendingApproval="0"
+              showOnHomeGrid="true" rendered="#{PersonInfo.position eq 'HR Payroll and benefits Supervisor' || PersonInfo.position eq 'HR Coordinator' || PersonInfo.position eq 'Senior People Affairs Specialist'}"/>
+    <itemNode id="Budget_validation_Setup" label="Budget Validation Setup"
+              icon="/images/qual_gearswrench_16.png" cardIcon="gearswrench.png"
+              taskMenuSource="/WEB-INF/Setup/BudgetValidationSetup.xml"   rendered="#{bindings.Role.inputValue eq 'ADMIN'}"
+              securedResourceName="/WEB-INF/Setup/BudgetValidationSetup.xml" 
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"
+              ownerUI="APPCOMPOSER" applicationStripe="crm" pendingApproval="0"
+              showOnHomeGrid="true"/>
+    <itemNode id="Email_Notification_Setup" label="Email Notification Setup"
+              icon="/images/qual_gearswrench_16.png" cardIcon="gearswrench.png"
+              taskMenuSource="/WEB-INF/Setup/EmailNotificationSetup_BTF.xml"
+              securedResourceName="/WEB-INF/Setup/EmailNotificationSetup_BTF.xml" 
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"  rendered="#{bindings.Role.inputValue eq 'ADMIN'}"
+              ownerUI="APPCOMPOSER" applicationStripe="crm" pendingApproval="0"
+              showOnHomeGrid="true"/>
+    <itemNode id="req_show_hide" label="Request Visible Setup"
+              icon="/images/qual_gearswrench_16.png" cardIcon="gearswrench.png"
+              taskMenuSource="/WEB-INF/Setup/RequestVisibleSetup_BTF.xml"
+              securedResourceName="/WEB-INF/Setup/RequestVisibleSetup_BTF.xml" 
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"  rendered="#{bindings.Role.inputValue eq 'ADMIN'}"
+              ownerUI="APPCOMPOSER" applicationStripe="crm" pendingApproval="0"
+              showOnHomeGrid="true"/>
+     <itemNode id="approval_flow_ceo" label="Approval Flow Setup CEO"
+              icon="/images/qual_gearswrench_16.png" cardIcon="gearswrench.png"
+              taskMenuSource="/WEB-INF/Setup/ApprovalFlowSetupCEO_BTF.xml"
+              securedResourceName="/WEB-INF/Setup/ApprovalFlowSetupCEO_BTF.xml" 
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"  rendered="#{bindings.Role.inputValue eq 'ADMIN'}"
+              ownerUI="APPCOMPOSER" applicationStripe="crm" pendingApproval="0"
+              showOnHomeGrid="true"/> 
+    <itemNode id="approval_flow" label="Approval Flow Setup"
+              icon="/images/qual_gearswrench_16.png" cardIcon="gearswrench.png"
+              taskMenuSource="/WEB-INF/Setup/ApprovalFlowSetup_BTF.xml"
+              securedResourceName="/WEB-INF/Setup/ApprovalFlowSetup_BTF.xml" 
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI"  rendered="#{bindings.Role.inputValue eq 'ADMIN'}"
+              ownerUI="APPCOMPOSER" applicationStripe="crm" pendingApproval="0"
+              showOnHomeGrid="true"/> 
+    <itemNode id="Delegate" label="Delegate Tasks"
+              icon="/images/qual_group_16.png" cardIcon="group.png"
+              taskMenuSource="/WEB-INF/Setup/DelegateTask_BTF.xml"
+              securedResourceName="/WEB-INF/Setup/DelegateTask_BTF.xml"
+              focusViewId="/FuseOverview" webApp="ORA_CRM_UI" pendingApproval="0"
+              applicationStripe="crm" showOnHomeGrid="true"  rendered="#{bindings.Role.inputValue eq 'ADMIN'}"/>
+        
+  </groupNode>
+</menu>
